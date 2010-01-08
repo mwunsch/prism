@@ -1,6 +1,17 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'hmachine'
 
+require 'rake'
+
+task :default => :test
+
+require 'rake/testtask'
+Rake::TestTask.new do |t|
+   t.libs << "test"
+   t.pattern = 'test/**/*_test.rb'
+   t.verbose = false
+end
+
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
