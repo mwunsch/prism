@@ -1,10 +1,12 @@
 module HMachine
   module Microformat
     class HCard < Base
-            
+      
+      validator { |node| node['class'] == self::ROOT_CLASS }
+      wiki_url "http://microformats.org/wiki/hcard"
+                        
       ROOT_CLASS = "vcard"
       ROOT_SELECTOR = ".#{ROOT_CLASS}"
-      WIKI_URL = "http://microformats.org/wiki/hcard"
       
       def initialize(node)
         raise "hCard not found in node" unless self.class.validate(node)

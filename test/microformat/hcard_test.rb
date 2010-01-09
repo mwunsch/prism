@@ -8,34 +8,34 @@ class HCardTest < Test::Unit::TestCase
   end
   
   describe 'Constants' do
-    test "hCard's root class" do
-      assert @hcard.class::ROOT_CLASS == 'vcard', "Root class is #{@hcard.class::ROOT_CLASS}"
-    end
-
-    test "hCard's root selector" do
-      assert @hcard.class::ROOT_SELECTOR == '.vcard', "Root selector is #{@hcard.class::ROOT_SELECTOR}"
-    end
-  end
+      test "hCard's root class" do
+        assert @hcard.class::ROOT_CLASS == 'vcard', "Root class is #{@hcard.class::ROOT_CLASS}"
+      end
   
-  describe "Inheritance" do
-    test "hCard's wiki url" do
-      assert @hcard.class.wiki_url == @hcard.class::WIKI_URL, "Wiki url is #{@hcard.class.wiki_url}"
+      test "hCard's root selector" do
+        assert @hcard.class::ROOT_SELECTOR == '.vcard', "Root selector is #{@hcard.class::ROOT_SELECTOR}"
+      end
     end
     
-    test "hCard's validation" do
-      assert @hcard.class.validate(@node)
+    describe "Inheritance" do
+      test "hCard's wiki url" do
+        assert @hcard.class.wiki_url == "http://microformats.org/wiki/hcard"
+      end
+      
+      test "hCard's validation" do
+        assert @hcard.class.validate(@node)
+      end
     end
-  end
-  
-  test "rejects invalid nodes" do
-    assert_raise RuntimeError do 
-      HMachine::Microformat::HCard.new(Nokogiri::HTML.parse(@html)) 
+    
+    test "rejects invalid nodes" do
+      assert_raise RuntimeError do 
+        HMachine::Microformat::HCard.new(Nokogiri::HTML.parse(@html)) 
+      end
     end
-  end
-  
-  test 'retains original node' do
-    assert @hcard.node == @node
-  end
+    
+    test 'retains original node' do
+      assert @hcard.node == @node
+    end
   
   
   
