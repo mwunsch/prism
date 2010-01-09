@@ -4,7 +4,7 @@ require 'nokogiri'
 require 'hmachine/microformat'
 
 module HMachine
-  VERSION = "0.0.0"
+  VERSION = "0.0.1"
   
   def self.find(document)
     html = get_document(document)
