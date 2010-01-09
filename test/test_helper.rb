@@ -1,5 +1,7 @@
 require 'test/unit'
 require File.join(File.dirname(__FILE__), "../vendor/gems/environment")
 
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib') unless $LOAD_PATH.include?(File.join(File.dirname(__FILE__), '..', 'lib'))
+lib_path = File.join(File.dirname(__FILE__), '..', 'lib')
+$LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
+
 require 'hmachine'
