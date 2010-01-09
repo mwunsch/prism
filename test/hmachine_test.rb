@@ -1,7 +1,9 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
 class HMachineTest < Test::Unit::TestCase
-  def test_something
-    assert_equal true, true
+  describe 'hMachine' do
+    test 'something' do
+      assert true
+    end
   end
 end
