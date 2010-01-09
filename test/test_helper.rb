@@ -8,3 +8,7 @@ require 'contest'
 require 'redgreen'
 
 require 'hmachine'
+
+def get_fixture(filename)
+  open(File.join(File.dirname(__FILE__), 'fixtures', "#{filename}")).read
+end
