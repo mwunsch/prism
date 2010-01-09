@@ -5,3 +5,5 @@ only :test do
 	gem 'contest'
 	gem 'redgreen'
 end
+
+bin_path 'vendor/bin'
