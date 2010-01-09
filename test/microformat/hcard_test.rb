@@ -17,7 +17,7 @@ class HCardTest < Test::Unit::TestCase
       end
     end
     
-    describe "Inheritance" do
+    describe "DSL" do
       test "hCard's wiki url" do
         assert @hcard.class.wiki_url == "http://microformats.org/wiki/hcard"
       end

@@ -14,16 +14,28 @@ module HMachine
     end
     
     def self.find_in_node(microformat, node)
+      hformat = normalize(microformat)
       microformats = []
-      node.css(microformat::ROOT_SELECTOR).each do |node|
-        microformats << create_for_node(microformat, node) if microformat.validate(node)
+      node.css(hformat::ROOT_SELECTOR).each do |node|
+        microformats << create_for_node(hformat, node) if hformat.validate(node)
       end
       microformats
     end
     
     def self.create_for_node(microformat, node)
-      return unless microformat.validate(node)
-      microformat.new node
+      hformat = normalize(microformat)
+      return unless hformat.validate(node)
+      hformat.new node
+    end
+    
+    def self.normalize(name)
+      return name if name.respond_to?(:superclass)
+      case name.to_s.strip.downcase.intern
+        when :hcard
+          HCard
+        else
+          raise "#{name} is not a recognized microformat."
+      end
     end
     
   end

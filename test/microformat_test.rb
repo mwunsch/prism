@@ -32,6 +32,16 @@ class MicroformatTest < Test::Unit::TestCase
     assert microformats.length == 1, "Number of Microformats in document: #{microformats.length}"
   end
   
+  test 'normalizes microformat names' do
+    assert HMachine::Microformat.normalize(:hCard) == HMachine::Microformat::HCard
+  end
+  
+  test 'does not know how to normalize names it does not recognize' do
+    assert_raise RuntimeError do 
+      HMachine::Microformat.normalize :hFoobar
+    end
+  end
+  
   describe 'Find hCard' do    
     test 'document contains an hCard' do
       first_hcard = HMachine::Microformat.find_hcard(@document)[0]
