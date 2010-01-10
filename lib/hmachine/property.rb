@@ -1,3 +1,6 @@
+require 'hmachine/microformat'
+require 'hmachine/pattern'
+
 module HMachine
   class Property
     
@@ -5,11 +8,14 @@ module HMachine
     # and extract it's own contents.
     # It can possess other properties.
     
-    attr_reader :name, :property_of
+    # Searches for content using patterns.
+    
+    attr_reader :name, :property_of, :patterns
     
     def initialize(name, property_of = Microformat::Base)
       @name = self.class.normalize(name)
       @property_of = Microformat.normalize(property_of)
+      @patterns = []
     end
     
     # Is this a property of microformat?
@@ -27,6 +33,28 @@ module HMachine
     # Search for the Property in a node
     def find_in(node)
       search.call(node)
+    end
+    
+    # Is the property found in node?
+    def found_in?(node)
+      !find_in(node).empty?
+    end
+    
+    # Define the patterns used to extract contents from node
+    def extract_with(*extraction_patterns)
+      @patterns = extraction_patterns
+    end
+    
+    # Try each defined extraction pattern to get the content for the property
+    def extract_from(node)
+      raise "The property #{name.intern} can not be found in this node" unless found_in?(node.parent)
+      node.content
+    end
+    
+    def parse(node)
+      # if found_in?(node)
+      #   find_in(node).each {|element| extract_from element }
+      # end     
     end
     
     def self.normalize(name)
