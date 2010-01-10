@@ -16,8 +16,8 @@ module HMachine
     def self.find_in_node(microformat, node)
       hformat = normalize(microformat)
       microformats = []
-      node.css(hformat::ROOT_SELECTOR).each do |node|
-        microformats << create_for_node(hformat, node) if hformat.validate(node)
+      hformat.find_in(node) do |element|
+        microformats << create_for_node(hformat, element) if hformat.validate(element)
       end
       microformats
     end
