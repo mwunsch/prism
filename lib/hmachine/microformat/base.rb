@@ -5,11 +5,13 @@ module HMachine
     class Base
       extend HMachine
       
+      # The root class name of the microformat
       def self.root(class_name=nil)
         @root = class_name if class_name
         @root
       end
       
+      # The wiki url for the microformat
       def self.wiki_url(url=nil)
         @wiki_url = url if url
         @wiki_url || 'http://microformats.org/wiki'
