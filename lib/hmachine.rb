@@ -42,6 +42,19 @@ module HMachine
     !find_in(node).empty?
   end
   
+  # Get/Set a function that tests to make sure a given node is
+  # the element we want. Should return truthy.
+  # Default just tests to see if the node passed is a child of its parent node.
+  def validate(&block)
+    @validate = block if block_given?
+    @validate || lambda { |node| find_in(node.parent).children.include?(node) }
+  end
+  
+  # Is this a valid node?
+  def valid?(node)
+    validate.call(node)
+  end
+  
   # Define the patterns used to extract contents from node
   # Can be symbols that match to a Pattern module, or a lambda,
   # or pass it a block

@@ -35,6 +35,25 @@ class HMachineTest < Test::Unit::TestCase
       assert !test.found_in?(@doc)
     end
     
+    should 'define a function to validate nodes' do
+      test = @klass.new
+      test.validate {|node| true if node }
+      assert_respond_to test.validate, :call
+    end
+    
+    should 'have a smart default validation method' do
+      test = @klass.new
+      node = @doc.css('.vcard').first
+      assert test.validate.call(node)
+    end
+    
+    should 'test if a node is valid' do
+      test = @klass.new
+      node = @doc.css('.vcard').first
+      test.validate { |node| node['class'] == 'vcard' }
+      assert test.valid?(node)
+    end
+    
     should 'define parsers to use with' do
       test = @klass.new
       test.extract_with {|node| node.content }
