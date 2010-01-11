@@ -6,6 +6,12 @@ class HMachineTest < Test::Unit::TestCase
     @doc = Nokogiri.parse(@html)
   end
   
+  describe 'Class Level Methods' do
+    should 'normalize names' do
+      assert_equal :hcard, HMachine.normalize("hCard")
+    end
+  end
+  
   describe 'Module' do
     setup do
       @klass = Class.new.send(:include, HMachine)

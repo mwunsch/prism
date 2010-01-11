@@ -1,7 +1,7 @@
 require 'nokogiri'
 
 require 'hmachine/pattern'
-# require 'hmachine/microformat'
+require 'hmachine/microformat'
 
 module HMachine
   VERSION = "0.0.1"
@@ -18,6 +18,10 @@ module HMachine
   # def self.get_document(html)
   #   html.is_a?(Nokogiri::XML::Node) ? html : Nokogiri::HTML.parse(html)
   # end
+  
+  def self.normalize(name)
+    name.to_s.strip.downcase.intern
+  end
   
   
   # Get/Set a function that defines how to find an element in a node.
