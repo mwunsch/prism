@@ -3,15 +3,105 @@ require File.join(File.dirname(__FILE__), 'test_helper')
 class HMachineTest < Test::Unit::TestCase
   setup do
     @html = get_fixture('hcard/commercenet.html')
+    @doc = Nokogiri.parse(@html)
   end
   
-  test 'gets a Nokogiri doc for a string of HTML' do
-    doc = HMachine.get_document(@html)
-    assert doc.is_a?(Nokogiri::HTML::Document), "Document is a #{doc.class}"
-  end
-  
-  test 'finds the microformats in a document' do
-    microformats = HMachine.find(@html)
-    assert microformats.respond_to? :length
+  describe 'Module' do
+    setup do
+      @klass = Class.new.send(:include, HMachine)
+    end
+    
+    should 'define a function to search nodes' do
+      test = @klass.new
+      test.search {|node| node.css('div') }
+      assert_respond_to test.search, :call
+    end
+    
+    should 'find an element in a node' do
+      test = @klass.new
+      test.search {|node| node.css('div') }
+      assert test.find_in(@doc).is_a?(Nokogiri::XML::NodeSet), "Search resulted in #{test.find_in(@doc).class}"
+    end
+    
+    should 'test if an element can be found in a node' do
+      test = @klass.new
+      test.search {|node| node.css('foobar') }
+      assert !test.found_in?(@doc)
+    end
+    
+    should 'define parsers to use with' do
+      test = @klass.new
+      test.extract_with {|node| node.content }
+      assert !test.parsers.empty?, "Parsers are empty."
+    end
+    
+    should 'extract with a block if a block is given' do
+      test = @klass.new
+      assert_respond_to test.extract_with{|node| node.content }.first, :call
+    end
+    
+    should 'extract with a lambda if a lambda is given' do
+      test = @klass.new
+      func = lambda{|node| node.content }
+      test.extract_with func
+      assert test.parsers.include?(func), "Parsers include #{test.parsers.inspect}"
+    end
+    
+    should 'extract with a pattern if a pattern is given' do
+      test = @klass.new
+      test.extract_with :valueclass
+      assert_respond_to test.parsers.first, :call
+    end
+    
+    should 'extract node content if no parsers are defined' do
+      test = @klass.new
+      assert_equal test.extract_from(@doc), @doc.content
+    end
+    
+    should 'attempt to use a parser to extract content from node' do
+      test = @klass.new
+      test.extract_with {|node| node.css('a.fn').first['href'] }
+      assert_equal @doc.css('a.fn').first['href'], test.extract_from(@doc)
+    end
+    
+    should 'try each parser until one works' do
+      test = @klass.new
+      funcs = (1..5).collect { lambda{ nil } }
+      funcs[2] = lambda{|node| node.css('a.fn').first['href'] }
+      test.extract_with *funcs
+      assert_equal test.parsers[2].call(@doc), test.extract_from(@doc)
+    end
+    
+    should 'ignore other parsers if it finds one that works' do
+      test = @klass.new
+      foobar = false
+      funcs = (1..3).collect { lambda{ nil } }
+      funcs[0] = lambda{|node| node.css('.fn').first['href'] }
+      funcs[1] = lambda{foobar = true}
+      test.extract_with *funcs
+      assert !foobar, "The value of foobar is #{foobar}"
+    end
+    
+    should 'if all the parsers return false, just return the contents of the node' do
+      test = @klass.new
+      funcs = (1..3).collect { lambda{nil} }
+      test.extract_with *funcs
+      assert_equal @doc.content, test.extract_from(@doc)
+    end
+    
+    should "parse a node, extracting its contents" do
+      test = @klass.new
+      test.search {|node| node.css('.fn') }
+      assert_equal @doc.css('.fn').first.content, test.parse(@doc)
+    end
+    
+    should 'parse a node, and return an array of contents' do
+      test = @klass.new
+      tel_type = @doc.css('.tel > .type').collect {|node| node.content }
+      test.search {|node| node.css('.tel') }
+      test.extract_with {|node| node.css('.type').first.content }
+      assert_equal tel_type, test.parse(@doc)
+    end
+    
   end
 end
