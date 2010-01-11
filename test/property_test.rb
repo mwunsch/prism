@@ -20,15 +20,11 @@ class PropertyTest < Test::Unit::TestCase
     assert !test.property_of?(:hcard), "Property is the property of #{test.property_of}"
   end
   
-  should 'have a set of patterns for extraction' do
+  should 'add parsers used to extract content' do
     test = HMachine::Property.new(:fn)
-    assert_respond_to test.patterns, :length
-  end
-  
-  should 'add patterns to extract content' do
-    test = HMachine::Property.new(:fn)
-    test.extract_with :value_class, :abbr_design
-    assert_equal test.patterns, [:value_class, :abbr_design]
+    parser = lambda{|node| node.content }
+    test.extract_with parser
+    assert test.parsers.include?(parser), "Parsers include: #{test.parsers.inspect}"
   end
   
   should 'extract content from a node' do
@@ -36,6 +32,24 @@ class PropertyTest < Test::Unit::TestCase
     fn = HMachine::Property.new(:fn)
     node = fn.find_in(Nokogiri::HTML.parse(html))[0]
     assert_equal "CommerceNet", fn.extract_from(node)
+  end
+  
+  should 'cycle through content parsers until one returns a value' do
+    test = HMachine::Property.new(:fn)
+    html = get_fixture('hcard/commercenet.html')
+    node = test.find_in(Nokogiri::HTML.parse(html))[0]
+    parser = (1..5).collect {|i| lambda{i} }
+    test.extract_with *parser
+    assert_equal 1, test.extract_from(node)
+  end
+  
+  should "default to node content if no parsers are able to find it" do
+    test = HMachine::Property.new(:fn)
+    html = get_fixture('hcard/commercenet.html')
+    node = test.find_in(Nokogiri::HTML.parse(html))[0]
+    parser = (1..5).collect {|i| lambda{nil} }
+    test.extract_with *parser
+    assert_equal node.content, test.extract_from(node)
   end
   
   should 'have a default search method' do
@@ -61,4 +75,12 @@ class PropertyTest < Test::Unit::TestCase
     node = Nokogiri::HTML.parse(html)
     assert fn.found_in?(node), "The property #{fn.name.inspect} is not found"
   end
+  
+  should 'parse a node and get the property' do
+    html = get_fixture('hcard/commercenet.html')
+    node = Nokogiri::HTML.parse(html)
+    fn = HMachine::Property.new(:fn)
+    assert_equal "CommerceNet", fn.parse(node)
+  end
+  
 end

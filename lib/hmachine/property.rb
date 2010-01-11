@@ -10,12 +10,11 @@ module HMachine
     
     # Searches for content using patterns.
     
-    attr_reader :name, :property_of, :patterns
+    attr_reader :name, :property_of, :parsers
     
     def initialize(name, property_of = Microformat::Base)
       @name = self.class.normalize(name)
       @property_of = Microformat.normalize(property_of)
-      @patterns = []
     end
     
     # Is this a property of microformat?
@@ -41,20 +40,36 @@ module HMachine
     end
     
     # Define the patterns used to extract contents from node
+    # Can be symbols that match to a Pattern module, or a lambda
+    # that returns the contents of a node
     def extract_with(*extraction_patterns)
-      @patterns = extraction_patterns
+      @parsers = []
+      extraction_patterns.each do |pattern|
+        parser = pattern.respond_to?(:call) ? pattern : Pattern.map(pattern).parser
+        @parsers << parser
+      end
     end
     
     # Try each defined extraction pattern to get the content for the property
     def extract_from(node)
       raise "The property #{name.intern} can not be found in this node" unless found_in?(node.parent)
-      node.content
+      return node.content unless parsers 
+      content = nil
+      parsers.each {|parser| 
+        if parser.call(node)
+          content = parser.call(node)
+          break
+        end
+      }
+      content || node.content
     end
     
+    # Parse the node, finding the property, and extract the content from it
     def parse(node)
-      # if found_in?(node)
-      #   find_in(node).each {|element| extract_from element }
-      # end     
+      if found_in?(node)
+        contents = find_in(node).collect {|element| extract_from(element) }
+        (contents.length == 1) ? contents.first : contents
+      end
     end
     
     def self.normalize(name)
