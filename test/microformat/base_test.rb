@@ -55,20 +55,21 @@ class BaseTest < Test::Unit::TestCase
   describe 'Instance' do
     setup do
       @node = @doc.css('.vcard').first
+      @klass = Class.new(HMachine::Microformat::Base)
     end
     
     should 'possess an html node' do
-      test = HMachine::Microformat::Base.new(@node)
+      test = @klass.new(@node)
       assert_equal @node, test.node
     end
     
     should 'convert its node to an html representation' do
-      test = HMachine::Microformat::Base.new(@node)
+      test = @klass.new(@node)
       assert_equal @node.to_s, test.to_s
     end
     
     should 'have a convenience method to convert to html' do
-      test = HMachine::Microformat::Base.new(@node)
+      test = @klass.new(@node)
       assert_equal @node.to_html, test.to_html
     end
   end
