@@ -31,8 +31,39 @@ module HMachine
         @validate || lambda { |node| node['class'] == root }
       end
       
-      def self.has_one(*properties,&block)        
-        # hCard has_one bday
+      # The list of Properties that belong to this Microformat
+      def self.properties
+        @properties ||= []
+      end
+      
+      # Create a Property with name <tt>name</tt>.
+      # Can further refine with a lambda (should return the property)
+      def self.create_property(name, function=nil)
+        property = Property.new(name)
+        function.call(property) if function
+        property
+      end
+      
+      # Create a group of properties with names <tt>names</tt>.
+      # The function will further refine each property 
+      # and push them on to @properties.
+      def self.add_properties(names, function=nil)
+        names.collect do |prop|
+          property = create_property(prop, function)
+          properties << property
+          property
+        end
+      end
+      
+      # Search for the <tt>property</tt> in <tt>node</tt>,
+      # ignoring nested microformats.
+      def self.search_for(property, node)
+        find_in(node).unlink if found_in?(node)
+        property.find_in(node)
+      end
+      
+      def self.has_one(*property_names,&block)
+        props = add_properties(property_names, block)
       end
       
       def self.has_many(property)
@@ -42,6 +73,10 @@ module HMachine
       def self.requires(property)
         # hCard requires fn
       end
+      
+      
+      
+
       
       # def self.requirements
       #   @requirements

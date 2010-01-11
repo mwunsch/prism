@@ -4,8 +4,6 @@ class BaseTest < Test::Unit::TestCase
   setup do
     @html = get_fixture('hcard/commercenet.html')
     @doc = Nokogiri::HTML.parse(@html)
-    # @node = Nokogiri::HTML.parse(@html).css('.'+HMachine::Microformat::HCard::ROOT_CLASS)[0]
-    # @hcard = HMachine::Microformat::Base.new(@node)
     @nested = '<div class="vcard"><span class="fn">Mark Wunsch</span> and <div class="vcard"><span class="fn">Somebody else</span></div></div>'
   end
   
@@ -48,7 +46,46 @@ class BaseTest < Test::Unit::TestCase
       test_class.root 'vcard'
       node = @doc.css('.vcard').first
       assert test_class.valid?(node)
-    end 
+    end
+    
+    should 'have a list of properties' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      assert test_class.properties.empty?, "Properties are #{test_class.properties.inspect}"
+    end
+    
+    should 'create a property' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      fn = test_class.create_property(:fn)
+      assert_instance_of HMachine::Property, fn
+    end
+    
+    should 'further define a property with a block' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      func = lambda{ false }
+      fn = test_class.create_property(:fn, func)
+      assert_instance_of HMachine::Property, fn
+    end
+    
+    should 'generate and add properties' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.add_properties([:fn])
+      assert_equal :fn, test_class.properties.first.name
+    end
+    
+    should 'search for property' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      fn = HMachine::Property.new(:fn)
+      assert_instance_of Nokogiri::XML::NodeSet, test_class.search_for(fn, @doc)
+    end
+    
+    should 'not search for properties in nested microformats' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      fn = HMachine::Property.new(:fn)
+      doc = test_class.find_in(Nokogiri::HTML.parse(@nested)).first
+      assert_equal 1, test_class.search_for(fn, doc).length
+    end
     
   end
   
