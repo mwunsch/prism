@@ -51,4 +51,10 @@ class PropertyTest < Test::Unit::TestCase
     end
     assert_equal 'foobar', test.subproperties[:n].belongs_to
   end
+  
+  should 'find subproperty by key' do
+    test = HMachine::Property.new(:fn)
+    test.subproperties :n
+    assert_equal test.subproperties[:n], test[:n]
+  end
 end

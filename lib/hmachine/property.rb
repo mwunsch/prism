@@ -12,6 +12,10 @@ module HMachine
       search {|node| node.css(".#{@name}")}
     end
     
+    def [](subproperty)
+      subproperties[subproperty] unless subproperties.empty?
+    end
+    
     # Is this a property of microformat?
     def property_of?(microformat)
       Microformat.normalize(microformat) == property_of
