@@ -13,7 +13,9 @@ module HMachine
     end
     
     def [](subproperty)
-      subproperties[subproperty] unless subproperties.empty?
+      if !subproperties.empty?
+        subproperties[subproperty] if subproperties.has_key?(subproperty)
+      end
     end
     
     # Is this a property of microformat?
