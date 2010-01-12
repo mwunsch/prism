@@ -58,28 +58,35 @@ module HMachine
       # Search for the <tt>property</tt> in <tt>node</tt>,
       # ignoring nested microformats.
       def self.search_for(property, node)
+        property.find_in(remove_nested(node))
+      end
+      
+      # Remove a microformat from a node if it is nested.
+      def self.remove_nested(node)
         if (find_in(node) != node)
           find_in(node).unlink if found_in?(node)
-        end        
-        property.find_in(node)
+        end
+        node
       end
       
       # Get the first instance of a property within a node
       def self.get_one(property, node)
-        property.extract_from(search_for(property, node).first)
+        property.extract_from(search_for(property, node).first) if property.found_in?(node)
       end
       
       # Get all the instances of a property within a node
       # If the node extracts as a hash, 
       def self.get_all(property, node)
-        element_hash = {}
-        elements = search_for(property,node).collect do |element|
-          values = property.extract_from(element)
-          element_hash.merge!(values) if values.respond_to?(:keys)
-          values
+        if property.found_in?(node)
+          element_hash = {}
+          elements = search_for(property,node).collect do |element|
+            values = property.extract_from(element)
+            element_hash.merge!(values) if values.respond_to?(:keys)
+            values
+          end
+          return element_hash unless element_hash.empty?
+          elements
         end
-        return element_hash unless element_hash.empty?
-        elements
       end
       
       # The Microformat Has One Property
@@ -102,26 +109,30 @@ module HMachine
         end
       end
       
-      def self.requires(property)
-        # hCard requires fn
-      end      
-      
-
-      
-      # def self.requirements
-      #   @requirements
-      # end
+      def self.invalid_msg
+        "This is not a valid Microformat node."
+      end
       
       attr_reader :node
       
       def initialize(node)
+        raise self.class.invalid_msg unless self.class.valid?(node)
         @node = node
       end
       
+      # Get the properties that exist in this microformat
+      def properties
+        @properties ||= self.class.properties.collect { |property|
+          property.name if self.send(property.name)
+        }.compact
+      end
+      
+      # Convert this microformat node to a string
       def to_s
         node.to_s
       end
       
+      # Convert this microformat node to its html representation
       def to_html
         node.to_html
       end

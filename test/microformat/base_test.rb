@@ -79,6 +79,22 @@ class BaseTest < Test::Unit::TestCase
       assert_instance_of Nokogiri::XML::NodeSet, test_class.search_for(fn, @doc)
     end
     
+    should 'remove nested microformats' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      fn = HMachine::Property.new(:fn)
+      doc = test_class.find_in(Nokogiri::HTML.parse(@nested)).first
+      assert_equal "Mark Wunsch", fn.parse(test_class.remove_nested(doc))
+    end
+    
+    should "don't remove nested microformats if the microformat is the document" do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.search {|doc| doc }
+      fn = HMachine::Property.new(:fn)
+      doc = test_class.find_in(Nokogiri::HTML.parse(@nested))
+      assert_equal 2, fn.parse(test_class.remove_nested(doc)).length
+    end
+    
     should 'not search for properties in nested microformats' do
       test_class = Class.new(HMachine::Microformat::Base)
       test_class.root 'vcard'
@@ -144,9 +160,6 @@ class BaseTest < Test::Unit::TestCase
       test_class = Class.new(HMachine::Microformat::Base)
       test_class.root 'vcard'
       test_class.has_many :tel
-      # tel.extract_with do |node|
-      #   {node.css('.type').first.unlink.content.strip.downcase.intern => node.content.strip}
-      # end
       hcard = test_class.find_in(@doc).first
       assert_respond_to test_class.new(hcard), :tel
     end
@@ -163,17 +176,29 @@ class BaseTest < Test::Unit::TestCase
       assert_equal [:work, :fax], test_class.new(hcard).tel.keys
     end
     
+    should 'have a message if this microformat is invalid' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      assert_respond_to test_class, :invalid_msg
+    end
+    
   end
   
   describe 'Instance' do
     setup do
       @node = @doc.css('.vcard').first
       @klass = Class.new(HMachine::Microformat::Base)
+      @klass.root 'vcard'
     end
     
     should 'possess an html node' do
       test = @klass.new(@node)
       assert_equal @node, test.node
+    end
+    
+    should 'raise an error if this is an invalid microformat' do
+      assert_raise RuntimeError do
+        @klass.new(@doc)
+      end
     end
     
     should 'convert its node to an html representation' do
@@ -184,6 +209,14 @@ class BaseTest < Test::Unit::TestCase
     should 'have a convenience method to convert to html' do
       test = @klass.new(@node)
       assert_equal @node.to_html, test.to_html
+    end
+    
+    should 'know what properties it has' do
+      klass = Class.new(HMachine::Microformat::Base)
+      klass.root 'vcard'
+      klass.has_one :fn, :n
+      hcard = klass.new(klass.find_in(@doc).first)
+      assert !hcard.properties.include?(:n), "Properties contain: #{hcard.properties.inspect}"
     end
   end
   
