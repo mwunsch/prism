@@ -53,6 +53,12 @@ class BaseTest < Test::Unit::TestCase
       assert test_class.properties.empty?, "Properties are #{test_class.properties.inspect}"
     end
     
+    should 'finds a property by a key' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.has_one :fn, :n
+      assert_equal test_class.properties[0], test_class.find_property(:fn)
+    end
+    
     should 'create a property' do
       test_class = Class.new(HMachine::Microformat::Base)
       fn = test_class.create_property(:fn)
@@ -218,6 +224,19 @@ class BaseTest < Test::Unit::TestCase
       hcard = klass.new(klass.find_in(@doc).first)
       assert !hcard.properties.include?(:n), "Properties contain: #{hcard.properties.inspect}"
     end
+    
+    should 'convert to a hash' do
+      klass = Class.new(HMachine::Microformat::Base)
+      klass.root 'vcard'
+      klass.has_many :foobar, :tel do |tel|
+        tel.extract_with do |node|
+          {node.css('.type').first.unlink.content.strip.downcase.intern => node.content.strip}
+        end
+      end
+      hcard = klass.new(klass.find_in(@doc).first)
+      assert hcard.to_h.has_key?(:tel), "Hash equals #{hcard.to_h.inspect}"
+    end
+    
   end
   
 end

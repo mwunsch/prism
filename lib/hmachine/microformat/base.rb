@@ -36,6 +36,14 @@ module HMachine
         @properties ||= []
       end
       
+      # Find a property by its named key
+      def self.find_property(key)
+        keys = properties.collect { |prop| prop.name }
+        if keys.include?(key)
+          properties[keys.index(key)]
+        end
+      end
+      
       # Create a Property with name <tt>name</tt>.
       # Can further refine with a lambda (should return the property)
       def self.create_property(name, function=nil)
@@ -125,6 +133,16 @@ module HMachine
         @properties ||= self.class.properties.collect { |property|
           property.name if self.send(property.name)
         }.compact
+      end
+      
+      # Convert microformat to a hash
+      def to_h
+        return @to_h if @to_h
+        hash = {}
+        self.class.properties.each do |p|
+          hash[p.name] = self.send(p.name)
+        end
+        @to_h = hash.delete_if {|k,v| !v }
       end
       
       # Convert this microformat node to a string
