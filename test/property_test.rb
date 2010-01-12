@@ -31,4 +31,24 @@ class PropertyTest < Test::Unit::TestCase
     fn = doc.css('.fn').first.content
     assert_equal fn, test.parse(doc)
   end
+  
+  should 'have subproperties' do
+    test = HMachine::Property.new(:fn)
+    test.subproperties :n
+    assert test.subproperties.has_key?(:n), "Subproperties are #{test.subproperties.inspect}"
+  end
+  
+  should 'belong to another property if this is a subproperty' do
+    test = HMachine::Property.new(:fn)
+    test.subproperties :n
+    assert_equal test, test.subproperties[:n].belongs_to
+  end
+  
+  should 'pass a block to further refine subproperties' do
+    test = HMachine::Property.new(:fn)
+    test.subproperties :n do |n| 
+      n.belongs_to 'foobar'
+    end
+    assert_equal 'foobar', test.subproperties[:n].belongs_to
+  end
 end
