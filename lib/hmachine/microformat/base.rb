@@ -58,38 +58,58 @@ module HMachine
       # Search for the <tt>property</tt> in <tt>node</tt>,
       # ignoring nested microformats.
       def self.search_for(property, node)
-        if node.respond_to?(:parent)
+        if (find_in(node) != node)
           find_in(node).unlink if found_in?(node)
         end        
         property.find_in(node)
       end
       
-      def self.has_one(*property_names,&block)
-        props = add_properties(property_names, block)
+      # Get the first instance of a property within a node
+      def self.get_one(property, node)
+        property.extract_from(search_for(property, node).first)
       end
       
-      def self.has_many(property)
-        # hCard has_many email
+      # Get all the instances of a property within a node
+      # If the node extracts as a hash, 
+      def self.get_all(property, node)
+        element_hash = {}
+        elements = search_for(property,node).collect do |element|
+          values = property.extract_from(element)
+          element_hash.merge!(values) if values.respond_to?(:keys)
+          values
+        end
+        return element_hash unless element_hash.empty?
+        elements
+      end
+      
+      # The Microformat Has One Property
+      def self.has_one(*property_names,&block)
+        props = add_properties(property_names, block)
+        props.each do |property|
+          define_method property.name do
+            self.class.get_one(property, node)
+          end
+        end
+      end
+      
+      # The Microformat Has Many Properties
+      def self.has_many(*property_names,&block)
+        props = add_properties(property_names, block)
+        props.each do |property|
+          define_method property.name do
+            self.class.get_all(property, node)
+          end
+        end
       end
       
       def self.requires(property)
         # hCard requires fn
-      end
-      
-      
+      end      
       
 
       
       # def self.requirements
       #   @requirements
-      # end
-      
-      # Searches for the property in the microformat avoiding nested microformats
-      # returns a Nokogiri::XML::NodeSet
-      # def self.search_for(property, node)
-      #   search = self.find_in(node)
-      #   search.unlink unless (search == node)
-      #   node.css(".#{property}")
       # end
       
       attr_reader :node

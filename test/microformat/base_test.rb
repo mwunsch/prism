@@ -95,6 +95,74 @@ class BaseTest < Test::Unit::TestCase
       assert_equal 2, test_class.search_for(fn, doc).length
     end
     
+    should 'get the first instance of a property' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      tel = HMachine::Property.new(:tel)
+      tel.extract_with {|node| node.css('.type').first.content.strip }
+      doc = test_class.find_in(@doc).first
+      assert_equal 'Work', test_class.get_one(tel, doc)
+    end
+    
+    should 'get all the instances of a property' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      tel = HMachine::Property.new(:tel)
+      tel.extract_with { |node| node.css('.type').first.content.strip }
+      doc = test_class.find_in(@doc).first
+      assert_equal 2, test_class.get_all(tel, doc).length
+    end
+    
+    should 'get all the instances of a property as a hash' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      tel = HMachine::Property.new(:tel)
+      tel.extract_with do |node|
+        {node.css('.type').first.unlink.content.strip.downcase.intern => node.content.strip}
+      end
+      doc = test_class.find_in(@doc).first
+      assert_respond_to test_class.get_all(tel, doc), :keys
+    end
+    
+    should 'define an instance method to get the first instance of a property' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      test_class.has_one :tel
+      hcard = test_class.find_in(@doc).first
+      assert_respond_to test_class.new(hcard), :tel
+    end
+    
+    should 'properties have one instance in a microformat' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      test_class.has_one :fn
+      hcard = test_class.find_in(@doc).first
+      assert_equal 'CommerceNet', test_class.new(hcard).fn
+    end
+    
+    should 'define an instance method to get all instances of a property' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      test_class.has_many :tel
+      # tel.extract_with do |node|
+      #   {node.css('.type').first.unlink.content.strip.downcase.intern => node.content.strip}
+      # end
+      hcard = test_class.find_in(@doc).first
+      assert_respond_to test_class.new(hcard), :tel
+    end
+    
+    should 'properties have many instances in a microformat' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      test_class.has_many :tel do |tel|
+        tel.extract_with do |node|
+          {node.css('.type').first.unlink.content.strip.downcase.intern => node.content.strip}
+        end
+      end
+      hcard = test_class.find_in(@doc).first
+      assert_equal [:work, :fax], test_class.new(hcard).tel.keys
+    end
+    
   end
   
   describe 'Instance' do
