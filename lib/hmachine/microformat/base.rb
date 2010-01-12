@@ -58,7 +58,9 @@ module HMachine
       # Search for the <tt>property</tt> in <tt>node</tt>,
       # ignoring nested microformats.
       def self.search_for(property, node)
-        find_in(node).unlink if found_in?(node)
+        if node.respond_to?(:parent)
+          find_in(node).unlink if found_in?(node)
+        end        
         property.find_in(node)
       end
       

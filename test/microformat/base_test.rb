@@ -87,6 +87,14 @@ class BaseTest < Test::Unit::TestCase
       assert_equal 1, test_class.search_for(fn, doc).length
     end
     
+    should 'search in the document if the microformat is the document' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.search {|doc| doc }
+      fn = HMachine::Property.new(:fn)
+      doc = test_class.find_in(Nokogiri::HTML.parse(@nested))
+      assert_equal 2, test_class.search_for(fn, doc).length
+    end
+    
   end
   
   describe 'Instance' do
