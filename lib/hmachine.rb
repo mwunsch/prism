@@ -54,7 +54,7 @@ module HMachine
   # Define the patterns used to extract contents from node
   # Can be symbols that match to a Pattern module, or a lambda,
   # or pass it a block
-  def extract_with(*patterns, &block)
+  def extract(*patterns, &block)
     @parsers = []
     return @parsers << block if block_given?
     patterns.each do |pattern|

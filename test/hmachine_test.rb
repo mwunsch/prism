@@ -56,25 +56,25 @@ class HMachineTest < Test::Unit::TestCase
     
     should 'define parsers to use with' do
       test = @klass.new
-      test.extract_with {|node| node.content }
+      test.extract {|node| node.content }
       assert !test.parsers.empty?, "Parsers are empty."
     end
     
     should 'extract with a block if a block is given' do
       test = @klass.new
-      assert_respond_to test.extract_with{|node| node.content }.first, :call
+      assert_respond_to test.extract{|node| node.content }.first, :call
     end
     
     should 'extract with a lambda if a lambda is given' do
       test = @klass.new
       func = lambda{|node| node.content }
-      test.extract_with func
+      test.extract func
       assert test.parsers.include?(func), "Parsers include #{test.parsers.inspect}"
     end
     
     should 'extract with a pattern if a pattern is given' do
       test = @klass.new
-      test.extract_with :valueclass
+      test.extract :valueclass
       assert_respond_to test.parsers.first, :call
     end
     
@@ -85,7 +85,7 @@ class HMachineTest < Test::Unit::TestCase
     
     should 'attempt to use a parser to extract content from node' do
       test = @klass.new
-      test.extract_with {|node| node.css('a.fn').first['href'] }
+      test.extract {|node| node.css('a.fn').first['href'] }
       assert_equal @doc.css('a.fn').first['href'], test.extract_from(@doc)
     end
     
@@ -93,7 +93,7 @@ class HMachineTest < Test::Unit::TestCase
       test = @klass.new
       funcs = (1..5).collect { lambda{ nil } }
       funcs[2] = lambda{|node| node.css('a.fn').first['href'] }
-      test.extract_with *funcs
+      test.extract *funcs
       assert_equal test.parsers[2].call(@doc), test.extract_from(@doc)
     end
     
@@ -103,14 +103,14 @@ class HMachineTest < Test::Unit::TestCase
       funcs = (1..3).collect { lambda{ nil } }
       funcs[0] = lambda{|node| node.css('.fn').first['href'] }
       funcs[1] = lambda{foobar = true}
-      test.extract_with *funcs
+      test.extract *funcs
       assert !foobar, "The value of foobar is #{foobar}"
     end
     
     should 'if all the parsers return false, just return the contents of the node' do
       test = @klass.new
       funcs = (1..3).collect { lambda{nil} }
-      test.extract_with *funcs
+      test.extract *funcs
       assert_equal @doc.content, test.extract_from(@doc)
     end
     
@@ -124,7 +124,7 @@ class HMachineTest < Test::Unit::TestCase
       test = @klass.new
       tel_type = @doc.css('.tel > .type').collect {|node| node.content }
       test.search {|node| node.css('.tel') }
-      test.extract_with {|node| node.css('.type').first.content }
+      test.extract {|node| node.css('.type').first.content }
       assert_equal tel_type, test.parse(@doc)
     end
     
@@ -132,7 +132,7 @@ class HMachineTest < Test::Unit::TestCase
       test = @klass.new
       tel_type = @doc.css('.tel > .type').collect {|node| node.content }
       test.search {|node| node.css('.tel') }
-      test.extract_with {|node| node.css('.type').first.content }
+      test.extract {|node| node.css('.type').first.content }
       assert_equal tel_type.first, test.parse_first(@doc)
     end
     

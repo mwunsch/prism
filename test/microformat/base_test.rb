@@ -15,7 +15,7 @@ class BaseTest < Test::Unit::TestCase
     
     should 'include the HMachine general parser' do
       test_class = Class.new(HMachine::Microformat::Base)
-      assert_respond_to test_class, :extract_with
+      assert_respond_to test_class, :extract
     end
     
     should 'define a root class name' do
@@ -121,7 +121,7 @@ class BaseTest < Test::Unit::TestCase
       test_class = Class.new(HMachine::Microformat::Base)
       test_class.root 'vcard'
       tel = HMachine::Property.new(:tel)
-      tel.extract_with {|node| node.css('.type').first.content.strip }
+      tel.extract {|node| node.css('.type').first.content.strip }
       doc = test_class.find_in(@doc).first
       assert_equal 'Work', test_class.get_one(tel, doc)
     end
@@ -130,7 +130,7 @@ class BaseTest < Test::Unit::TestCase
       test_class = Class.new(HMachine::Microformat::Base)
       test_class.root 'vcard'
       tel = HMachine::Property.new(:tel)
-      tel.extract_with { |node| node.css('.type').first.content.strip }
+      tel.extract { |node| node.css('.type').first.content.strip }
       doc = test_class.find_in(@doc).first
       assert_equal 2, test_class.get_all(tel, doc).length
     end
@@ -139,7 +139,7 @@ class BaseTest < Test::Unit::TestCase
       test_class = Class.new(HMachine::Microformat::Base)
       test_class.root 'vcard'
       tel = HMachine::Property.new(:tel)
-      tel.extract_with do |node|
+      tel.extract do |node|
         {node.css('.type').first.unlink.content.strip.downcase.intern => node.content.strip}
       end
       doc = test_class.find_in(@doc).first
@@ -174,12 +174,13 @@ class BaseTest < Test::Unit::TestCase
       test_class = Class.new(HMachine::Microformat::Base)
       test_class.root 'vcard'
       test_class.has_many :tel do |tel|
-        tel.extract_with do |node|
+        tel.extract do |node|
           {node.css('.type').first.unlink.content.strip.downcase.intern => node.content.strip}
         end
       end
       hcard = test_class.find_in(@doc).first
-      assert_equal [:work, :fax], test_class.new(hcard).tel.keys
+      test = test_class.new(hcard)
+      assert_equal 2, test.tel.keys.length
     end
     
     should 'have a message if this microformat is invalid' do
@@ -229,7 +230,7 @@ class BaseTest < Test::Unit::TestCase
       klass = Class.new(HMachine::Microformat::Base)
       klass.root 'vcard'
       klass.has_many :foobar, :tel do |tel|
-        tel.extract_with do |node|
+        tel.extract do |node|
           {node.css('.type').first.unlink.content.strip.downcase.intern => node.content.strip}
         end
       end
