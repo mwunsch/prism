@@ -36,6 +36,10 @@ module HMachine
         @properties ||= []
       end
       
+      def self.requirements
+        @requirements ||= []
+      end
+      
       # Find a property by its named key
       def self.find_property(key)
         keys = properties.collect { |prop| prop.name }
@@ -92,6 +96,7 @@ module HMachine
       
       # The Microformat Has One Property
       def self.has_one(*property_names,&block)
+        block = property_names.pop if (!block && property_names.last.respond_to?(:call))
         props = add_properties(property_names, block)
         props.each do |property|
           define_method property.name do
@@ -102,12 +107,24 @@ module HMachine
       
       # The Microformat Has Many Properties
       def self.has_many(*property_names,&block)
+        block = property_names.pop if (!block && property_names.last.respond_to?(:call))
         props = add_properties(property_names, block)
         props.each do |property|
           define_method property.name do
             self.class.get_all(property, node)
           end
         end
+      end
+      
+      # Define Required properties for the Microformat
+      def self.requires(*property_names,&block)
+        block ? has_one(property_names,block) : has_one(property_names)
+        property_names.each {|property| requirements << property }
+      end
+      
+      def self.requires_at_least_one(*property_names,&block)
+        block ? has_many(property_names,block) : has_many(property_names)
+        property_names.each {|property| requirements << property }
       end
       
       def self.invalid_msg(msg = nil)
@@ -120,6 +137,9 @@ module HMachine
       def initialize(node)
         raise self.class.invalid_msg unless self.class.valid?(node)
         @node = node
+        self.class.requirements.each do |requirement| 
+          raise "Invalid Microformat. Missing Requirement: #{requirement}" unless properties.include?(requirement)
+        end
       end
       
       def [](property)

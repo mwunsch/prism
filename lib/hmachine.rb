@@ -1,3 +1,4 @@
+require 'uri'
 require 'nokogiri'
 
 module HMachine
@@ -35,7 +36,7 @@ module HMachine
   
   # Is the element found in node?
   def found_in?(node)
-    !find_in(node).empty?
+    !find_in(node).nil? || !find_in(node).empty?
   end
   
   # Get/Set a function that tests to make sure a given node is
@@ -94,9 +95,15 @@ module HMachine
     end
   end
   
+  # Parse the node, extracting the content for the first instance of the element
   def parse_first(document)
     if found_in?(document)
-      extract_from(find_in(document).first)
+      found = find_in(document)
+      if found.respond_to?(:first)
+        extract_from(found.first)
+      else 
+        extract_from(found)
+      end
     end
   end 
   

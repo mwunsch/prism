@@ -183,6 +183,32 @@ class BaseTest < Test::Unit::TestCase
       assert_equal 2, test.tel.keys.length
     end
     
+    should 'have a set of requirements' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.requires(:fn)
+      assert test_class.requirements.include?(:fn), "Requirements include: #{test_class.requirements.inspect}"
+    end
+    
+    should 'add requirements to properties' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.requires(:fn)
+      properties = test_class.properties.collect {|p| p.name }
+      assert properties.include?(:fn), "Properties include: #{properties.inspect}"
+    end
+    
+    should 'requirements act like any other property' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      test_class.requires_at_least_one :tel do |tel|
+        tel.extract do |node|
+          {node.css('.type').first.unlink.content.strip.downcase.intern => node.content.strip}
+        end
+      end
+      hcard = test_class.find_in(@doc).first
+      test = test_class.new(hcard)
+      assert_respond_to test, :tel
+    end
+    
     should 'have a message if this microformat is invalid' do
       test_class = Class.new(HMachine::Microformat::Base)
       assert_respond_to test_class, :invalid_msg
@@ -205,6 +231,15 @@ class BaseTest < Test::Unit::TestCase
     should 'raise an error if this is an invalid microformat' do
       assert_raise RuntimeError do
         @klass.new(@doc)
+      end
+    end
+    
+    should 'raise an error if a requirement is missing' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      test_class.requires :foobar
+      assert_raise RuntimeError do
+        test_class.new(@node)
       end
     end
     
