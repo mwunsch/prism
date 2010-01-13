@@ -15,7 +15,7 @@ module HMachine
       end
       
       def tag
-        self.class.extract_from(node)
+        @tag ||= self.class.extract_from(node)
       end
       
       def name
