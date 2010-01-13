@@ -1,11 +1,7 @@
 require 'nokogiri'
 
-require 'hmachine/pattern'
-require 'hmachine/microformat'
-
 module HMachine
-  VERSION = "0.0.1"
-  
+  VERSION = "0.0.1"  
   # def self.find(document)
   #   html = get_document(document)
   #   Microformat.find_all html
@@ -87,10 +83,24 @@ module HMachine
   # Parse the node, finding the desired element, and extract the content for it
   def parse(document)
     if found_in?(document)
-      contents = find_in(document).collect {|element| extract_from(element) }
+      element_hash = {}
+      contents = find_in(document).collect do |element|
+        values = extract_from(element)
+        element_hash.merge!(values) if values.respond_to?(:keys)
+        values
+      end
+      return element_hash unless element_hash.empty?
       (contents.length == 1) ? contents.first : contents
     end
   end
   
+  def parse_first(document)
+    if found_in?(document)
+      extract_from(find_in(document).first)
+    end
+  end 
   
 end
+
+require 'hmachine/pattern'
+require 'hmachine/microformat'

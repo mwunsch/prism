@@ -128,5 +128,13 @@ class HMachineTest < Test::Unit::TestCase
       assert_equal tel_type, test.parse(@doc)
     end
     
+    should 'parse the first instance of an element in a node' do
+      test = @klass.new
+      tel_type = @doc.css('.tel > .type').collect {|node| node.content }
+      test.search {|node| node.css('.tel') }
+      test.extract_with {|node| node.css('.type').first.content }
+      assert_equal tel_type.first, test.parse_first(@doc)
+    end
+    
   end
 end
