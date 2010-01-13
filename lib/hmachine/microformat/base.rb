@@ -3,8 +3,8 @@ require 'hmachine/property'
 module HMachine
   module Microformat
     class Base
-      extend HMachine
-      
+      extend HMachine    
+            
       # The root class name of the microformat
       def self.root(class_name=nil)
         @root = class_name if class_name
@@ -46,7 +46,7 @@ module HMachine
       
       # Create a Property with name <tt>name</tt>.
       # Can further refine with a lambda (should return the property)
-      def self.create_property(name, function=nil)
+      def self.create_property(name, function=nil)        
         property = Property.new(name)
         function.call(property) if function
         property
@@ -79,22 +79,15 @@ module HMachine
       
       # Get the first instance of a property within a node
       def self.get_one(property, node)
-        property.extract_from(search_for(property, node).first) if property.found_in?(node)
+        elem = remove_nested(node)
+        property.parse_first(elem) if property.found_in?(elem)
       end
       
       # Get all the instances of a property within a node
       # If the node extracts as a hash, 
       def self.get_all(property, node)
-        if property.found_in?(node)
-          element_hash = {}
-          elements = search_for(property,node).collect do |element|
-            values = property.extract_from(element)
-            element_hash.merge!(values) if values.respond_to?(:keys)
-            values
-          end
-          return element_hash unless element_hash.empty?
-          elements
-        end
+        elem = remove_nested(node)
+        property.parse(elem) if property.found_in?(elem)
       end
       
       # The Microformat Has One Property
@@ -117,8 +110,9 @@ module HMachine
         end
       end
       
-      def self.invalid_msg
-        "This is not a valid Microformat node."
+      def self.invalid_msg(msg = nil)
+        @msg = msg if msg
+        @msg || "This is not a valid Microformat node."
       end
       
       attr_reader :node

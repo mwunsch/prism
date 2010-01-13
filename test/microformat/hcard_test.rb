@@ -3,35 +3,54 @@ require File.join(File.dirname(__FILE__), '..', 'test_helper')
 class HCardTest < Test::Unit::TestCase
   setup do
     @html = get_fixture('hcard/commercenet.html')
-    @node = Nokogiri::HTML.parse(@html).css('.'+HMachine::Microformat::HCard::ROOT_CLASS)[0]
-    @hcard = HMachine::Microformat::HCard.new(@node)
+    @doc = Nokogiri::HTML.parse(@html)
   end
   
-  test "wiki url" do
-    assert @hcard.class.wiki_url == "http://microformats.org/wiki/hcard"
-  end
-  
-  test "validation" do
-    assert @hcard.class.validate(@node)
-  end
-  
-  test "root" do
-    assert @hcard.class.root == @hcard.class::ROOT_CLASS
-  end
-  
-  test "rejects invalid nodes" do
-    assert_raise RuntimeError do 
-      HMachine::Microformat::HCard.new(Nokogiri::HTML.parse(@html)) 
+  describe 'Class' do
+    should 'inherit from Base' do
+      assert_equal HMachine::Microformat::Base, HMachine::Microformat::HCard.superclass
+    end
+    
+    should 'have a url to a wiki page' do
+      assert_equal "http://microformats.org/wiki/hcard", HMachine::Microformat::HCard.wiki_url
+    end
+    
+    should 'have a root class to search for' do
+      assert_equal "vcard", HMachine::Microformat::HCard.root
+    end
+    
+    should 'find itself in a document' do
+      assert_equal 1, HMachine::Microformat::HCard.find_in(@doc).length
     end
   end
   
-  test 'retains original node' do
-    assert @hcard.node == @node
+  describe 'Instance' do
+    setup do
+      @node = HMachine::Microformat::HCard.find_in(@doc).first
+    end
+    
+    should 'validate the node' do
+      assert_nothing_raised do
+        HMachine::Microformat::HCard.new(@node)
+      end      
+    end
+    
+    should 'have one fn' do
+      test = HMachine::Microformat::HCard.new(@node)
+      assert_respond_to test, :fn
+    end
+    
+    should 'have one n' do
+      test = HMachine::Microformat::HCard.new(@node)
+      assert_respond_to test, :n
+    end
   end
   
-  test 'something' do
-    
-    @hcard.class.search_for :fn, @node
+  describe 'Parsing' do
+    setup do
+      @node = HMachine::Microformat::HCard.find_in(@doc).first
+      @hcard = HMachine::Microformat::HCard.new(@node)
+    end
   end
 
 end
