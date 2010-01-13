@@ -1,5 +1,3 @@
-require 'hmachine'
-
 module HMachine
   class Property
     include HMachine
