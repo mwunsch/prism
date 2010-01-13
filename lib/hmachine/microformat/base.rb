@@ -122,6 +122,10 @@ module HMachine
         @node = node
       end
       
+      def [](property)
+        to_h[property]
+      end
+      
       # Get the properties that exist in this microformat
       def properties
         @properties ||= self.class.properties.collect { |property|

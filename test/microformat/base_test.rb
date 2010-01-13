@@ -237,6 +237,14 @@ class BaseTest < Test::Unit::TestCase
       assert hcard.to_h.has_key?(:tel), "Hash equals #{hcard.to_h.inspect}"
     end
     
+    should 'key into it like a hash' do
+      klass = Class.new(HMachine::Microformat::Base)
+      klass.root 'vcard'
+      klass.has_one :fn, :n
+      hcard = klass.new(klass.find_in(@doc).first)
+      assert_equal hcard.fn, hcard[:fn]
+    end
+    
   end
   
 end
