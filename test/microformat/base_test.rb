@@ -48,6 +48,19 @@ class BaseTest < Test::Unit::TestCase
       assert test_class.valid?(node)
     end
     
+    should 'extract by creating a new instance' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      node = @doc.css('.vcard').first
+      assert_instance_of test_class, test_class.extract.call(node)
+    end
+    
+    should 'parse out all the microformats in a document' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      assert_instance_of test_class, test_class.parse(@doc)
+    end
+    
     should 'have a list of properties' do
       test_class = Class.new(HMachine::Microformat::Base)
       assert test_class.properties.empty?, "Properties are #{test_class.properties.inspect}"
@@ -59,16 +72,10 @@ class BaseTest < Test::Unit::TestCase
       assert_equal test_class.properties[0], test_class.find_property(:fn)
     end
     
-    should 'create a property' do
-      test_class = Class.new(HMachine::Microformat::Base)
-      fn = test_class.create_property(:fn)
-      assert_instance_of HMachine::Property, fn
-    end
-    
     should 'further define a property with a block' do
       test_class = Class.new(HMachine::Microformat::Base)
-      func = lambda{ false }
-      fn = test_class.create_property(:fn, func)
+      func = lambda{ true }
+      fn = test_class.add_properties([:fn], func).first
       assert_instance_of HMachine::Property, fn
     end
     
@@ -183,6 +190,36 @@ class BaseTest < Test::Unit::TestCase
       assert_equal 2, test.tel.keys.length
     end
     
+    should 'map properties if it gets one instance' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.has_one :fn
+      assert test_class.one_or_many[:one].include?(:fn), "Has one: #{test_class.one_or_many[:one].inspect}"
+    end
+    
+    should 'map properties if it gets many instances' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.has_many :tel
+      assert test_class.one_or_many[:many].include?(:tel), "Has one: #{test_class.one_or_many[:many].inspect}"
+    end
+    
+    should 'parse all properties in a node' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      test_class.has_many :tel
+      hcard = test_class.find_in(@doc).first
+      tel = test_class.find_property(:tel)
+      assert_equal tel.parse(hcard), test_class.fetch_property_from_node(:tel, hcard)
+    end
+    
+    should 'parse a single property from a node' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      test_class.has_one :fn
+      hcard = test_class.find_in(@doc).first
+      fn = test_class.find_property(:fn)
+      assert_equal fn.parse(hcard), test_class.fetch_property_from_node(:fn, hcard)
+    end
+    
     should 'have a set of requirements' do
       test_class = Class.new(HMachine::Microformat::Base)
       test_class.requires(:fn)
@@ -217,70 +254,70 @@ class BaseTest < Test::Unit::TestCase
   end
   
   describe 'Instance' do
-    setup do
-      @node = @doc.css('.vcard').first
-      @klass = Class.new(HMachine::Microformat::Base)
-      @klass.root 'vcard'
-    end
-    
-    should 'possess an html node' do
-      test = @klass.new(@node)
-      assert_equal @node, test.node
-    end
-    
-    should 'raise an error if this is an invalid microformat' do
-      assert_raise RuntimeError do
-        @klass.new(@doc)
+      setup do
+        @node = @doc.css('.vcard').first
+        @klass = Class.new(HMachine::Microformat::Base)
+        @klass.root 'vcard'
       end
-    end
-    
-    should 'raise an error if a requirement is missing' do
-      test_class = Class.new(HMachine::Microformat::Base)
-      test_class.root 'vcard'
-      test_class.requires :foobar
-      assert_raise RuntimeError do
-        test_class.new(@node)
+      
+      should 'possess an html node' do
+        test = @klass.new(@node)
+        assert_equal @node, test.node
       end
-    end
-    
-    should 'convert its node to an html representation' do
-      test = @klass.new(@node)
-      assert_equal @node.to_s, test.to_s
-    end
-    
-    should 'have a convenience method to convert to html' do
-      test = @klass.new(@node)
-      assert_equal @node.to_html, test.to_html
-    end
-    
-    should 'know what properties it has' do
-      klass = Class.new(HMachine::Microformat::Base)
-      klass.root 'vcard'
-      klass.has_one :fn, :n
-      hcard = klass.new(klass.find_in(@doc).first)
-      assert !hcard.properties.include?(:n), "Properties contain: #{hcard.properties.inspect}"
-    end
-    
-    should 'convert to a hash' do
-      klass = Class.new(HMachine::Microformat::Base)
-      klass.root 'vcard'
-      klass.has_many :foobar, :tel do |tel|
-        tel.extract do |node|
-          {node.css('.type').first.unlink.content.strip.downcase.intern => node.content.strip}
+      
+      should 'raise an error if this is an invalid microformat' do
+        assert_raise RuntimeError do
+          @klass.new(@doc)
         end
       end
-      hcard = klass.new(klass.find_in(@doc).first)
-      assert hcard.to_h.has_key?(:tel), "Hash equals #{hcard.to_h.inspect}"
+      
+      should 'raise an error if a requirement is missing' do
+        test_class = Class.new(HMachine::Microformat::Base)
+        test_class.root 'vcard'
+        test_class.requires :foobar
+        assert_raise RuntimeError do
+          test_class.new(@node)
+        end
+      end
+      
+      should 'convert its node to an html representation' do
+        test = @klass.new(@node)
+        assert_equal @node.to_s, test.to_s
+      end
+      
+      should 'have a convenience method to convert to html' do
+        test = @klass.new(@node)
+        assert_equal @node.to_html, test.to_html
+      end
+      
+      should 'know what properties it has' do
+        klass = Class.new(HMachine::Microformat::Base)
+        klass.root 'vcard'
+        klass.has_one :fn, :n
+        hcard = klass.new(klass.find_in(@doc).first)
+        assert !hcard.properties.include?(:n), "Properties contain: #{hcard.properties.inspect}"
+      end
+      
+      should 'convert to a hash' do
+        klass = Class.new(HMachine::Microformat::Base)
+        klass.root 'vcard'
+        klass.has_many :foobar, :tel do |tel|
+          tel.extract do |node|
+            {node.css('.type').first.unlink.content.strip.downcase.intern => node.content.strip}
+          end
+        end
+        hcard = klass.new(klass.find_in(@doc).first)
+        assert hcard.to_h.has_key?(:tel), "Hash equals #{hcard.to_h.inspect}"
+      end
+      
+      should 'key into it like a hash' do
+        klass = Class.new(HMachine::Microformat::Base)
+        klass.root 'vcard'
+        klass.has_one :fn, :n
+        hcard = klass.new(klass.find_in(@doc).first)
+        assert_equal hcard.fn, hcard[:fn]
+      end
+      
     end
-    
-    should 'key into it like a hash' do
-      klass = Class.new(HMachine::Microformat::Base)
-      klass.root 'vcard'
-      klass.has_one :fn, :n
-      hcard = klass.new(klass.find_in(@doc).first)
-      assert_equal hcard.fn, hcard[:fn]
-    end
-    
-  end
   
 end

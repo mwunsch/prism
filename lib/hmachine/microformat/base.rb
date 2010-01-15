@@ -28,7 +28,18 @@ module HMachine
       # defaulting to checking against the class of name of the node 
       def self.validate(&block)
         @validate = block if block_given?
-        @validate || lambda { |node| node['class'] == root }
+        @validate || lambda { |node| node['class'] && node['class'].split(' ').include?(root) }
+      end
+      
+      # Overrides the HMachine extraction method.
+      # Instead of getting the contents of a node, this creates
+      # a microformat from the node
+      def self.extract
+        lambda{|node| self.new(node) }
+      end
+      
+      def self.extract_from(node)
+        extract.call(node)
       end
       
       # The list of Properties that belong to this Microformat
@@ -42,18 +53,14 @@ module HMachine
       
       # Find a property by its named key
       def self.find_property(key)
-        keys = properties.collect { |prop| prop.name }
-        if keys.include?(key)
-          properties[keys.index(key)]
+        @keys ||= properties.collect { |prop| prop.name }
+        if @keys.include?(key)
+          properties[@keys.index(key)]
         end
       end
       
-      # Create a Property with name <tt>name</tt>.
-      # Can further refine with a lambda (should return the property)
-      def self.create_property(name, function=nil)        
-        property = Property.new(name)
-        function.call(property) if function
-        property
+      def self.[](key)
+        find_property(key)
       end
       
       # Create a group of properties with names <tt>names</tt>.
@@ -61,7 +68,8 @@ module HMachine
       # and push them on to @properties.
       def self.add_properties(names, function=nil)
         names.collect do |prop|
-          property = create_property(prop, function)
+          property = Property.new(prop)
+          function.call(property) if function
           properties << property
           property
         end
@@ -99,6 +107,7 @@ module HMachine
         block = property_names.pop if (!block && property_names.last.respond_to?(:call))
         props = add_properties(property_names, block)
         props.each do |property|
+          one_or_many[:one] << property.name
           define_method property.name do
             self.class.get_one(property, node)
           end
@@ -110,9 +119,24 @@ module HMachine
         block = property_names.pop if (!block && property_names.last.respond_to?(:call))
         props = add_properties(property_names, block)
         props.each do |property|
+          one_or_many[:many] << property.name
           define_method property.name do
             self.class.get_all(property, node)
           end
+        end
+      end
+      
+      # Maps Method of Parsing to a Property
+      def self.one_or_many
+        @one_or_many ||= {:one => [], :many => []}
+      end
+      
+      def self.fetch_property_from_node(property_name, node)
+        property = find_property(property_name)
+        if one_or_many[:one].include?(property_name)
+          get_one(property, node) 
+        elsif one_or_many[:many].include?(property_name)
+          get_all(property, node)
         end
       end
       
@@ -149,7 +173,7 @@ module HMachine
       # Get the properties that exist in this microformat
       def properties
         @properties ||= self.class.properties.collect { |property|
-          property.name if self.send(property.name)
+          property.name if property.found_in?(node)
         }.compact
       end
       
@@ -157,8 +181,8 @@ module HMachine
       def to_h
         return @to_h if @to_h
         hash = {}
-        self.class.properties.each do |p|
-          hash[p.name] = self.send(p.name)
+        properties.each do |property|
+          hash[property] = self.class.fetch_property_from_node(property, node)
         end
         @to_h = hash.delete_if {|k,v| !v }
       end
