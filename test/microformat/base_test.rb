@@ -190,6 +190,29 @@ class BaseTest < Test::Unit::TestCase
       assert_equal 2, test.tel.keys.length
     end
     
+    should 'add a property without defining an instance method' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      test_class.has_one! :fn
+      hcard = test_class.find_in(@doc).first
+      assert !test_class.new(hcard).respond_to?(:fn)
+      assert_equal 'CommerceNet', test_class.new(hcard)[:fn]
+    end
+    
+    should 'add a property that has many instances without defining an instance method' do
+      test_class = Class.new(HMachine::Microformat::Base)
+      test_class.root 'vcard'
+      test_class.has_many! :tel do |tel|
+        tel.extract do |node|
+          {node.css('.type').first.unlink.content.strip.downcase.intern => node.content.strip}
+        end
+      end
+      hcard = test_class.find_in(@doc).first
+      test = test_class.new(hcard)
+      assert !test.respond_to?(:tel)
+      assert_equal 2, test[:tel].keys.length
+    end
+    
     should 'map properties if it gets one instance' do
       test_class = Class.new(HMachine::Microformat::Base)
       test_class.has_one :fn

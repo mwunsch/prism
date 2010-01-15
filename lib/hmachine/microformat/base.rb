@@ -126,11 +126,31 @@ module HMachine
         end
       end
       
-      # Maps Method of Parsing to a Property
+      # <tt>has_one!</tt> and <tt>has_many!</tt> (note the bang) add a property without
+      # adding an instance method.
+      def self.has_one!(*property_names,&block)
+        block = property_names.pop if (!block && property_names.last.respond_to?(:call))
+        props = add_properties(property_names, block)
+        props.each do |property|
+          one_or_many[:one] << property.name
+        end
+      end
+      
+      def self.has_many!(*property_names,&block)
+        block = property_names.pop if (!block && property_names.last.respond_to?(:call))
+        props = add_properties(property_names, block)
+        props.each do |property|
+          one_or_many[:many] << property.name
+        end
+      end
+      
+      # Maps Method of Parsing (one or many) to a Property
       def self.one_or_many
         @one_or_many ||= {:one => [], :many => []}
       end
       
+      # Given a property name and a node, see how many properties
+      # should be parsed (one or all) and parse the node.
       def self.fetch_property_from_node(property_name, node)
         property = find_property(property_name)
         if one_or_many[:one].include?(property_name)
