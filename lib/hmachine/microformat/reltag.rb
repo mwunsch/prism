@@ -6,16 +6,12 @@ module HMachine
       
       search {|doc| doc.css('a[rel~="tag"]') }
       
-      validate {|a| a['rel'] && a['rel'].include?('tag') }
+      validate {|a| a['rel'] && a['rel'].split(' ').include?('tag') }
       
       invalid_msg "This is not a Rel-Tag Microformat"
       
-      extract do |node| 
-        { node['href'].split('/').last => node['href'] }
-      end
-      
       def tag
-        @tag ||= self.class.extract_from(node)
+        @tag ||= { node['href'].split('/').last => node['href'] }
       end
       
       def name

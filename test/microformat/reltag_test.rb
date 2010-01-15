@@ -11,10 +11,6 @@ class RelTagTest < Test::Unit::TestCase
       assert_equal HMachine::Microformat::Base, HMachine::Microformat::RelTag.superclass
     end
     
-    should 'have a url to a wiki page' do
-      assert_equal "http://microformats.org/wiki/rel-tag", HMachine::Microformat::RelTag.wiki_url
-    end
-    
     should 'find itself in a document' do
       first_entry = @doc.css('.hfeed > .hentry').first
       assert_equal 8, HMachine::Microformat::RelTag.find_in(first_entry).count
@@ -35,7 +31,7 @@ class RelTagTest < Test::Unit::TestCase
     
     should 'convert to a string easily' do
       test = @klass.new(@node)
-      assert_equal "#{test}", test.name
+      assert_equal test.name, "#{test}"
     end
     
     should 'store the url for the tag' do
