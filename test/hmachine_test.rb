@@ -80,7 +80,7 @@ class HMachineTest < Test::Unit::TestCase
     
     should 'extract node content if no parsers are defined' do
       test = @klass.new
-      assert_equal test.extract_from(@doc), @doc.content
+      assert_equal @doc.content.strip, test.extract_from(@doc)
     end
     
     should 'attempt to use a parser to extract content from node' do
@@ -111,7 +111,7 @@ class HMachineTest < Test::Unit::TestCase
       test = @klass.new
       funcs = (1..3).collect { lambda{nil} }
       test.extract *funcs
-      assert_equal @doc.content, test.extract_from(@doc)
+      assert_equal @doc.content.strip, test.extract_from(@doc)
     end
     
     should "parse a node, extracting its contents" do
