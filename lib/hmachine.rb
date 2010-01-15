@@ -72,13 +72,13 @@ module HMachine
   # If none of them work, or if no parsers are defined,
   # just get the contents from the node.
   def extract_from(node)
-    return node.content unless parsers
+    return node.content.strip unless parsers
     content = nil
     parsers.each do |parser|
       content = parser.call(node)
       break if content
     end
-    content || node.content
+    content || node.content.strip
   end
   
   # Parse the node, finding the desired element, and extract the content for it
