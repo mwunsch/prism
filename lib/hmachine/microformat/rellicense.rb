@@ -4,6 +4,8 @@ module HMachine
       
       wiki_url 'http://microformats.org/wiki/rel-license'
       
+      xmdp 'http://microformats.org/profile/rel-license'
+      
       search {|doc| doc.css('a[rel~="license"], link[rel~="license"]') }
       
       validate {|a| a['rel'] && a['rel'].split(' ').include?('license') }

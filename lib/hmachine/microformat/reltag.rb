@@ -4,6 +4,8 @@ module HMachine
       
       wiki_url "http://microformats.org/wiki/rel-tag"
       
+      xmdp 'http://microformats.org/profile/rel-tag'
+      
       search {|doc| doc.css('a[rel~="tag"]') }
       
       validate {|a| a['rel'] && a['rel'].split(' ').include?('tag') }

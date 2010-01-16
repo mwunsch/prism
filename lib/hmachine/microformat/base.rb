@@ -14,7 +14,12 @@ module HMachine
       # The wiki url for the microformat
       def self.wiki_url(url=nil)
         @wiki_url = url if url
-        @wiki_url || 'http://microformats.org/wiki'
+        @wiki_url
+      end
+      
+      def self.xmdp(profile=nil)
+        @xmdp = profile if profile
+        @xmdp
       end
       
       # Overrides the HMachine search method with a similar method, only

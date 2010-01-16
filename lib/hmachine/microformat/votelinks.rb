@@ -4,6 +4,8 @@ module HMachine
       
       wiki_url 'http://microformats.org/wiki/vote-links'
       
+      xmdp 'http://microformats.org/profile/vote-links'
+      
       search do |doc| 
         doc.css('a[rev~="vote-for"], a[rev~="vote-against"], a[rev~="vote-abstain"]')
       end

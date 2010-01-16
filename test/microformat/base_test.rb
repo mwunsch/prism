@@ -30,9 +30,10 @@ class BaseTest < Test::Unit::TestCase
       assert_equal 'http://microformats.org/wiki/hcard', test_class.wiki_url
     end
     
-    should 'have a default wiki url' do
+    should 'define an xmdp profile url' do
       test_class = Class.new(HMachine::Microformat::Base)
-      assert_equal 'http://microformats.org/wiki', test_class.wiki_url
+      test_class.xmdp 'http://microformats.org/profile/rel-tag'
+      assert_equal 'http://microformats.org/profile/rel-tag', test_class.xmdp
     end
     
     should 'have a default search method' do
