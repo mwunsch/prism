@@ -37,15 +37,15 @@ class PropertyTest < Test::Unit::TestCase
   should 'belong to another property if this is a subproperty' do
     test = HMachine::Property.new(:fn)
     test.subproperties :n
-    assert_equal test, test.subproperties[:n].belongs_to
+    assert_equal test, test.subproperties[:n].property_of
   end
   
   should 'pass a block to further refine subproperties' do
     test = HMachine::Property.new(:fn)
     test.subproperties :n do |n| 
-      n.belongs_to 'foobar'
+      n.extract { 'foobar' }
     end
-    assert_equal 'foobar', test.subproperties[:n].belongs_to
+    assert_equal 'foobar', test.subproperties[:n].extract.call
   end
   
   should 'find subproperty by key' do

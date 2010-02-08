@@ -4,10 +4,9 @@ module HMachine
     
     attr_reader :name, :property_of
     
-    def initialize(name, owner = :base)
+    def initialize(name, property_of = :base)
       @name = HMachine.normalize(name)
-      @owner = owner
-      @property_of = HMachine.map(owner)
+      @property_of = property_of.respond_to?(:extract) ? property_of : HMachine.map(property_of)   
       search {|node| node.css(".#{@name}") }
     end
     
@@ -25,17 +24,11 @@ module HMachine
     def subproperties(*properties)
       @subproperties ||= {}
       properties.each do |property|
-        sub_property = self.class.new(property, @owner)
-        sub_property.belongs_to self
+        sub_property = self.class.new(property, self)
         yield sub_property if block_given?
         @subproperties[property] = sub_property
       end
       @subproperties
-    end
-    
-    def belongs_to(property = nil)
-      @belongs_to = property if property
-      @belongs_to
     end
     
   end
