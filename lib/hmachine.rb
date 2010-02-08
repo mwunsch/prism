@@ -82,7 +82,7 @@ module HMachine
     extract.call(node)
   end
   
-  # Parse the node, finding the desired element, and extract the content for it
+  # Parse the document, finding every instance of the desired element, and extract their contents
   def parse(document)
     if found_in?(document)
       element_hash = {}
@@ -96,7 +96,7 @@ module HMachine
     end
   end
   
-  # Parse the node, extracting the content for the first instance of the element
+  # Parse the document, extracting the content for the first instance of the element
   def parse_first(document)
     if found_in?(document)
       extract_from(find_in(document).first)
@@ -106,4 +106,5 @@ module HMachine
 end
 
 require 'hmachine/pattern'
+require 'hmachine/posh'
 require 'hmachine/microformat'
