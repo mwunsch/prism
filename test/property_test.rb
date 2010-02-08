@@ -1,10 +1,6 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
 class PropertyTest < Test::Unit::TestCase
-  should 'include the HMachine general parser' do
-    assert HMachine::Property.include?(HMachine), "Property includes #{HMachine::Property.ancestors.inspect}"
-  end
-  
   should 'have a name' do
     test = HMachine::Property.new(:fn)
     assert_equal :fn, test.name
@@ -13,7 +9,7 @@ class PropertyTest < Test::Unit::TestCase
   should 'normalize names' do
     assert_equal :email, HMachine::Property.new("Email").name
   end
-
+  
   should 'be a property of a microformat' do
     test = HMachine::Property.new(:fn, :hcard)
     assert_equal HMachine::Microformat::HCard, test.property_of

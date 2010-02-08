@@ -4,29 +4,30 @@ module HMachine
     
     attr_reader :name, :property_of
     
-    def initialize(name, property_of = :base)
+    def initialize(name, owner = :base)
       @name = HMachine.normalize(name)
-      @property_of = Microformat.normalize(property_of)
-      search {|node| node.css(".#{@name}")}
+      @owner = owner
+      @property_of = HMachine.map(owner)
+      search {|node| node.css(".#{@name}") }
     end
     
     def [](subproperty)
       if !subproperties.empty?
-        subproperties[subproperty] if subproperties.has_key?(subproperty)
+        subproperties[subproperty]
       end
     end
     
     # Is this a property of microformat?
     def property_of?(microformat)
-      Microformat.normalize(microformat) == property_of
+      HMachine.map(microformat) == property_of
     end
     
-    def subproperties(*properties, &block)
+    def subproperties(*properties)
       @subproperties ||= {}
       properties.each do |property|
-        sub_property = self.class.new(property, property_of)
+        sub_property = self.class.new(property, @owner)
         sub_property.belongs_to self
-        block.call(sub_property) if block_given?
+        yield sub_property if block_given?
         @subproperties[property] = sub_property
       end
       @subproperties

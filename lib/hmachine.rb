@@ -25,8 +25,12 @@ module HMachine
     case normalize(key)
       when :value_class, :valueclass
         Pattern::ValueClass
+      when :base
+        Microformat::Base
+      when :hcard
+        Microformat::HCard
       else
-        raise "#{name} is not a recognized markup design pattern."
+        raise "#{key} is not a recognized markup design pattern."
     end
   end
   
