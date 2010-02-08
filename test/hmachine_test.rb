@@ -10,6 +10,10 @@ class HMachineTest < Test::Unit::TestCase
     should 'normalize names' do
       assert_equal :hcard, HMachine.normalize("hCard")
     end
+    
+    should 'map symbol names to Extraction methods' do
+      assert_equal HMachine::Pattern::ValueClass, HMachine.map(:value_class)
+    end
   end
   
   describe 'Module' do
@@ -54,28 +58,10 @@ class HMachineTest < Test::Unit::TestCase
       assert test.valid?(node)
     end
     
-    should 'define parsers to use with' do
+    should 'define an extraction method' do
       test = @klass.new
       test.extract {|node| node.content }
-      assert !test.parsers.empty?, "Parsers are empty."
-    end
-    
-    should 'extract with a block if a block is given' do
-      test = @klass.new
-      assert_respond_to test.extract{|node| node.content }.first, :call
-    end
-    
-    should 'extract with a lambda if a lambda is given' do
-      test = @klass.new
-      func = lambda{|node| node.content }
-      test.extract func
-      assert test.parsers.include?(func), "Parsers include #{test.parsers.inspect}"
-    end
-    
-    should 'extract with a pattern if a pattern is given' do
-      test = @klass.new
-      test.extract :valueclass
-      assert_respond_to test.parsers.first, :call
+      assert_respond_to test.extract, :call
     end
     
     should 'extract node content if no parsers are defined' do
@@ -89,38 +75,13 @@ class HMachineTest < Test::Unit::TestCase
       assert_equal @doc.css('a.fn').first['href'], test.extract_from(@doc)
     end
     
-    should 'try each parser until one works' do
-      test = @klass.new
-      funcs = (1..5).collect { lambda{ nil } }
-      funcs[2] = lambda{|node| node.css('a.fn').first['href'] }
-      test.extract *funcs
-      assert_equal test.parsers[2].call(@doc), test.extract_from(@doc)
-    end
-    
-    should 'ignore other parsers if it finds one that works' do
-      test = @klass.new
-      foobar = false
-      funcs = (1..3).collect { lambda{ nil } }
-      funcs[0] = lambda{|node| node.css('.fn').first['href'] }
-      funcs[1] = lambda{foobar = true}
-      test.extract *funcs
-      assert !foobar, "The value of foobar is #{foobar}"
-    end
-    
-    should 'if all the parsers return false, just return the contents of the node' do
-      test = @klass.new
-      funcs = (1..3).collect { lambda{nil} }
-      test.extract *funcs
-      assert_equal @doc.content.strip, test.extract_from(@doc)
-    end
-    
     should "parse a node, extracting its contents" do
       test = @klass.new
       test.search {|node| node.css('.fn') }
       assert_equal @doc.css('.fn').first.content, test.parse(@doc)
     end
     
-    should 'parse a node, and return an array of contents' do
+    should 'parse a document, and return an array of contents' do
       test = @klass.new
       tel_type = @doc.css('.tel > .type').collect {|node| node.content }
       test.search {|node| node.css('.tel') }

@@ -20,6 +20,16 @@ module HMachine
     name.to_s.strip.downcase.intern
   end
   
+  # Map a key to an element or design pattern
+  def self.map(key)
+    case normalize(key)
+      when :value_class, :valueclass
+        Pattern::ValueClass
+      else
+        raise "#{name} is not a recognized markup design pattern."
+    end
+  end
+  
   
   # Get/Set a function that defines how to find an element in a node.
   # The Search function should return a Nokogiri::XML::NodeSet.
@@ -29,7 +39,7 @@ module HMachine
     @search || lambda {|node| node }
   end
   
-  # Search for the element in a node 
+  # Search for the element in a document 
   def find_in(document)
     search.call(document)
   end
@@ -52,33 +62,20 @@ module HMachine
     validate.call(node)
   end
   
-  # Define the patterns used to extract contents from node
-  # Can be symbols that match to a Pattern module, or a lambda,
-  # or pass it a block
-  def extract(*patterns, &block)
-    @parsers = []
-    return @parsers << block if block_given?
-    patterns.each do |pattern|
-      @parsers << (pattern.respond_to?(:call) ? pattern : Pattern.map(pattern).parser )
+  # Define the pattern used to extract contents from node
+  # Can be a symbols that match to an Element parser, or a block
+  def extract(pattern = nil, &block)
+    if block_given?
+      @extract = block 
+    else
+      @extract = HMachine.map(pattern).extract if pattern
     end
+    @extract || lambda{|node| node.content.strip }
   end
   
-  # Parsers that should be used to get content from a node
-  def parsers
-    @parsers
-  end
-  
-  # Try each defined extraction pattern to get the content for the element
-  # If none of them work, or if no parsers are defined,
-  # just get the contents from the node.
+  # Extract the content from the node
   def extract_from(node)
-    return node.content.strip unless parsers
-    content = nil
-    parsers.each do |parser|
-      content = parser.call(node)
-      break if content
-    end
-    content || node.content.strip
+    extract.call(node)
   end
   
   # Parse the node, finding the desired element, and extract the content for it
