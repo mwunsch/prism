@@ -1,10 +1,8 @@
 module HMachine
   module Microformat
-    class VoteLinks < Base
-      
-      wiki_url 'http://microformats.org/wiki/vote-links'
-      
-      xmdp 'http://microformats.org/profile/vote-links'
+    class VoteLinks < POSH::Base
+      WIKI_URL = 'http://microformats.org/wiki/vote-links'
+      XMDP = 'http://microformats.org/profile/vote-links'
       
       search do |doc| 
         doc.css('a[rev~="vote-for"], a[rev~="vote-against"], a[rev~="vote-abstain"]')

@@ -1,8 +1,7 @@
 module HMachine
   module Microformat
     class RelTag < POSH::Base
-      WIKI_URL = "http://microformats.org/wiki/rel-tag"
-      
+      WIKI_URL = "http://microformats.org/wiki/rel-tag"      
       XMDP = 'http://microformats.org/profile/rel-tag'
       
       search {|doc| doc.css('a[rel~="tag"]') }

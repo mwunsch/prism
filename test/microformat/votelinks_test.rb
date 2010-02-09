@@ -6,11 +6,7 @@ class VoteLinksTest < Test::Unit::TestCase
     @doc = Nokogiri::HTML.parse(@html)
   end
   
-  describe 'Class' do
-    should 'inherit from Base' do
-      assert_equal HMachine::Microformat::Base, HMachine::Microformat::VoteLinks.superclass
-    end
-    
+  describe 'Class' do    
     should 'find itself in a document' do
       assert_equal 3, HMachine::Microformat::VoteLinks.find_in(@doc).count
     end

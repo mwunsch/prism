@@ -6,11 +6,7 @@ class RelLicenseTest < Test::Unit::TestCase
     @doc = Nokogiri::HTML.parse(@html)
   end
   
-  describe 'Class' do
-    should 'inherit from Base' do
-      assert_equal HMachine::Microformat::Base, HMachine::Microformat::RelLicense.superclass
-    end
-    
+  describe 'Class' do    
     should 'find itself in a document' do
       assert_equal 2, HMachine::Microformat::RelLicense.find_in(@doc).count
     end
