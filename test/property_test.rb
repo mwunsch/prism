@@ -11,13 +11,14 @@ class PropertyTest < Test::Unit::TestCase
   end
   
   should 'be a property of a microformat' do
-    test = HMachine::Property.new(:fn, :hcard)
-    assert_equal HMachine::Microformat::HCard, test.property_of
+    test = HMachine::Property.new(:fn, :base)
+    assert_equal HMachine::POSH::Base, test.parent
   end
   
   should 'test to see if it is a property of a microformat' do
     test = HMachine::Property.new(:fn)
-    assert !test.property_of?(:hcard), "Property is the property of #{test.property_of}"
+    assert !test.property_of?(:valueclass), "Property is the property of #{test.parent}"
+    assert test.property_of?(:base)
   end
   
   should 'parse a document to find itself' do
@@ -30,27 +31,27 @@ class PropertyTest < Test::Unit::TestCase
   
   should 'have subproperties' do
     test = HMachine::Property.new(:fn)
-    test.subproperties :n
-    assert test.subproperties.has_key?(:n), "Subproperties are #{test.subproperties.inspect}"
+    test.has_one :n
+    assert test.properties.has_key?(:n), "Subproperties are #{test.properties.inspect}"
   end
   
   should 'belong to another property if this is a subproperty' do
     test = HMachine::Property.new(:fn)
-    test.subproperties :n
-    assert_equal test, test.subproperties[:n].property_of
+    test.has_one :n
+    assert_equal test, test.properties[:n].parent
   end
   
   should 'pass a block to further refine subproperties' do
     test = HMachine::Property.new(:fn)
-    test.subproperties :n do |n| 
+    test.has_one :n do |n| 
       n.extract { 'foobar' }
     end
-    assert_equal 'foobar', test.subproperties[:n].extract.call
+    assert_equal 'foobar', test.properties[:n].extract.call
   end
   
   should 'find subproperty by key' do
     test = HMachine::Property.new(:fn)
-    test.subproperties :n
-    assert_equal test.subproperties[:n], test[:n]
+    test.has_one :n
+    assert_equal test.properties[:n], test[:n]
   end
 end

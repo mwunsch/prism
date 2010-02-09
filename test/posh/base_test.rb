@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), '..', 'test_helper')
 
-class PoshTest < Test::Unit::TestCase
+class PoshBaseTest < Test::Unit::TestCase
   setup do
     @html = get_fixture('hcard/commercenet.html')
     @doc = Nokogiri.parse(@html)
@@ -16,38 +16,6 @@ class PoshTest < Test::Unit::TestCase
     
     should 'parse itself out of a document' do
       assert_instance_of @test_class, @test_class.parse(@doc)
-    end
-    
-    should "add a property to its group of properties" do
-      property = @test_class.add_property(:fn)
-      assert_equal HMachine::Property, property.class
-      assert_equal property, @test_class.properties[:fn]
-    end
-    
-    should 'further refine a property with a block' do
-      property = @test_class.add_property(:fn, lambda{|p| p.subproperties :n } )
-      assert_equal property[:n], @test_class.properties[:fn][:n]
-    end
-    
-    should 'find a property' do
-      property = @test_class.add_property(:fn)
-      assert_equal property, @test_class[:fn]
-    end
-    
-    should 'remove nested nodes from a node' do
-      nested = '<div class="vcard"><span class="fn">Mark Wunsch</span> and <div class="vcard"><span class="fn">Somebody else</span></div></div>'
-      parsed = @test_class.find_in(Nokogiri::HTML.parse(nested)).first
-      assert_equal "Mark Wunsch and", @test_class.remove_nested(parsed).content.strip
-    end
-    
-    should 'have one property' do
-      property = @test_class.has_one!(:fn)
-      assert_equal 1, @test_class.instance_variable_get(:@has_one).length
-    end
-    
-    should 'has many properties' do
-      property = @test_class.has_many!(:tel)
-      assert_equal property, @test_class.instance_variable_get(:@has_many).first
     end
     
     should 'have one property and define an instance method' do
