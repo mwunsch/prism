@@ -33,8 +33,8 @@ module HMachine
         end
       elsif block_given?
         @extract = block
-      else
-        @extract = HMachine.map(pattern).extract if pattern
+      elsif pattern
+        @extract = HMachine.map(pattern).extract
       end
       @extract || lambda{|node| node.content.strip }
     end
