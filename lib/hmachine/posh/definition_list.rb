@@ -26,12 +26,6 @@ module HMachine
         @to_h ||= self.class.build_dictionary(node)
       end
       
-      def keys
-        to_h.keys
-      end
-      
-      
-      
     end
   end
 end
