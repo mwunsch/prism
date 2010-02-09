@@ -46,6 +46,6 @@ class PoshBaseTest < Test::Unit::TestCase
   should 'parse by properties' do
     property = @klass.has_one :fn
     assert_equal property.first, @klass.instance_variable_get(:@has_one).first
-    assert @klass.parse(@doc).has_key?(:fn)
+    assert_equal 'CommerceNet', @klass.parse(@doc)[:fn]
   end
 end
