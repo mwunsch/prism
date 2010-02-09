@@ -26,9 +26,7 @@ module HMachine
       when :value_class, :valueclass
         Pattern::ValueClass
       when :base
-        Microformat::Base
-      when :hcard
-        Microformat::HCard
+        POSH::Base
       else
         raise "#{key} is not a recognized markup design pattern."
     end
@@ -105,6 +103,6 @@ module HMachine
   
 end
 
-require 'hmachine/pattern'
 require 'hmachine/posh'
+require 'hmachine/pattern'
 require 'hmachine/microformat'
