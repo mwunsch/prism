@@ -1,37 +1,34 @@
 module HMachine
   module Microformat
-    class XOXO < Base
-      
-      root 'xoxo'
-      
-      wiki_url 'http://microformats.org/wiki/xoxo'
-      
-      xmdp 'http://microformats.org/profile/xoxo'
+    class XOXO < POSH::Base
+      WIKI_URL = 'http://microformats.org/wiki/xoxo'
+      XMDP = 'http://microformats.org/profile/xoxo'
       
       search {|doc| doc.css('ol.xoxo, ul.xoxo, ol.blogroll, ul.blogroll') }
       
       validate {|list| list.matches?('ol.xoxo, ul.xoxo, ol.blogroll, ul.blogroll') }
       
-      def self.tree(node)
+      # Seriously ugly WTF      
+      def self.build_outline(node)
         tree = []
         node.children.each do |child|
           if child.elem? && 
             case child.node_name
               when 'li'
                 if child.children.select {|li| li.elem? }.empty?
-                  tree = tree | tree(child)
+                  tree = tree | build_outline(child)
                 else
-                  tree << tree(child)
+                  tree << build_outline(child)
                 end
               when 'ol', 'ul'
-                tree << tree(child)
+                tree << build_outline(child)
               when 'dl'
                 definition_list = {}
                 keys = child.css('dt')
                 keys.each do |key|
                   definition = key.next_element if key.next_element.node_name.eql?('dd')
                   definition_contents = definition.children.select {|dd| dd.elem? }
-                  definition_list.merge!({ key.content.strip => (definition_contents.empty? ? definition.content.to_s : tree(definition)) })
+                  definition_list.merge!({ key.content.strip => (definition_contents.empty? ? definition.content.to_s : build_outline(definition)) })
                 end
                 tree << definition_list
               when 'a'
@@ -41,7 +38,7 @@ module HMachine
                 link[:title] = child['title'] if child['title']
                 tree << link
               else
-                child.content.strip
+                tree << child.content.strip
             end
           elsif (child.text? && !child.content.strip.empty?)
             tree << child.content.strip
@@ -51,7 +48,7 @@ module HMachine
       end
       
       def outline
-        @outline ||= self.class.tree(node)
+        @outline ||= self.class.build_outline(node)
       end
       
       def to_a
