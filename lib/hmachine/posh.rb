@@ -57,9 +57,6 @@ module HMachine
     def has_one(*property_names, &block)
       property_names.collect do |name|
         property = has_one!(name, block)
-        # define_method property.name do 
-        #   self[property.name]
-        # end
         property
       end
     end
@@ -67,9 +64,6 @@ module HMachine
     def has_many(*property_names, &block)
       property_names.collect do |name|
         property = has_many!(name, block)
-        # define_method property.name do 
-        #   self[property.name]
-        # end
         property
       end
     end
@@ -95,3 +89,4 @@ end
 
 require 'hmachine/property'
 require 'hmachine/posh/base'
+require 'hmachine/posh/anchor'
