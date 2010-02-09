@@ -79,20 +79,24 @@ module HMachine
         to_h[property_key]
       end
       
+      def properties
+        @properties ||= self.class.properties.reject { |key, property|
+          !property.found_in?(node)
+        }
+      end
+      
       def to_h
-        @to_h ||= {}
+        return @to_h if @to_h
+        @to_h = {}
         has_one = self.class.instance_variable_get(:@has_one)
-        self.class.properties.each_pair do |key, property|
-          if property.found_in?(node)
-            if (has_one && has_one.include?(property))
-              value = property.parse_first(node)
-            else
-              value = property.parse(node)
-            end
-            @to_h[key] = value
+        properties.each_pair do |key, property|
+          @to_h[key] = if (has_one && has_one.include?(property))
+            property.parse_first(node)
+          else
+            property.parse(node)
           end
         end
-        @to_h
+        @to_h        
       end
       
       def to_s

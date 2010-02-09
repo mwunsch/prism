@@ -76,6 +76,15 @@ class PoshTest < Test::Unit::TestCase
       assert_equal @node, @klass.new(@node).node
     end
     
+    should 'have its own set of properties' do
+      fn = @klass.has_one :fn
+      @klass.has_many :foobar
+      vcard = @klass.new(@node)
+      assert vcard.properties.has_key?(:fn)
+      assert !vcard.properties.has_key?(:foobar)
+      assert_equal fn.first, vcard.properties[:fn]
+    end
+    
     should 'lookup a property value' do
       fn = @klass.has_one :fn
       vcard = @klass.new(@node)
