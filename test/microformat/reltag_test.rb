@@ -6,14 +6,15 @@ class RelTagTest < Test::Unit::TestCase
     @doc = Nokogiri::HTML.parse(@html)
   end
   
-  describe 'Class' do
-    should 'inherit from Base' do
-      assert_equal HMachine::Microformat::Base, HMachine::Microformat::RelTag.superclass
-    end
-    
+  describe 'Class' do    
     should 'find itself in a document' do
       first_entry = @doc.css('.hfeed > .hentry').first
       assert_equal 8, HMachine::Microformat::RelTag.find_in(first_entry).count
+    end
+    
+    should 'parse itself out of a document' do
+      first_entry = @doc.css('.hfeed > .hentry').first
+      assert_equal HMachine::Microformat::RelTag, HMachine::Microformat::RelTag.parse(first_entry).first.class
     end
   end
   
