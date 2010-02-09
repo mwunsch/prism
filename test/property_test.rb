@@ -19,6 +19,7 @@ class PropertyTest < Test::Unit::TestCase
     test = HMachine::Property.new(:fn)
     assert !test.property_of?(:valueclass), "Property is the property of #{test.parent}"
     assert test.property_of?(:base)
+    assert test.child_of?(:base)
   end
   
   should 'parse a document to find itself' do
