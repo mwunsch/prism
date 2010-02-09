@@ -73,6 +73,7 @@ module HMachine
       def initialize(node)
         raise 'Uh OH' unless self.class.valid?(node)
         @node = node
+        @first_node = self.class.remove_nested(node.dup)
       end
       
       def [](property_key)
@@ -81,7 +82,7 @@ module HMachine
       
       def properties
         @properties ||= self.class.properties.reject { |key, property|
-          !property.found_in?(node)
+          !property.found_in?(@first_node)
         }
       end
       
@@ -91,12 +92,12 @@ module HMachine
         has_one = self.class.instance_variable_get(:@has_one)
         properties.each_pair do |key, property|
           @to_h[key] = if (has_one && has_one.include?(property))
-            property.parse_first(node)
+            property.parse_first(@first_node)
           else
-            property.parse(node)
+            property.parse(@first_node)
           end
         end
-        @to_h        
+        @to_h
       end
       
       def to_s

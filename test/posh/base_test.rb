@@ -102,6 +102,15 @@ class PoshTest < Test::Unit::TestCase
       assert !vcard.to_h.has_key?(:foobar)
     end
     
+    should 'not search for properties in nested microformats' do
+      nested = '<div class="vcard"><span class="fn">Mark Wunsch</span> and <div class="vcard"><span class="fn">Somebody else</span></div></div>'
+      doc = Nokogiri::HTML.parse(nested)
+      @klass.has_many :fn
+      vcard = @klass.parse_first(doc)
+      assert vcard.instance_variable_get(:@first_node) != vcard.node
+      assert_equal "Mark Wunsch", vcard.fn
+    end
+    
     should 'have a DSL for defining properties' do
       @klass.has_one :fn
       @klass.has_many :tel
