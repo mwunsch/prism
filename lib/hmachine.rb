@@ -48,7 +48,7 @@ module HMachine
   
   # Is the element found in node?
   def found_in?(node)
-    !find_in(node).empty?
+    find_in(node).eql?(node) || !find_in(node).empty?
   end
   
   # Get/Set a function that tests to make sure a given node is
@@ -97,7 +97,9 @@ module HMachine
   # Parse the document, extracting the content for the first instance of the element
   def parse_first(document)
     if found_in?(document)
-      extract_from(find_in(document).first)
+      elements = find_in(document)
+      first_element = elements.respond_to?(:first) ? elements.first : elements 
+      extract_from(first_element)
     end
   end 
   

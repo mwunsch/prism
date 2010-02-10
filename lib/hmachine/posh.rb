@@ -24,7 +24,7 @@ module HMachine
           props = {}
           properties.each_pair do |key, property|
             if @has_one && @has_one.include?(property)
-              props[key] = property.parse(node)
+              props[key] = property.parse_first(node)
             else
               props[key] = property.parse(node)
             end
