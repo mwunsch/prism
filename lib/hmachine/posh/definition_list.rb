@@ -17,12 +17,12 @@ module HMachine
           elsif nested_dls.length.eql?(1)
             value = build_dictionary(nested_dls.first)
           else
+            # if there are multiple nested <dl> elements, merge them together
             value = {}
             nested_dls.each do |dict| 
               value.merge! build_dictionary(dict) 
             end
           end
-          # value = nested_dls.empty? ? definition.content.strip : build_dictionary(nested_dls.first)
           dictionary[term.content.strip.intern] = value
         end
         dictionary
