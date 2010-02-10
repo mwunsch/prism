@@ -4,8 +4,10 @@ module HMachine
       extend POSH
       
       def self.inherited(subclass)
-        @has_one.each { |property| subclass.has_one! property } if @has_one
-        @has_many.each { |property| subclass.has_many! property } if @has_many
+        inheritable = [:@properties, :@has_one, :@has_many, :@search, :@extract, :@validate]
+        inheritable.each do |var|
+          subclass.instance_variable_set(var, instance_variable_get(var).dup) if instance_variable_get(var)
+        end
       end
             
       # Instead of getting the contents of a node, this creates

@@ -40,6 +40,7 @@ class PoshBaseTest < Test::Unit::TestCase
       klass.has_one :foo
       assert !@test_class.properties.has_key?(:foo)
       assert klass.properties.has_key?(:foo)
+      assert_respond_to klass.parse_first(@doc), :foo
     end
   end
   
