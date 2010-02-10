@@ -3,6 +3,11 @@ module HMachine
     class Base
       extend POSH
       
+      def self.inherited(subclass)
+        @has_one.each { |property| subclass.has_one! property } if @has_one
+        @has_many.each { |property| subclass.has_many! property } if @has_many
+      end
+            
       # Instead of getting the contents of a node, this creates
       # a POSH format from the node
       def self.extract

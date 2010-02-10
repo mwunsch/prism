@@ -48,9 +48,13 @@ module HMachine
     end
     
     def add_property(property_name, block=nil)
-      property = Property.new(property_name, self)
-      block.call(property) if block
-      properties[property_name] = property
+      if property_name.respond_to?(:property_of?)
+        property = property_name
+      else
+        property = Property.new(property_name, self)
+        block.call(property) if block
+      end
+      properties[property.name] = property
       property
     end
     

@@ -29,6 +29,18 @@ class PoshBaseTest < Test::Unit::TestCase
       property = @test_class.has_many :tel
       assert_respond_to @test_class.parse(@doc), :tel
     end
+    
+    should 'subclasses retain properties' do
+      @test_class.has_one :fn
+      @test_class.has_many :tel
+      klass = Class.new(@test_class)
+      assert_equal @test_class.properties, klass.properties
+      assert_equal @test_class.instance_variable_get(:@has_one), klass.instance_variable_get(:@has_one)
+      assert_equal @test_class.instance_variable_get(:@has_many), klass.instance_variable_get(:@has_many)
+      klass.has_one :foo
+      assert !@test_class.properties.has_key?(:foo)
+      assert klass.properties.has_key?(:foo)
+    end
   end
   
   describe 'Instance' do
