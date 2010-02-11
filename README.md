@@ -4,6 +4,8 @@
 
 It is not even close to ready, yet.
 
+[RDoc](http://rdoc.info/projects/mwunsch/hmachine)
+
 ## Requirements
 
 + [Nokogiri](http://github.com/tenderlove/nokogiri)
