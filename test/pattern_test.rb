@@ -26,6 +26,7 @@ class PatternTest < Test::Unit::TestCase
   end
   
   describe 'Value Class Pattern' do
+    # http://microformats.org/wiki/value-class-pattern-tests
     should 'find value class in a document' do
       doc = Nokogiri.parse(%q{
         <span class="tel">

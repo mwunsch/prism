@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
 class MicroformatTest < Test::Unit::TestCase
+  # http://microformats.org/wiki/test-suite
   describe 'Mapper' do
     should 'map a symbol to a design pattern' do
       assert HMachine::Microformat::HCard, HMachine::Microformat.map(:hcard)
