@@ -14,7 +14,7 @@ It is not even close to ready, yet.
 + A CLI for fetching microformats from a url or a string of html
 + A DSL for defining semantic markup patterns
 + Export microformats to other standards. hCard => vCard.
-+ HTML outlininer (using HTML5 sectioning)
++ HTML outliner (using HTML5 sectioning)
 + Extensions so you can do something like: `String.is_a_valid? :hcard` in your tests
 + Extensions to turn Ruby objects into semantic HTML. Hash.to_definition_list, Arrays.to_ordered_list, etc. 
 
