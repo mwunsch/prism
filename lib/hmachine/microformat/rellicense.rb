@@ -1,6 +1,6 @@
 module HMachine
   module Microformat
-    class RelLicense < POSH::Base
+    class RelLicense < POSH::Anchor
       WIKI_URL = 'http://microformats.org/wiki/rel-license'
       XMDP = 'http://microformats.org/profile/rel-license'
       

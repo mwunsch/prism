@@ -1,6 +1,6 @@
 module HMachine
   module Microformat
-    class VoteLinks < POSH::Base
+    class VoteLinks < POSH::Anchor
       WIKI_URL = 'http://microformats.org/wiki/vote-links'
       XMDP = 'http://microformats.org/profile/vote-links'
       
@@ -25,14 +25,6 @@ module HMachine
           vote.index('vote-') != 0
         end
         vote_type.first
-      end
-      
-      def title
-        node['title']
-      end
-      
-      def url
-        node['href']
       end
       
       def for?
