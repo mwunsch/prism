@@ -25,6 +25,8 @@ module HMachine
     case normalize(key)
       when :value_class, :valueclass, :abbr
         Pattern.map(key)
+      when :hcard, :geo, :rellicense, :reltag, :votelinks, :xfn, :xmdp, :xoxo
+        Microformat.map(key)
       when :base
         POSH::Base
       else

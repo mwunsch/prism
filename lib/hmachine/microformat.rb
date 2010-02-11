@@ -1,7 +1,37 @@
+require 'hmachine/microformat/reltag'
+require 'hmachine/microformat/rellicense'
+require 'hmachine/microformat/votelinks'
+require 'hmachine/microformat/xoxo'
+require 'hmachine/microformat/xmdp'
+require 'hmachine/microformat/xfn'
+require 'hmachine/microformat/geo'
+require 'hmachine/microformat/hcard'
+
 module HMachine
   module Microformat
     
-    
+    def self.map(name)
+      case name.to_s.strip.downcase.intern
+        when :hcard
+          HCard
+        when :geo
+          Geo
+        when :rellicense
+          RelLicense
+        when :reltag
+          RelTag
+        when :votelinks
+          VoteLinks
+        when :xfn
+          XFN
+        when :xmdp
+          XMDP
+        when :xoxo
+          XOXO
+        else
+          raise "#{name} is not a recognized markup design pattern."
+      end
+    end
     # def self.find_hcard(html)
     #   doc = HMachine.get_document(html)
     #   find_in_node(HCard, doc)
@@ -26,26 +56,6 @@ module HMachine
     #   hformat.new node
     # end
     # 
-    # def self.normalize(name)
-    #   case name.to_s.strip.downcase.intern
-    #     when :hcard
-    #       HCard
-    #     when :base
-    #       Base  
-    #     else
-    #       Base
-    #       # raise "#{name} is not a recognized microformat."
-    #   end
-    # end
     
   end
 end
-
-require 'hmachine/microformat/reltag'
-require 'hmachine/microformat/rellicense'
-require 'hmachine/microformat/votelinks'
-require 'hmachine/microformat/xoxo'
-require 'hmachine/microformat/xmdp'
-require 'hmachine/microformat/xfn'
-require 'hmachine/microformat/geo'
-# require 'hmachine/microformat/hcard'
