@@ -4,13 +4,13 @@ module HMachine
       WIKI_URL = 'http://microformats.org/wiki/XFN'
       XMDP = 'http://gmpg.org/xfn/11'
       
-      @@friendship =    %w( contact acquaintance friend)
-      @@physical =      %w( met )
-      @@professional =  %w( co-worker colleague )
-      @@geographical =  %w( co-resident neighbor )
-      @@family =        %w( child parent sibling spouse kin )
-      @@romantic =      %w( muse crush date sweetheart )
-      @@identity =      %w( me )
+      @@friendship    = %w( contact acquaintance friend)
+      @@physical      = %w( met )
+      @@professional  = %w( co-worker colleague )
+      @@geographical  = %w( co-resident neighbor )
+      @@family        = %w( child parent sibling spouse kin )
+      @@romantic      = %w( muse crush date sweetheart )
+      @@identity      = %w( me )
       
       @@relationships = @@friendship + @@physical + @@professional + @@geographical + @@family + @@romantic + @@identity
       
