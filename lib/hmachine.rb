@@ -105,6 +105,6 @@ module HMachine
   
 end
 
-require 'hmachine/posh'
 require 'hmachine/pattern'
+require 'hmachine/posh'
 require 'hmachine/microformat'
