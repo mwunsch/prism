@@ -1,3 +1,5 @@
+require 'hmachine/pattern/abbr'
+
 module HMachine
   module Pattern
     
@@ -5,6 +7,8 @@ module HMachine
       case name.to_s.strip.downcase.intern
         when :value_class, :valueclass
           ValueClass
+        when :abbr
+          Abbr
         else
           raise "#{name} is not a recognized markup design pattern."
       end

@@ -23,12 +23,12 @@ module HMachine
   # Map a key to an element or design pattern
   def self.map(key)
     case normalize(key)
-      when :value_class, :valueclass
-        Pattern::ValueClass
+      when :value_class, :valueclass, :abbr
+        Pattern.map(key)
       when :base
         POSH::Base
       else
-        raise "#{key} is not a recognized markup design pattern."
+        raise "#{key} is not a recognized parser."
     end
   end
   
