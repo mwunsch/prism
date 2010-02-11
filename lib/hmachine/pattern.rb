@@ -1,4 +1,5 @@
 require 'hmachine/pattern/abbr'
+require 'hmachine/pattern/valueclass'
 
 module HMachine
   module Pattern
@@ -11,12 +12,6 @@ module HMachine
           Abbr
         else
           raise "#{name} is not a recognized markup design pattern."
-      end
-    end
-    
-    module ValueClass
-      def self.parser
-        lambda { |node| node.content }
       end
     end
     
