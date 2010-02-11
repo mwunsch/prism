@@ -22,6 +22,7 @@ module HMachine
         rel.search {|node| node }
         rel.extract {|node| node['rel'].split(' ') }
       end
+      alias relationship rel
       
       has_one :title do |title|
         title.search {|node| node }
