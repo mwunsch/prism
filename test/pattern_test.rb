@@ -7,21 +7,6 @@ class PatternTest < Test::Unit::TestCase
     end
   end
   
-  describe 'DateTime parsing' do
-    should 'validate a DateTime string' do
-      assert HMachine::Pattern::DateTime.valid?('2010-02-14')
-      assert !HMachine::Pattern::DateTime.valid?('Hello World!')
-    end
-    
-    should 'convert a datetime string to a Time object' do
-      valentines_day = HMachine::Pattern::DateTime.extract_from('2010-02-14')
-      afternoon = HMachine::Pattern::DateTime.extract_from('16:30')
-      assert_equal Time, valentines_day.class
-      assert_equal 2010, valentines_day.year
-      assert_equal 16, afternoon.hour
-    end
-  end
-  
   describe 'Abbr Design Pattern' do
     should 'have an extraction method' do
       assert_respond_to HMachine::Pattern::Abbr, :extract

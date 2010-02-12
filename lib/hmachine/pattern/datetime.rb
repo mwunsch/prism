@@ -18,18 +18,20 @@ module HMachine
       # Normalize ISO8601 Dates
       def self.date(datestring)
         datetime = Date._parse(datestring)
-        if !datetime.empty? && (datetime[:year] || datetime[:mon])
+        if !datetime.empty? && datetime[:year] && (datetime[:mon] || datetime[:yday])
           local = Time.now
           year = datetime[:year] || local.year
           if datetime[:yday]
-            ordinal = Date.ordinal(year, datetime[:yday])
-            month = ordinal.month
-            day = ordinal.day
+            ordinal = Date.ordinal(year, datetime[:yday]) rescue nil
+            if ordinal
+              month = ordinal.month
+              day = ordinal.day
+            end
           else
             month = datetime[:mon] || local.month
             day = datetime[:mday] || 1
           end
-          "#{year}-#{month}-#{day}"
+          "#{year}-#{month}-#{day}" if (month && day)
         end
       end
       

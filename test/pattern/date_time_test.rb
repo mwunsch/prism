@@ -20,7 +20,7 @@ class DateTimePatternTest < Test::Unit::TestCase
   
   should 'build an iso8601 date' do
     assert '2010-02-14', @pattern.date('February 14, 2010')
-    assert_equal @pattern.date('July 4'), @pattern.date('2010-185')
+    assert_equal @pattern.date('July 4 2010'), @pattern.date('2010-185')
     assert_equal '2010-1-1', @pattern.date('January 2010')
   end
   
@@ -34,13 +34,14 @@ class DateTimePatternTest < Test::Unit::TestCase
   should 'build a iso8601 timestamp' do
     assert_equal '2010-2-14', @pattern.iso8601('2010-02-14')
     assert_equal 'T4:45:30Z', @pattern.iso8601('4:45:30Z')
-    assert_equal '2010-2-14T4:45:30Z', @pattern.iso8601('February 14 4:45:30Z')
+    assert_equal '2010-2-14T4:45:30Z', @pattern.iso8601('February 14 2010 4:45:30Z')
     assert @pattern.iso8601('Hello world').empty?
   end
   
   should 'validate a DateTime string' do
     assert @pattern.valid?('2010-02-14')
     assert !@pattern.valid?('Hello World!')
+    assert !@pattern.valid?('+441223 123 123')
   end
   
   should 'convert a datetime string to a Time object' do
