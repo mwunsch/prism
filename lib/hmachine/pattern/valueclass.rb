@@ -12,21 +12,26 @@ module HMachine
       
       extract do |node|
         if found_in?(node)
-          if find_in(node).first.matches?('.value-title[title]')
-            find_in(node).first['title']
-          else
-            find_in(node).collect { |val|
-              if Abbr.valid?(val)
-                Abbr.extract_from(val)
-              elsif ((val.node_name.eql?('img') || val.node_name.eql?('area')) && val['alt'])
-                val['alt']
-              else
-                val.content.strip
-              end            
-            }.join
-          end
+          values = get_values(node)
+          values.join
         else
           node.content.strip
+        end
+      end
+      
+      def self.datetime(value)
+        DateTime.valid?(value) ? DateTime.iso8601(value) : value
+      end
+      
+      def self.get_values(node)
+        find_in(node).collect do |val|
+          if (val.node_name.eql?('img') || val.node_name.eql?('area')) && val['alt']
+            val['alt']
+          elsif Abbr.valid?(val)
+            val['title']
+          else
+            val.content.strip
+          end
         end
       end
       

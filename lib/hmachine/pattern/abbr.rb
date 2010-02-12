@@ -9,7 +9,7 @@ module HMachine
       validate {|abbr| abbr.node_name.eql?('abbr') && abbr['title'] }
   
       extract do |node|
-        if (node.node_name.eql?('abbr') && node['title'])
+        if valid?(node)
           DateTime.valid?(node['title']) ? DateTime.extract_from(node['title']) : node['title']
         else
           node.content.strip

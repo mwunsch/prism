@@ -57,7 +57,11 @@ module HMachine
       
       validate do |datetime|
         if !iso8601(datetime).empty?
-          Time.parse(iso8601(datetime)).respond_to?(:iso8601) rescue false
+          begin
+            Time.parse(iso8601(datetime)).respond_to?(:iso8601)
+          rescue ArgumentError
+            false
+          end
         end
       end
       
