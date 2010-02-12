@@ -1,3 +1,4 @@
+require 'hmachine/pattern/datetime'
 require 'hmachine/pattern/abbr'
 require 'hmachine/pattern/valueclass'
 
