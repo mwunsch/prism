@@ -4,9 +4,9 @@ module HMachine
       extend HMachine
       WIKI_URL = 'http://microformats.org/wiki/abbr-design-pattern'
   
-      search {|element| element.css('abbr') }
+      search {|element| element.css('abbr[title]') }
   
-      validate {|abbr| abbr.node_name.eql?('abbr') }
+      validate {|abbr| abbr.node_name.eql?('abbr') && abbr['title'] }
   
       extract do |node|
         if (node.node_name.eql?('abbr') && node['title'])

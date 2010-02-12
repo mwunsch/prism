@@ -16,7 +16,7 @@ module HMachine
             find_in(node).first['title']
           else
             find_in(node).collect { |val|
-              if (val.node_name.eql?('abbr') && val['title'])
+              if Abbr.valid?(val)
                 Abbr.extract_from(val)
               elsif ((val.node_name.eql?('img') || val.node_name.eql?('area')) && val['alt'])
                 val['alt']
