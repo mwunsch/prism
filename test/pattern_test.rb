@@ -82,9 +82,9 @@ class PatternTest < Test::Unit::TestCase
     end
     
     should 'extract the value intelligently from an abbr element' do
-      doc = Nokogiri.parse(%q{<span class="dtstart"><abbr class="value" title="2008-06-24">this Tuesday</abbr></span>})
+      doc = Nokogiri.parse(%q{<span class="dtstart"><abbr class="value" title="hello">this Tuesday</abbr></span>})
       assert_not_equal 'this Tuesday', HMachine::Pattern::ValueClass.extract_from(doc)
-      assert_equal '2008-06-24', HMachine::Pattern::ValueClass.extract_from(doc)
+      assert_equal 'hello', HMachine::Pattern::ValueClass.extract_from(doc)
     end
     
     should 'use the alt attribute for images or areas' do

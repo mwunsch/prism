@@ -7,7 +7,12 @@ module HMachine
       extend HMachine
       
       validate do |time|
-        !ParseDate.parsedate(time).compact.empty?
+        datetime = ParseDate.parsedate(time) 
+        begin
+          Time.local(*datetime).respond_to?(:iso8601)
+        rescue
+          !datetime.compact.empty?
+        end
       end
       
       extract do |datetime|

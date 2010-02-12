@@ -10,7 +10,7 @@ module HMachine
   
       extract do |node|
         if (node.node_name.eql?('abbr') && node['title'])
-          node['title']
+          DateTime.valid?(node['title']) ? DateTime.extract_from(node['title']) : node['title']
         else
           node.content.strip
         end
