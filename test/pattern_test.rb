@@ -80,10 +80,10 @@ class PatternTest < Test::Unit::TestCase
     should 'understand the value-title pattern' do
       doc = Nokogiri.parse(%q{
       <span class="dtstart">
-        <span class="value-title" title="2009-06-05T20:00:00"> </span>
+        <span class="value-title" title="hi"> </span>
         Friday, June 5th at 8pm
       </span>})
-      assert_equal '2009-06-05T20:00:00', HMachine::Pattern::ValueClass.extract_from(doc)
+      assert_equal 'hi', HMachine::Pattern::ValueClass.extract_from(doc)
     end
     
   end

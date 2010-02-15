@@ -43,7 +43,7 @@ module HMachine
           hour = datetime[:hour]
           min = datetime[:min] || 0
           sec = datetime[:sec] || 0
-          zone = datetime[:zone] || local.zone
+          zone = datetime[:zone] || local.utc_offset
           "T#{hour}:#{min}:#{sec}#{zone}"
         end
       end
@@ -60,6 +60,7 @@ module HMachine
           begin
             Time.parse(iso8601(datetime)).respond_to?(:iso8601)
           rescue ArgumentError
+            # An out-of-bounds error means a false positive
             false
           end
         end

@@ -13,21 +13,22 @@ module HMachine
       extract do |node|
         if found_in?(node)
           values = get_values(node)
-          values.join
+          normalize_values = values.collect { |val| DateTime.valid?(val) ? DateTime.iso8601(val) : val }.join
+          DateTime.valid?(normalize_values) ? DateTime.extract_from(normalize_values): normalize_values
         else
           node.content.strip
         end
       end
       
-      def self.datetime(value)
-        DateTime.valid?(value) ? DateTime.iso8601(value) : value
+      def self.dates_and_times(values)
+
       end
       
       def self.get_values(node)
         find_in(node).collect do |val|
           if (val.node_name.eql?('img') || val.node_name.eql?('area')) && val['alt']
             val['alt']
-          elsif Abbr.valid?(val)
+          elsif (Abbr.valid?(val) || val.matches?('.value-title'))
             val['title']
           else
             val.content.strip
