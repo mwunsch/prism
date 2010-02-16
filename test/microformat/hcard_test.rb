@@ -73,6 +73,10 @@ class HCardTest < Test::Unit::TestCase
       @klass = HMachine::Microformat::HCard
       @vcard = @klass.parse_first(@doc)
     end
+    
+    test 'The adr (address) is a optional multiple value' do
+      assert @vcard.has_property?(:adr)
+    end
   end
   
   

@@ -28,6 +28,8 @@ module HMachine
           end
         end
       end
+      
+      has_many :adr
             
       has_one :org do |org|
         org.has_one :organization_name, :organization_unit
