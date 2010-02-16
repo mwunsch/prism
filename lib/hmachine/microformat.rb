@@ -1,12 +1,3 @@
-require 'hmachine/microformat/reltag'
-require 'hmachine/microformat/rellicense'
-require 'hmachine/microformat/votelinks'
-require 'hmachine/microformat/xoxo'
-require 'hmachine/microformat/xmdp'
-require 'hmachine/microformat/xfn'
-require 'hmachine/microformat/geo'
-require 'hmachine/microformat/hcard'
-
 module HMachine
   module Microformat
     
@@ -59,3 +50,12 @@ module HMachine
     
   end
 end
+
+require 'hmachine/microformat/reltag'
+require 'hmachine/microformat/rellicense'
+require 'hmachine/microformat/votelinks'
+require 'hmachine/microformat/xoxo'
+require 'hmachine/microformat/xmdp'
+require 'hmachine/microformat/xfn'
+require 'hmachine/microformat/geo'
+require 'hmachine/microformat/hcard'

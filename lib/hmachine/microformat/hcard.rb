@@ -8,8 +8,27 @@ module HMachine
       
       validate {|vcard| vcard.matches?('.vcard') }
       
-      has_one :fn
+      has_one :fn, :bday, :tz, :sort_string, :uid, :rev 
+      alias birthday bday
       
+      has_many :agent, :bday, :category, :key, :label, :logo,
+               :mailer, :nickname, :note, :photo, :role, :sound, 
+               :title, :url
+      
+      has_one :geo do |geo|
+        geo.has_one :latitude
+        geo.has_one :longitude
+        
+        geo.extract do |node|
+          if geo[:latitude].found_in?(node) && geo[:longitude].found_in?(node)
+            Microformat::Geo.extract_from(node)
+          else
+            coords = Pattern::ValueClass.extract_from(node).split(';')
+            {:latitude => coords[0], :longitude => coords[1]}
+          end
+        end
+      end
+            
       has_one :org do |org|
         org.has_one :organization_name, :organization_unit
       end
@@ -35,6 +54,8 @@ module HMachine
           end
         end  
       end
+      
+      has_one! :class
       
       # N Optimization from Sumo:
       # http://www.danwebb.net/2007/2/9/sumo-a-generic-microformats-parser-for-javascript
