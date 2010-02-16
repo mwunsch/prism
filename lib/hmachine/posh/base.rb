@@ -56,17 +56,11 @@ module HMachine
       end
       
       def to_h
-        return @to_h if @to_h
-        @to_h = {}
-        has_one = self.class.instance_variable_get(:@has_one)
-        properties.each_pair do |key, property|
-          @to_h[key] = if (has_one && has_one.include?(property))
-            property.parse_first(@first_node)
-          else
-            property.parse(@first_node)
-          end
-        end
-        @to_h
+        @to_h ||= self.class.property_hash(@first_node, properties)
+      end
+      
+      def has_property?(key)
+        to_h.has_key?(key)
       end
       
       def to_s
