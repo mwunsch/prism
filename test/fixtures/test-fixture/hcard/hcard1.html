@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hCard 1</title>
+  
+  <!-- This will be replace with one CSS file and one JavaScipt file -->
+  <link rel="stylesheet" href="../css/uftestsuite.css" type="text/css" />
+  <link rel="stylesheet" href="../../testrunner/css/testrunner.css" type="text/css" />
+  
+  <script type="text/javascript" src="../../testrunner/javascript/prototype-1.6.0.2.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/beautify.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/sumo/microformat.js"></script>
+  <script type="application/javascript;version=1.7" src="http://svn.mozilla.org/labs/operator/chrome/operator/content/Microformats/Microformats.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/testrunner.js"></script>
+   
+</head>
+<body>
+    
+    
+    <div class="test-fixture">
+    
+    <p>
+    <a href="../"><img border="0" id="testsuite-image" alt="Microformats testsuite" src="../images/testsuite.gif" /></a><br />
+    </p>
+    
+    <h1 class="summary">hCard 1 - single occurrence test</h1>
+    <p class="description">This page was design to test that values of a hcard which are meant to have only a single occurrence are parsed correctly.
+    The IsEqualToISODate method uses date <a href="../documentation/iso-date.htm">normalisation and compare</a> methods.</p>
+    <p>From: <a href="default.htm"><span class="format">hCard</span> test suite 1.0</a></p>
+    <p class="author vcard">
+        Author: <a class="url fn" href="http://www.glennjones.net/">Glenn Jones</a> 
+    </p>
+    <!--
+    <p>Output examples: 
+    <ul>
+    <li class="output"><a class="url" href="hcard1.js"><span class="type">JSON</span></a></li>
+    <li class="output"><a class="url" href="hcard1.xml"><span class="type">XML</span></a></li>
+    </ul>
+    </p>
+    -->
+    
+    <p>Tests:</p>
+    <table id="assetTable" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="assert">
+            <td class="test">vcard[0].fn</td>
+            <td class="result">IsEqualTo("John Doe")</td>
+            <td class="comment">The fn (formatted name) is a singular value</td>
+        </tr>
+         <tr class="assert">
+            <td class="test">vcard[0].n</td>
+            <td class="result">HasProperty(true)</td>
+            <td class="comment">The n (name) is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].bday</td>
+            <td class="result">IsEqualToISODate("2000-01-01T00:00:00-08:00")</td>
+            <td class="comment">The bday (birthday) is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].class</td>
+            <td class="result">IsEqualTo("Public")</td>
+            <td class="comment">The class is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].geo</td>
+            <td class="result">HasProperty(true)</td>
+            <td class="comment">The geo is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].rev</td>
+            <td class="result">IsEqualToISODate("2008-01-01T13:45:00")</td>
+            <td class="comment">The rev is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].role</td>
+            <td class="result">IsEqualTo("Designer")</td>
+            <td class="comment">The role is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].sort-string</td>
+            <td class="result">IsEqualTo("John")</td>
+            <td class="comment">The sort-string is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].tz</td>
+            <td class="result">IsEqualTo("-05:00")</td>
+            <td class="comment">The tz is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].uid</td>
+            <td class="result">IsEqualTo("com.johndoe/profiles/johndoe")</td>
+            <td class="comment">The uid is a singular value</td>
+        </tr>
+    </tbody>
+    </table> 
+    
+    
+    <p>History:</p>
+    <ul>
+    <li class="history vevent">
+        <span class="summary">Created</span>: <abbr class="dtstart" title="2008-04-08">8 April 2008</abbr> 
+        <span class="description">by Glenn Jones</span>
+    </li>
+    <li class="history vevent">
+        <span class="summary">Updated</span>: <abbr class="dtstart" title="2008-05-08">7 May 2008</abbr> 
+        <span class="description">by Glenn Jones - Changes the tests for n and geo to HasProperty and extended the rev to full ISO date</span>
+    </li>
+    </ul>
+    
+    
+    
+    </div>
+  
+    <div id="uf">
+        <div class="vcard">
+            <!-- This may not be the best semantic use of HTML element -->
+            <div class="fn n"><span class="given-name sort-string">John</span> Doe</div>
+            <div>Birthday: <abbr class="bday" title="2000-01-01T00:00:00-08:00">January 1st, 2000</abbr></div>
+            <div>Role: <span class="role">Designer</span></div>
+            <div>Location: <abbr class="geo" title="30.267991;-97.739568">Brighton</abbr></div>
+            <div>Time zone: <abbr class="tz" title="-05:00">Eastern Standard Time</abbr></div>
+            
+            <div>Profile details:
+                <div>Profile id: <span class="uid">com.johndoe/profiles/johndoe</span></div>
+                <div>Details are: <span class="class">Public</span></div>
+                <div>Last updated: <abbr class="rev" title="2008-01-01T13:45:00">January 1st, 2008 - 13:45</abbr></div>
+            </div>
+        </div>
+    </div>
+    
+    <p>
+        <a rel="license" href="../license.txt">Some rights reserved</a>
+    </p>
+      
+</body>
+
+</html>
