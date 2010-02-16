@@ -63,6 +63,10 @@ module HMachine
         to_h.has_key?(key)
       end
       
+      def inspect
+        "#{self.class}:#{object_id} #{to_h.inspect}"
+      end
+      
       def to_s
         node.to_s
       end
