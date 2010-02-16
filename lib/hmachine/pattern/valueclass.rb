@@ -14,14 +14,10 @@ module HMachine
         if found_in?(node)
           values = get_values(node)
           normalize_values = values.collect { |val| DateTime.valid?(val) ? DateTime.iso8601(val) : val }.join
-          DateTime.valid?(normalize_values) ? DateTime.extract_from(normalize_values): normalize_values
+          DateTime.valid?(normalize_values) ? DateTime.extract_from(normalize_values) : normalize_values
         else
           node.content.strip
         end
-      end
-      
-      def self.dates_and_times(values)
-
       end
       
       def self.get_values(node)

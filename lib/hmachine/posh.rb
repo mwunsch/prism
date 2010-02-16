@@ -19,24 +19,29 @@ module HMachine
     
     # Override extract to grok subproperties
     def extract(pattern = nil, &block)
-      if !properties.empty?
-        @extract = lambda do |node|
-          props = {}
-          properties.each_pair do |key, property|
-            if @has_one && @has_one.include?(property)
-              props[key] = property.parse_first(node)
-            else
-              props[key] = property.parse(node)
-            end
-          end
-          props
-        end
-      elsif block_given?
+      if block_given?
         @extract = block
       elsif pattern
         @extract = HMachine.map(pattern).extract
       end
-      @extract || lambda{|node| node.content.strip }
+      if (!properties.empty? && !@extract)
+        @extract = lambda do |node|
+          property_hash(node)
+        end
+      end
+      @extract || Pattern::ValueClass.extract
+    end
+    
+    def property_hash(node, props=properties)
+      hash = {}
+      props.each_pair do |key, property|
+        hash[key] = if @has_one && @has_one.include?(property)
+          property.parse_first(node)
+        else
+          property.parse(node)
+        end
+      end
+      hash.reject {|key,value| value.nil? }
     end
 
     # Remove a format from a node if it is nested.
