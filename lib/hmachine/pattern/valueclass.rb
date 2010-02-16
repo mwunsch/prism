@@ -15,6 +15,8 @@ module HMachine
           values = get_values(node)
           normalize_values = values.collect { |val| DateTime.valid?(val) ? DateTime.iso8601(val) : val }.join
           DateTime.valid?(normalize_values) ? DateTime.extract_from(normalize_values) : normalize_values
+        elsif Abbr.valid?(node)
+          Abbr.extract_from(node)
         else
           node.content.strip
         end
