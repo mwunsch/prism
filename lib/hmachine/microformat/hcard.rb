@@ -56,7 +56,7 @@ module HMachine
           end
         end
         
-        n.has_one :family_name, :given_name, :additional_name,
+        n.has_many :family_name, :given_name, :additional_name,
                   :honorific_prefix, :honorific_suffix
         
         n.extract do |node|

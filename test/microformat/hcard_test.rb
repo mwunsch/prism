@@ -198,7 +198,35 @@ class HCardTest < Test::Unit::TestCase
     end
   end
   
-  
+  # http://ufxtract.com/testsuite/hcard/hcard4.htm
+  describe 'n single and multiple occurence test' do
+    setup do
+      @html = get_fixture('test-fixture/hcard/hcard4.html')
+      @doc = Nokogiri::HTML.parse(@html).css('#uf').first
+      @klass = HMachine::Microformat::HCard
+      @vcard = @klass.parse_first(@doc)
+    end
+    
+    test 'The honorific-prefix is a optional multiple value' do
+      assert_equal 'Dr', @vcard.n[:honorific_prefix]
+    end
+    
+    test 'The given-name is a optional multiple value' do
+      assert_equal 'John', @vcard.n[:given_name]
+    end
+    
+    test 'The additional-name is a optional multiple value' do
+      assert_equal 'Peter', @vcard.n[:additional_name]
+    end
+    
+    test 'The family-name is a optional multiple value' do
+      assert_equal 'Doe', @vcard.n[:family_name]
+    end
+    
+    test 'The honorific-suffix is a optional multiple value' do
+      assert_equal 'PHD', @vcard.n[:honorific_suffix][1]
+    end
+  end
   
   
   
