@@ -228,6 +228,41 @@ class HCardTest < Test::Unit::TestCase
     end
   end
   
+  # http://ufxtract.com/testsuite/hcard/hcard6.htm
+  describe 'extracting email addresses text' do
+    setup do
+      @html = get_fixture('test-fixture/hcard/hcard6.html')
+      @doc = Nokogiri::HTML.parse(@html).css('#uf').first
+      @klass = HMachine::Microformat::HCard
+      @vcard = @klass.parse(@doc)
+    end
+    
+    should 'collect the email address from href attribute' do
+      assert_equal 'john@example.com', @vcard[0].email
+    end
+    
+    test 'Where a type is specified, but the value is not then the node text is the value' do
+      assert @vcard[1].email.has_key?(:internet)
+      assert_equal 'john@example.com', @vcard[1].email.values.first
+    end
+    
+    should 'collect the email address from the node text' do
+      assert_equal 'john@example.com', @vcard[2].email
+    end
+    
+    should 'find the type value. types are case insensitive' do
+      assert_equal :internet, @vcard[3].email.keys.first
+    end
+    
+    should 'not contain querystring "?subject=parser-test"' do
+      assert_equal 'john@example.com', @vcard[5].email
+    end
+    
+    test 'Where a type is specified, but the value is not then the node text is the value' do
+      assert_equal 'john@example.com', @vcard[6].email.values.first
+    end
+  end
+  
   
   
   

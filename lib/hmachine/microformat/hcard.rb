@@ -32,7 +32,11 @@ module HMachine
         end
       end
       
-      has_many :email, :tel
+      has_many :tel
+      
+      has_many :email do |email|        
+        email.extract :typevalue
+      end
       
       has_many :adr do |adr|
         adr.extract do |node|  
