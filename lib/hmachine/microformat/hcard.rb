@@ -34,8 +34,11 @@ module HMachine
       
       has_many :email, :tel
       
-      has_many :adr do |adr| 
-        adr.extract :adr
+      has_many :adr do |adr|
+        adr.extract do |node|  
+          address = Microformat::Adr.extract_from(node)
+          address.type ? { address.type => address } : address          
+        end
       end
       alias address adr
             

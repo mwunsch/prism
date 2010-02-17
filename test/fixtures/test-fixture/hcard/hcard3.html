@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hCard 3 - adr (address) singular and multiple occurrence test</title>
+  
+   <!-- This will be replace with one CSS file and one JavaScipt file -->
+  <link rel="stylesheet" href="../css/uftestsuite.css" type="text/css" />
+  <link rel="stylesheet" href="../../testrunner/css/testrunner.css" type="text/css" />
+  
+  <script type="text/javascript" src="../../testrunner/javascript/prototype-1.6.0.2.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/beautify.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/sumo/microformat.js"></script>
+  <script type="application/javascript;version=1.7" src="http://svn.mozilla.org/labs/operator/chrome/operator/content/Microformats/Microformats.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/testrunner.js"></script>
+   
+   
+</head>
+<body>
+    
+    <div class="test-fixture">
+    
+    <p>
+    <a href="../"><img border="0" id="testsuite-image" alt="Microformats test suite" src="../images/testsuite.gif" /></a><br />
+    </p>
+    
+    <h1 class="summary">hCard 3 - adr (address) singular and multiple occurrence test</h1>
+    <p class="description">This page was design to test singular and multiple occurrence values in the adr element of a hcard.</p>
+    <p>From: <a href="default.htm"><span class="format">hCard</span> test suite 1.0</a></p>
+    <p class="author vcard">
+        Author: <a class="url fn" href="http://www.glennjones.net/">Glenn Jones</a> 
+    </p>
+    <!--
+    <p>Output examples: 
+    <ul>
+    <li class="output"><a class="url" href="hcard1.js"><span class="type">JSON</span></a></li>
+    <li class="output"><a class="url" href="hcard1.xml"><span class="type">XML</span></a></li>
+    </ul>
+    </p>
+    -->
+    
+    <p>Tests:</p>
+    <table id="assetTable" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="assert">
+            <td class="test">vcard[0].adr[0].type[0]</td>
+            <td class="result">IsEqualToCaseInsensitive("work")</td>
+            <td class="comment">The type is a optional multiple value. Types are case insensitive</td>
+        </tr>
+         <tr class="assert">
+            <td class="test">vcard[0].adr[0].post-office-box</td>
+            <td class="result">IsEqualTo("PO Box 46")</td>
+            <td class="comment">The post-office-box is a optional singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].adr[0].street-address[1]</td>
+            <td class="result">IsEqualTo("West Street")</td>
+            <td class="comment">The street-address is a optional multiple value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].adr[0].extended-address</td>
+            <td class="result">IsEqualTo("Suite 2")</td>
+            <td class="comment">The extended-address is a optional singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].adr[0].region</td>
+            <td class="result">IsEqualTo("East Sussex")</td>
+            <td class="comment">The region is a optional singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].adr[0].locality</td>
+            <td class="result">IsEqualTo("Brighton")</td>
+            <td class="comment">The locality is a optional singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].adr[0].postal-code</td>
+            <td class="result">IsEqualTo("BN1 3DF")</td>
+            <td class="comment">The postal-code is a optional singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].adr[0].country-name</td>
+            <td class="result">IsEqualTo("United Kingdom")</td>
+            <td class="comment">The country-name is a optional singular value</td>
+        </tr>
+    </tbody>
+    </table> 
+    
+    
+    <p>History:</p>
+    <ul>
+    <li class="history vevent">
+        <span class="summary">Created</span>: <abbr class="dtstart" title="2008-04-08">8 April 2008</abbr> 
+        <span class="description">by Glenn Jones</span>
+    </li>
+    
+    <li class="history vevent">
+        <span class="summary">Updated</span>: <abbr class="dtstart" title="2008-05-07">7 May 2008</abbr> 
+        <span class="description">by Glenn Jones - Changed the extended-address property from multiple to singular. This is still an area of debate.</span>
+    </li>
+    </ul>
+    
+    
+    
+    </div>
+  
+    <div id="uf">
+        <div class="vcard">
+            <!-- This may not be the best semantic use of HTML element -->
+            <div class="fn n"><span class="given-name">John</span> <span class="family-name">Doe</span></div>
+  
+            <div class="adr">
+                <span class="type">Work</span>: 
+                <div class="label">
+                    <span class="post-office-box">PO Box 46</span>, 
+                    <span class="extended-address">Suite 2</span>,
+                    <span class="street-address">Sunny House</span>, 
+                    <span class="street-address">West Street</span>, 
+                    <span class="locality">Brighton</span>, 
+                    <span class="region">East Sussex</span>, 
+                    <span class="country-name">United Kingdom</span>, 
+                    <span class="postal-code">BN1 3DF</span>
+                </div>
+            </div>
+      
+            
+        </div>
+    </div>
+    
+    <p>
+        <a rel="license" href="../license.txt">Some rights reserved</a>
+    </p>
+    
+  
+</body>
+
+</html>

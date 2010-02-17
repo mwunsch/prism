@@ -156,6 +156,47 @@ class HCardTest < Test::Unit::TestCase
     end   
   end
   
+  # http://ufxtract.com/testsuite/hcard/hcard3.htm
+  describe 'adr single and multiple occurence test' do
+    setup do
+      @html = get_fixture('test-fixture/hcard/hcard3.html')
+      @doc = Nokogiri::HTML.parse(@html).css('#uf').first
+      @klass = HMachine::Microformat::HCard
+      @vcard = @klass.parse_first(@doc)
+    end
+    
+    test 'The type is a optional multiple value.' do
+      assert @vcard.adr.has_key?(:work)
+    end
+    
+    test 'The post-office-box is a optional singular value' do
+      assert_equal 'PO Box 46', @vcard.adr[:work].post_office_box
+    end
+    
+    test 'The street-address is a optional multiple value' do
+      assert_equal 'West Street', @vcard.adr[:work].street_address[1]
+    end
+    
+    test 'The extended-address is a optional singular value' do
+      assert_equal 'Suite 2', @vcard.adr[:work].extended_address
+    end
+    
+    test 'The region is a optional singular value' do
+      assert_equal 'East Sussex', @vcard.adr[:work].region
+    end
+    
+    test 'The locality is a optional singular value' do
+      assert_equal 'Brighton', @vcard.adr[:work].locality
+    end
+    
+    test 'The postal-code is a optional singular value' do
+      assert_equal 'BN1 3DF', @vcard.adr[:work].postal_code
+    end
+    
+    test 'The country-name is a optional singular value' do
+      assert_equal 'United Kingdom', @vcard.adr[:work].country_name
+    end
+  end
   
   
   

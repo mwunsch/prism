@@ -11,6 +11,13 @@ module HMachine
       has_one :post_office_box, :postal_code
       has_many :street_address, :locality, :region, :extended_address, :country_name
       
+      has_many :type do |type|
+        type.extract do |node|
+          value = Pattern::ValueClass.extract_from(node)
+          HMachine.normalize(value) if value
+        end
+      end
+      
     end
   end
 end
