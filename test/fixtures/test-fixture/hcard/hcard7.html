@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hCard 7 - extracting telephone number test</title>
+  
+ <!-- This will be replace with one CSS file and one JavaScipt file -->
+  <link rel="stylesheet" href="../css/uftestsuite.css" type="text/css" />
+  <link rel="stylesheet" href="../../../testrunner/css/testrunner.css" type="text/css" />
+  
+  <script type="text/javascript" src="../../testrunner/javascript/prototype-1.6.0.2.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/beautify.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/sumo/microformat.js"></script>
+  <script type="application/javascript;version=1.7" src="http://svn.mozilla.org/labs/operator/chrome/operator/content/Microformats/Microformats.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/testrunner.js"></script>
+   
+</head>
+<body>
+    
+    <div class="test-fixture">
+    
+    <p>
+    <a href="../"><img border="0" id="testsuite-image" alt="Microformats test suite" src="../images/testsuite.gif" /></a><br />
+    </p>
+    
+    <h1 class="summary">hCard 7 - extracting tel (telephone) number test</h1>
+    <p class="description">
+    This page test that parsers can extract telephone numbers from different structures. This includes type property and value excerpting test. 
+    The IsEqualToPhoneNumber method <a href="../documentation/phone-number.htm">canonicalises and compares</a> phone numbers.
+	</p>
+	
+    <p>From: <a href="default.htm"><span class="format">hCard</span> test suite 1.0</a></p>
+    <p class="author vcard">
+        Author: <a class="url fn" href="http://www.glennjones.net/">Glenn Jones</a>
+    </p>
+    <!--
+    <p>Output examples: 
+    <ul>
+    <li class="output"><a class="url" href="hcard1.js"><span class="type">JSON</span></a></li>
+    <li class="output"><a class="url" href="hcard1.xml"><span class="type">XML</span></a></li>
+    </ul>
+    </p>
+    -->
+    
+    <p>Tests:</p>
+    <table id="assetTable" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+         <tr class="assert">
+            <td class="test">vcard[0].tel[0].value</td>
+            <td class="result">IsEqualTo("01273 700100")</td>
+            <td class="comment">Should collect the telephone number from the node text</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vcard[1].tel[0].value</td>
+            <td class="result">IsEqualToPhoneNumber("01273 700100")</td>
+            <td class="comment">Should collect the telephone number from a 
+			descendant node with value property</td>
+        </tr>
+
+        <tr class="assert">
+            <td class="test">vcard[2].tel[0].type[11]</td>
+            <td class="result">IsEqualToCaseInsensitive("PCS")</td>
+            <td class="comment">Should find the type value. Types are case insensitive</td>
+        </tr>
+  
+        
+        <tr class="assert">
+            <td class="test">vcard[3].tel[0].type[1]</td>
+            <td class="result">HasProperty(false)</td>
+            <td class="comment">The second type value "next-door" is incorrect</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vcard[4].tel[0].value</td>
+            <td class="result">IsEqualToPhoneNumber("01273 700301")</td>
+            <td class="comment">Where a type is specified, but the value is not then the node text is the value</td>
+        </tr>
+
+
+
+    </tbody>
+    </table> 
+    
+    
+    <p>History:</p>
+    <ul>
+
+	    <li class="history vevent">
+	        <span class="summary">Created</span>: <abbr class="dtstart" title="2008-05-10">10 May 2008</abbr> 
+	        <span class="description">by Glenn Jones</span>
+	    </li>    
+        <li class="history vevent">
+	        <span class="summary">Updated</span>: <abbr class="dtstart" title="2008-05-14">14 May 2008</abbr> 
+	        <span class="description">by Glenn Jones - Added any additional test and example hCard 4. Changed the type values to match hCard specification
+			invalid removing "video" and adding "pcs". Remove the test where email had atype but no value.</span>
+	    </li>
+	    
+    </ul>
+    
+    
+    
+    </div>
+  
+    <div id="uf">
+            <!-- This may not be the best semantic use of HTML element -->
+            
+            <!-- 0 -->
+ 			<p class="vcard">
+		      <span class="fn">John Doe</span> - 
+		      <span class="tel">01273 700100</span>: 
+		    </p>
+
+            <!-- 1 -->
+		    <p class="vcard">
+		      <span class="fn">John Doe</span> - 
+		      <span class="tel">
+			      <span class="type">pref</span>erred: 
+			      <span class="value">01273 700100</span>
+		      </span>
+		    </p> 
+		   
+		   	<!-- 2 -->
+		    <div class="vcard">
+		    <span class="fn">John Doe</span> - 
+		        <div class="tel">
+			        <span class="type">home</span>, 
+			        <span class="type">work</span>,  
+			        <span class="type">pref</span>,  
+			        <span class="type">voice</span>,  
+			        <span class="type">fax</span>, 
+			        <span class="type">msg</span>, 
+			        <span class="type">cell</span>, 
+			        <span class="type">pager</span>, 
+			        <span class="type">bbs</span>, 
+			        <span class="type">modem</span>, 
+			        <span class="type">car</span>, 
+			        <span class="type">isdn</span> and  
+                	<span class="type">pcs</span>
+                	 
+			        <span class="value">01273 700100</span>			    
+			     </div>
+			    
+			     <div class="tel">
+			        <span class="type">home</span>: 
+			        <span class="value">01273 700200</span>	
+			    </div>
+			 </div>
+			
+			<!-- 3 -->
+		   	<div class="vcard">
+		    	<span class="fn">John Doe</span> - 
+		        <span class="tel">
+			        <span class="type">home</span> 
+			        <span class="type">next-door</span> 
+				    <span class="value">01273 700101</span>
+			    </span>
+			</div>
+			
+			<!-- 4 -->
+			<div class="vcard">
+		    	<span class="fn">John Doe</span> - 
+		        <span class="tel"> <span class="type">home</span> 01273 700301</span>
+			</div>
+			
+			
+
+			
+		    
+    </div>
+    
+    <p>
+        <a rel="license" href="../license.txt">Some rights reserved</a>
+    </p>
+        
+  
+</body>
+
+</html>

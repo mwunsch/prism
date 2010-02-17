@@ -32,10 +32,8 @@ module HMachine
         end
       end
       
-      has_many :tel
-      
-      has_many :email do |email|        
-        email.extract :typevalue
+      has_many :email, :tel do |email_and_tel|        
+        email_and_tel.extract :typevalue
       end
       
       has_many :adr do |adr|

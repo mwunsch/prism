@@ -251,7 +251,7 @@ class HCardTest < Test::Unit::TestCase
     end
     
     should 'find the type value. types are case insensitive' do
-      assert_equal :internet, @vcard[3].email.keys.first
+      assert @vcard[3].email.has_key?(:internet)
     end
     
     should 'not contain querystring "?subject=parser-test"' do
@@ -260,6 +260,32 @@ class HCardTest < Test::Unit::TestCase
     
     test 'Where a type is specified, but the value is not then the node text is the value' do
       assert_equal 'john@example.com', @vcard[6].email.values.first
+    end
+  end
+  
+  # http://ufxtract.com/testsuite/hcard/hcard7.htm
+  describe 'extracting tel number test' do
+    setup do
+      @html = get_fixture('test-fixture/hcard/hcard7.html')
+      @doc = Nokogiri::HTML.parse(@html).css('#uf').first
+      @klass = HMachine::Microformat::HCard
+      @vcard = @klass.parse(@doc)
+    end
+    
+    should 'collect the telephone number from the node text' do
+      assert_equal '01273 700100', @vcard[0].tel
+    end
+    
+    should 'collect the telephone number from a descendant node with value property' do
+      assert_equal "01273 700100", @vcard[1].tel[:pref]
+    end
+    
+    should 'find the type value' do
+      assert @vcard[2].tel.keys.include?(:pcs)
+    end
+    
+    test 'Where a type is specified, but the value is not then the node text is the value' do
+      assert_equal '01273 700301', @vcard[4].tel[:home]
     end
   end
   
