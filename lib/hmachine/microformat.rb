@@ -7,6 +7,8 @@ module HMachine
           HCard
         when :geo
           Geo
+        when :adr
+          Adr
         when :rellicense
           RelLicense
         when :reltag
@@ -20,7 +22,7 @@ module HMachine
         when :xoxo
           XOXO
         else
-          raise "#{name} is not a recognized markup design pattern."
+          raise "#{name} is not a recognized microformat."
       end
     end
     # def self.find_hcard(html)

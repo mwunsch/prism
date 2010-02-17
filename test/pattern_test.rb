@@ -7,6 +7,29 @@ class PatternTest < Test::Unit::TestCase
     end
   end
   
+  describe 'URI Design Pattern' do
+    should 'have an extraction method' do
+      assert_respond_to HMachine::Pattern::URL, :extract
+    end
+    
+    should 'normalize URLs' do
+      assert_respond_to HMachine::Pattern::URL, :normalize
+      assert_equal 'http://foobar.com/', HMachine::Pattern::URL.normalize('http://foobar.com')
+    end
+    
+    should 'extract the href out of an a element' do
+      doc = Nokogiri.parse('<a href="http://foobar.com">Hello</a>')
+      a = doc.css('a').first
+      assert_equal 'http://foobar.com/', HMachine::Pattern::URL.extract_from(a)
+    end
+    
+    should 'extract the src out of an img element' do
+      doc = Nokogiri.parse('<img src="http://foobar.com" alt="Foobar" />')
+      img = doc.css('img').first
+      assert_equal 'http://foobar.com/', HMachine::Pattern::URL.extract_from(img)
+    end
+  end
+  
   describe 'Abbr Design Pattern' do
     should 'have an extraction method' do
       assert_respond_to HMachine::Pattern::Abbr, :extract

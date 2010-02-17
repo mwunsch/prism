@@ -1,3 +1,4 @@
+require 'hmachine/pattern/url'
 require 'hmachine/pattern/datetime'
 require 'hmachine/pattern/abbr'
 require 'hmachine/pattern/valueclass'
@@ -11,6 +12,8 @@ module HMachine
           ValueClass
         when :abbr
           Abbr
+        when :uri, :url
+          URL
         else
           raise "#{name} is not a recognized markup design pattern."
       end
