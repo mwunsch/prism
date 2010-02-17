@@ -11,9 +11,13 @@ module HMachine
       has_one :fn, :bday, :tz, :sort_string, :uid, :rev 
       alias birthday bday
       
-      has_many :agent, :bday, :category, :key, :label, :logo,
-               :mailer, :nickname, :note, :photo, :role, :sound, 
-               :title, :url
+      has_many :agent, :category, :key, :label,
+               :mailer, :nickname, :note, :role, :sound, 
+               :title
+               
+      has_many :logo, :photo, :url do |uri|
+        uri.extract :url
+      end
       
       has_one :geo do |geo|
         geo.has_one :latitude,  :longitude
@@ -28,9 +32,14 @@ module HMachine
         end
       end
       
-      has_many :adr
+      has_many :email, :tel
+      
+      has_many :adr do |adr| 
+        adr.extract :adr
+      end
+      alias address adr
             
-      has_one :org do |org|
+      has_many :org do |org|
         org.has_one :organization_name, :organization_unit
       end
       

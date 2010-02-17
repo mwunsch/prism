@@ -77,6 +77,83 @@ class HCardTest < Test::Unit::TestCase
     test 'The adr (address) is a optional multiple value' do
       assert @vcard.has_property?(:adr)
     end
+    
+    test 'The email is a optional multiple value' do
+      assert @vcard.has_property?(:email)
+    end
+    
+    test 'The org is a optional multiple value' do
+      assert @vcard.has_property?(:org)
+    end
+    
+    test 'The tel is a optional multiple value' do
+      assert @vcard.has_property?(:tel)
+    end
+    
+    test 'The agent is a optional multiple value' do
+      assert @vcard.has_property?(:agent)
+      assert_equal 'Dave Doe', @vcard.agent[1]
+    end
+    
+    test 'The category is a optional multiple value' do
+      assert @vcard.has_property?(:category)
+      assert_equal 'development', @vcard.category[1]
+    end
+    
+    test 'The key is a optional multiple value' do
+      assert @vcard.has_property?(:key)
+      assert_equal "hd02$Gfu*d%dh87KTa2=23934532479", @vcard.key
+    end
+    
+    test 'The key is a optional multiple value' do
+      assert @vcard.has_property?(:label)
+      assert_equal "West Street, Brighton, United Kingdom", @vcard.label[1].split("\n").collect {|i| i.strip }.join(' ')
+    end
+    
+    test 'The label is a optional multiple value' do
+      assert @vcard.has_property?(:label)
+      assert_equal "West Street, Brighton, United Kingdom", @vcard.label[1].split("\n").collect {|i| i.strip }.join(' ')
+    end
+    
+    test 'The logo is a optional multiple value' do
+      assert @vcard.has_property?(:logo)
+      assert_equal "../images/logo.gif", @vcard.logo[1]
+    end
+    
+    test 'The mailer is a optional multiple value' do
+      assert @vcard.has_property?(:mailer)
+      assert_equal "Outlook 2007", @vcard.mailer[1]
+    end
+    
+    test 'The nickname is a optional multiple value' do
+      assert @vcard.has_property?(:nickname)
+      assert_equal "Lost boy", @vcard.nickname[1]
+    end
+    
+    test 'The note is a optional multiple value' do
+      assert @vcard.has_property?(:note)
+      assert_equal "It can be a real problem booking a hotel room with the name John Doe.", @vcard.note[1]
+    end
+    
+    test 'The photo is a optional multiple value' do
+      assert @vcard.has_property?(:photo)
+      assert_equal "../images/photo.gif", @vcard.photo
+    end
+    
+    test 'The sound is a optional multiple value' do
+      assert @vcard.has_property?(:sound)
+      assert_equal 'Pronunciation of my name', @vcard.sound
+    end
+    
+    test 'The title is a optional multiple value' do
+      assert @vcard.has_property?(:title)
+      assert_equal 'Owner', @vcard.title[1]
+    end
+    
+    test 'The url is a optional multiple value' do
+      assert @vcard.has_property?(:url)
+      assert_equal "http://www.webfeetmedia.com/", @vcard.url[1]
+    end   
   end
   
   
