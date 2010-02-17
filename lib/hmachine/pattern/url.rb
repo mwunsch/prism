@@ -21,7 +21,12 @@ module HMachine
       end
       
       def self.normalize(url)
-        URI.parse(url).normalize.to_s
+        uri = URI.parse(url).normalize.to_s
+        if uri.index('mailto:').eql?(0)
+          uri.split('mailto:').last
+        else
+          uri
+        end
       end
       
     end
