@@ -15,6 +15,8 @@ module HMachine
           Abbr
         when :uri, :url
           URL
+        when :typevalue
+          TypeValue
         else
           raise "#{name} is not a recognized markup design pattern."
       end

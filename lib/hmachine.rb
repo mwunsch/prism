@@ -23,7 +23,7 @@ module HMachine
   # Map a key to an element or design pattern
   def self.map(key)
     case normalize(key)
-      when :value_class, :valueclass, :abbr, :uri, :url
+      when :value_class, :valueclass, :abbr, :uri, :url, :typevalue
         Pattern.map(key)
       when :hcard, :geo, :rellicense, :reltag, :votelinks, :xfn, :xmdp, :xoxo, :adr
         Microformat.map(key)
