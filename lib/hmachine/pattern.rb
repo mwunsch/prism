@@ -2,6 +2,7 @@ require 'hmachine/pattern/url'
 require 'hmachine/pattern/datetime'
 require 'hmachine/pattern/abbr'
 require 'hmachine/pattern/valueclass'
+require 'hmachine/pattern/typevalue'
 
 module HMachine
   module Pattern

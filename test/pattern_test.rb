@@ -30,6 +30,23 @@ class PatternTest < Test::Unit::TestCase
     end
   end
   
+  describe 'Type/Value Pattern' do
+    setup do
+      @html = get_fixture('test-fixture/hcard/hcard6.html')
+      @doc = Nokogiri::HTML.parse(@html).css('#uf').first
+    end
+    
+    should 'extract the type and value of an element' do
+      html = Nokogiri.parse(%Q{<span class="email">
+	      <span class="type">internet</span> 
+	      <a href="mailto:notthis@example.com">john@example.com</a>
+      </span>})
+      type_value = HMachine::Pattern::TypeValue.extract_from(html)
+      assert type_value.has_key?(:internet)
+      assert_equal 'john@example.com', type_value[:internet]
+    end
+  end
+  
   describe 'Abbr Design Pattern' do
     should 'have an extraction method' do
       assert_respond_to HMachine::Pattern::Abbr, :extract

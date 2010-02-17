@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hCard 6 - extracting email addresses test</title>
+  
+ <!-- This will be replace with one CSS file and one JavaScipt file -->
+  <link rel="stylesheet" href="../css/uftestsuite.css" type="text/css" />
+  <link rel="stylesheet" href="../../../testrunner/css/testrunner.css" type="text/css" />
+  
+  <script type="text/javascript" src="../../testrunner/javascript/prototype-1.6.0.2.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/beautify.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/sumo/microformat.js"></script>
+  <script type="application/javascript;version=1.7" src="http://svn.mozilla.org/labs/operator/chrome/operator/content/Microformats/Microformats.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/testrunner.js"></script>
+   
+</head>
+<body>
+    
+    <div class="test-fixture">
+    
+    <p>
+    <a href="../"><img border="0" id="testsuite-image" alt="Microformats test suite" src="../images/testsuite.gif" /></a><br />
+    </p>
+    
+    <h1 class="summary">hCard 6 - extracting email addresses test</h1>
+    <p class="description">This page test that parsers can extract email addresses from differnt structures. This includes type property and value excerpting test.</p>
+    <p>From: <a href="default.htm"><span class="format">hCard</span> test suite 1.0</a></p>
+    <p class="author vcard">
+        Author: <a class="url fn" href="http://www.glennjones.net/">Glenn Jones</a> 
+    </p>
+    <!--
+    <p>Output examples: 
+    <ul>
+    <li class="output"><a class="url" href="hcard1.js"><span class="type">JSON</span></a></li>
+    <li class="output"><a class="url" href="hcard1.xml"><span class="type">XML</span></a></li>
+    </ul>
+    </p>
+    -->
+    
+    <p>Tests:</p>
+    <table id="assetTable" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+         <tr class="assert">
+            <td class="test">vcard[0].email[0].value</td>
+            <td class="result">IsEqualTo("john@example.com")</td>
+            <td class="comment">Should collect the email address from href attribute</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vcard[1].email[0].value</td>
+            <td class="result">IsEqualTo("john@example.com")</td>
+            <td class="comment">Where a type is specified, but the value is not then the node text is the value</td>
+        </tr>
+
+        <tr class="assert">
+            <td class="test">vcard[2].email[0].value</td>
+            <td class="result">IsEqualTo("john@example.com")</td>
+            <td class="comment">Should collect the email address from the node text</td>
+        </tr>
+   
+        <tr class="assert">
+            <td class="test">vcard[3].email[0].type[0]</td>
+            <td class="result">IsEqualToCaseInsensitive("Internet")</td>
+            <td class="comment">Should find the type value. Types are case insensitive</td>
+        </tr>
+                
+        <tr class="assert">
+            <td class="test">vcard[4].email[0].type[3]</td>
+            <td class="result">HasProperty(false)</td>
+            <td class="comment">The thrid type value "lotus-notes" is incorrect</td>
+        </tr>
+
+        <tr class="assert">
+            <td class="test">vcard[5].email[0].value</td>
+            <td class="result">IsEqualTo("john@example.com")</td>
+            <td class="comment">Should not conatin quertystring "?subject=parser-test"</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vcard[6].email[0].value</td>
+            <td class="result">IsEqualTo("john@example.com")</td>
+            <td class="comment">Where a type is specified, but the value is not then the node text is the value</td>
+        </tr>
+
+
+    </tbody>
+    </table> 
+    
+    
+    <p>History:</p>
+    <ul>
+	    <li class="history vevent">
+	        <span class="summary">Created</span>: <abbr class="dtstart" title="2008-05-10">10 May 2008</abbr> 
+	        <span class="description">by Glenn Jones</span>
+	    </li>
+	    <li class="history vevent">
+	        <span class="summary">Updated</span>: <abbr class="dtstart" title="2008-05-14">14 May 2008</abbr> 
+	        <span class="description">by Glenn Jones - Added any additional test and example hCard 6. Removed the duplicate class="email" which made hCard 7 
+			invalid. </span>
+	    </li>
+    </ul>
+    
+    
+    
+    </div>
+  
+    <div id="uf">
+            <!-- This may not be the best semantic use of HTML element -->
+            
+            <!-- 0 -->
+			<p class="vcard">
+		      <span class="fn">John Doe</span> - 
+		      <a href="mailto:john@example.com" class="email">notthis@example.com</a>
+		    </p>
+		    
+		    <!-- 1 -->
+ 			<p class="vcard">
+		      <span class="fn">John Doe</span> - 
+		      <span class="email">
+			      <span class="type">internet</span> 
+			      <a href="mailto:notthis@example.com">john@example.com</a>
+		      </span>
+		    </p>
+
+            <!-- 2 -->
+		    <p class="vcard">
+		      <span class="fn">John Doe</span> - 
+		      <span class="email">john@example.com</span>
+		    </p> 
+		   
+		   	<!-- 3 -->
+		    <div class="vcard">
+		    <span class="fn">John Doe</span> - 
+		        <div class="email">
+			        <span class="type">internet</span> 
+			        <span class="type">pref</span>: 
+			        <a class="value" href="mailto:john@example.com">john@example.com</a>
+			    </div>
+			    
+			     <div class="email">
+			        <span class="type">internet</span>: 
+			        <a class="value" href="mailto:jdoe@example.com">jdoe@example.com</a>
+			    </div>
+			 </div>
+			
+			<!-- 4 -->
+		   	<div class="vcard">
+		    	<span class="fn">John Doe</span> - 
+		        <span class="email">
+			        <span class="type">internet</span> 
+			        <span class="type">pref</span> 
+			        <span class="type">x400</span> 
+			        <span class="type">lotus-notes</span>: 
+			        <a class="value" href="mailto:john@example.com">john@example.com</a>
+			    </span>
+			</div>
+			
+		    <!-- 5 -->
+		    <p class="vcard">
+		      <span class="fn">John Doe</span> - 
+		      <a href="mailto:john@example.com?subject=parser-test" class="email">john@example.com</a>
+		    </p> 
+		    
+		    <!-- 6 -->
+		    <p class="vcard">
+		    	<span class="email"><span class="type">Home</span> john@example.com</span>
+		    </p> 
+		    
+    </div>
+    
+    <p>
+        <a rel="license" href="../license.txt">Some rights reserved</a>
+    </p>
+        
+  
+</body>
+
+</html>
