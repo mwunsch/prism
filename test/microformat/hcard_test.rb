@@ -421,6 +421,48 @@ class HCardTest < Test::Unit::TestCase
     end
   end
   
+  # http://ufxtract.com/testsuite/hcard/hcard99.htm
+  describe 'implied n optimization test' do
+    def self.before_all
+      @doc ||= test_fixture('hcard/hcard99.html')
+      @vcard ||= @@klass.parse(@doc)
+    end
+    
+    setup do
+      @vcard = self.class.before_all
+    end
+    
+    test 'The given-name value is implied from the fn value' do
+      assert_equal 'Ryan', @vcard[0].n[:given_name]
+      assert_equal 'Ryan', @vcard[1].n[:given_name]
+      assert_equal 'Ryan', @vcard[2].n[:given_name]
+      assert_equal 'Brian', @vcard[3].n[:given_name]
+      assert_equal 'Ryan', @vcard[4].n[:given_name]
+      assert_equal 'R', @vcard[5].n[:given_name]
+      assert_equal 'King', @vcard[6].n[:given_name]
+    end
+    
+    test 'The family-name value is implied from the fn value' do
+      assert_equal 'King', @vcard[0].n[:family_name]
+      assert_equal 'King', @vcard[1].n[:family_name]
+      assert_equal 'King', @vcard[2].n[:family_name]
+      assert_equal 'Suda', @vcard[3].n[:family_name]
+      assert_equal 'King', @vcard[4].n[:family_name]
+      assert_equal 'King', @vcard[5].n[:family_name]
+      assert_equal 'R', @vcard[6].n[:family_name]
+    end
+    
+    test 'The given name property should be missing' do
+      assert !@vcard[7].has_property?(:n)
+      assert !@vcard[8].has_property?(:n)
+    end
+    
+    test 'The family name property should be missing' do
+      assert !@vcard[7].has_property?(:n)
+      assert !@vcard[8].has_property?(:n)
+    end
+  end
+  
   
 
 end
