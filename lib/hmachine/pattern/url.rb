@@ -9,7 +9,7 @@ module HMachine
       
       extract do |url|
         if valid?(url)
-          value = if (url.node_name.eql?('a') || url.node_name.eql?('a'))
+          value = if (url.node_name.eql?('a') || url.node_name.eql?('area'))
             url['href']
           elsif url.node_name.eql?('img')
             url['src']

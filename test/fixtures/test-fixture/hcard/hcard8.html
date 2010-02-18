@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hCard 8 - extracting URLs test</title>
+  
+ <!-- This will be replace with one CSS file and one JavaScipt file -->
+  <link rel="stylesheet" href="../css/uftestsuite.css" type="text/css" />
+  <link rel="stylesheet" href="../../../testrunner/css/testrunner.css" type="text/css" />
+  
+  <script type="text/javascript" src="../../testrunner/javascript/prototype-1.6.0.2.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/beautify.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/sumo/microformat.js"></script>
+  <script type="application/javascript;version=1.7" src="http://svn.mozilla.org/labs/operator/chrome/operator/content/Microformats/Microformats.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/testrunner.js"></script>
+   
+  
+</head>
+<body>
+    
+    <div class="test-fixture">
+    
+    <p>
+    <a href="../"><img border="0" id="testsuite-image" alt="Microformats test suite" src="../images/testsuite.gif" /></a><br />
+    </p>
+    
+    <h1 class="summary">hCard 8 - extracting URLs test</h1>
+    <p class="description">This page test that parsers can extract URLs from differnt structures.</p>
+    <p>From: <a href="default.htm"><span class="format">hCard</span> test suite 1.0</a></p>
+    <p class="author vcard">
+        Author: <a class="url fn" href="http://www.glennjones.net/">Glenn Jones</a> 
+    </p>
+    <!--
+    <p>Output examples: 
+    <ul>
+    <li class="output"><a class="url" href="hcard1.js"><span class="type">JSON</span></a></li>
+    <li class="output"><a class="url" href="hcard1.xml"><span class="type">XML</span></a></li>
+    </ul>
+    </p>
+    -->
+    
+    <p>Tests:</p>
+    <table id="assetTable" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+         <tr class="assert">
+            <td class="test">vcard[0].url[0]</td>
+            <td class="result">IsEqualTo("http://example.com/johndoe/")</td>
+            <td class="comment">Should collect the URL from the a element</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vcard[1].url[0]</td>
+            <td class="result">IsEqualTo("http://example.com/johndoe/")</td>
+            <td class="comment">Should collect the URL from the area element</td>
+        </tr>
+
+        <tr class="assert">
+            <td class="test">vcard[2].photo[0]</td>
+            <td class="result">IsEqualTo("http://ufxtract.com/testsuite/images/photo.gif")</td>
+            <td class="comment">Should collect the URL of the image element</td>
+        </tr>
+   
+
+    </tbody>
+    </table> 
+    
+    
+    <p>History:</p>
+    <ul>
+    <li class="history vevent">
+        <span class="summary">Created</span>: <abbr class="dtstart" title="2008-05-10">10 May 2008</abbr> 
+        <span class="description">by Glenn Jones</span>
+    </li>
+    </ul>
+    
+    
+    
+    </div>
+  
+    <div id="uf">
+            <!-- This may not be the best semantic use of HTML element -->
+            
+            <!-- 0 -->
+ 			<p class="vcard">
+		      <span class="fn">John Doe</span> - 
+		      <a href="http://example.com/johndoe/" class="url">Blog</a>: 
+		    </p>
+		    
+		    <!-- 1 -->
+		    <p class="vcard">
+		      	<span class="fn">John Doe</span> - 
+		      	<img src="http://ufxtract.com/testsuite/images/photo.gif" class="photo" usemap="#people"/> 
+				<map id="#people" name="#people">
+					<area class="url" shape ="rect" coords ="0,0,20,20" href="http://example.com/johndoe/" alt="John Doe" />
+				</map>
+		  	</p>
+
+ 		    <!-- 2 -->
+		    <p class="vcard">
+		      <span class="fn">John Doe</span>
+		      <img  src="http://ufxtract.com/testsuite/images/photo.gif" class="photo" /> 
+		    </p>
+		    
+		    <!-- 4 Could not htink of a practical example
+		    <p class="vcard">
+		      <span class="fn">John Doe</span> - 
+		      <object data="http://example.com/johndoe/" class="photo" />
+		    </p>
+		    -->
+
+		   		    
+    </div>
+    
+    <p>
+        <a rel="license" href="../license.txt">Some rights reserved</a>
+    </p>
+        
+  
+</body>
+
+</html>

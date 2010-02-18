@@ -315,6 +315,15 @@ class HCardTest < Test::Unit::TestCase
     end
     
     should 'collect the URL from the a element' do
+      assert_equal 'http://example.com/johndoe/', @vcard.first.url
+    end
+    
+    should 'collect the URL from the area element' do
+      assert_equal 'http://example.com/johndoe/', @vcard[1].url
+    end
+    
+    should 'collect the URL of the image element' do
+      assert_equal 'http://ufxtract.com/testsuite/images/photo.gif', @vcard[2].photo
     end
   end
   
