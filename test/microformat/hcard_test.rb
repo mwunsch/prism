@@ -327,6 +327,33 @@ class HCardTest < Test::Unit::TestCase
     end
   end
   
+  # http://ufxtract.com/testsuite/hcard/hcard5.htm
+  describe 'multiple values in class attribute test' do
+    def self.before_all
+      @doc ||= test_fixture('hcard/hcard5.html')
+      @vcard ||= @@klass.parse(@doc)
+    end
+    
+    setup do
+      @vcard = self.class.before_all
+    end
+    
+    should 'find given-name value even if class attribute has multiple values' do
+      assert_equal 'John', @vcard.n[:given_name]
+    end
+    
+    should 'find category value even if class and rel attribute have multiple values' do
+      assert_equal 'development', @vcard.category[1]
+    end
+    
+    should 'find rev value even if class attribute has multiple values' do
+      assert @vcard.has_property?(:rev)
+      assert_equal 2008, @vcard.rev.year
+      assert_equal 1, @vcard.rev.mon
+      assert_equal 1, @vcard.rev.day
+    end
+  end
+  
   
   
   

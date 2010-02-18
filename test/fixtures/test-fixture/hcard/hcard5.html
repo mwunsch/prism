@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hCard 5 -  multiple values in class attribute test</title>
+  
+ <!-- This will be replace with one CSS file and one JavaScipt file -->
+  <link rel="stylesheet" href="../css/uftestsuite.css" type="text/css" />
+  <link rel="stylesheet" href="../../../testrunner/css/testrunner.css" type="text/css" />
+  
+  <script type="text/javascript" src="../../testrunner/javascript/prototype-1.6.0.2.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/beautify.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/sumo/microformat.js"></script>
+  <script type="application/javascript;version=1.7" src="http://svn.mozilla.org/labs/operator/chrome/operator/content/Microformats/Microformats.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/testrunner.js"></script>
+   
+  
+  <script type="application/javascript;version=1.7" src="http://svn.mozilla.org/labs/operator/chrome/operator/content/Microformats/Microformats.js"></script>
+  
+</head>
+<body>
+    
+    <div class="test-fixture">
+    
+    <p>
+    <a href="../"><img border="0" id="testsuite-image" alt="Microformats test suite" src="../images/testsuite.gif" /></a><br />
+    </p>
+    
+    <h1 class="summary">hCard 5 -  multiple values in class attribute test</h1>
+    <p class="description">This page test that parsers can find a class name where a author has used multiple values in the class attributes. 
+    The IsEqualToISODate method <a href="../documentation/iso-date.htm">normalisation and compares</a> dates.
+    </p>
+    <p>From: <a href="default.htm"><span class="format">hCard</span> test suite 1.0</a></p>
+    <p class="author vcard">
+        Author: <a class="url fn" href="http://www.glennjones.net/">Glenn Jones</a> 
+    </p>
+    <!--
+    <p>Output examples: 
+    <ul>
+    <li class="output"><a class="url" href="hcard1.js"><span class="type">JSON</span></a></li>
+    <li class="output"><a class="url" href="hcard1.xml"><span class="type">XML</span></a></li>
+    </ul>
+    </p>
+    -->
+    
+    <p>Tests:</p>
+    <table id="assetTable" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="assert">
+            <td class="test">vcard[0].n.given-name[0]</td>
+            <td class="result">IsEqualTo("John")</td>
+            <td class="comment">Should find given-name value even if class attribute has multiple values</td>
+        </tr>
+                 <tr class="assert">
+            <td class="test">vcard[0].category[1]</td>
+            <td class="result">IsEqualTo("development")</td>
+            <td class="comment">Should find category value even if class and rel attribute have multiple values</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[0].rev</td>
+            <td class="result">IsEqualToISODate("2008-01-01T13:45:00")</td>
+            <td class="comment">Should find rev value even if class attribute has multiple values</td>
+        </tr>
+       
+ 
+
+    </tbody>
+    </table> 
+    
+    
+    <p>History:</p>
+    <ul>
+    <li class="history vevent">
+        <span class="summary">Created</span>: <abbr class="dtstart" title="2008-04-08">8 April 2008</abbr> 
+        <span class="description">by Glenn Jones</span>
+    </li>
+    </ul>
+    
+    
+    
+    </div>
+  
+    <div id="uf">
+            <!-- This may not be the best semantic use of HTML element -->
+            
+		 <div class="attendee vcard first">
+			 <span class="fn n">
+			 <span class="bold given-name">John</span> 
+			 <span class="family-name">Doe</span>
+			 </span>
+			 
+			<p>Tags: 
+            <a rel="tag next" class="category" href="http://en.wikipedia.org/wiki/design">design</a>, 
+            <a rel="tag" class="category" href="http://en.wikipedia.org/wiki/development">development</a> and
+            <a rel="previous tag" class="category" href="http://en.wikipedia.org/wiki/web">web</a>
+            </p>
+
+			 <div>Last updated: <abbr class="datetime rev" title="2008-01-01T13:45:00">January 1st, 2008 - 13:45</abbr></div>
+
+		 </div>
+ 
+    </div>
+    
+    <p>
+        <a rel="license" href="../license.txt">Some rights reserved</a>
+    </p>
+        
+  
+</body>
+
+</html>
