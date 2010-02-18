@@ -1,13 +1,17 @@
 require File.join(File.dirname(__FILE__), '..', 'test_helper')
 
 class HCardTest < Test::Unit::TestCase
+  @@klass = HMachine::Microformat::HCard
+  
   # http://www.ufxtract.com/testsuite/hcard/hcard1.htm
   describe 'single occurence test' do
+    def self.before_all
+      @doc ||= test_fixture('hcard/hcard1.html')
+      @vcard ||= @@klass.parse_first(@doc)
+    end
+    
     setup do
-      @html = get_fixture('test-fixture/hcard/hcard1.html')
-      @doc = Nokogiri::HTML.parse(@html).css('#uf').first
-      @klass = HMachine::Microformat::HCard
-      @vcard = @klass.parse_first(@doc)
+      @vcard = self.class.before_all
     end
     
     test 'The fn (formatted name) is a singular value' do
@@ -67,11 +71,13 @@ class HCardTest < Test::Unit::TestCase
   
   # http://www.ufxtract.com/testsuite/hcard/hcard2.htm
   describe 'multiple occurence test' do
+    def self.before_all
+      @doc ||= test_fixture('hcard/hcard2.html')
+      @vcard ||= @@klass.parse_first(@doc)
+    end
+    
     setup do
-      @html = get_fixture('test-fixture/hcard/hcard2.html')
-      @doc = Nokogiri::HTML.parse(@html).css('#uf').first
-      @klass = HMachine::Microformat::HCard
-      @vcard = @klass.parse_first(@doc)
+      @vcard = self.class.before_all
     end
     
     test 'The adr (address) is a optional multiple value' do
@@ -158,11 +164,13 @@ class HCardTest < Test::Unit::TestCase
   
   # http://ufxtract.com/testsuite/hcard/hcard3.htm
   describe 'adr single and multiple occurence test' do
+    def self.before_all
+      @doc ||= test_fixture('hcard/hcard3.html')
+      @vcard ||= @@klass.parse_first(@doc)
+    end
+    
     setup do
-      @html = get_fixture('test-fixture/hcard/hcard3.html')
-      @doc = Nokogiri::HTML.parse(@html).css('#uf').first
-      @klass = HMachine::Microformat::HCard
-      @vcard = @klass.parse_first(@doc)
+      @vcard = self.class.before_all
     end
     
     test 'The type is a optional multiple value.' do
@@ -200,11 +208,13 @@ class HCardTest < Test::Unit::TestCase
   
   # http://ufxtract.com/testsuite/hcard/hcard4.htm
   describe 'n single and multiple occurence test' do
+    def self.before_all
+      @doc ||= test_fixture('hcard/hcard4.html')
+      @vcard ||= @@klass.parse_first(@doc)
+    end
+    
     setup do
-      @html = get_fixture('test-fixture/hcard/hcard4.html')
-      @doc = Nokogiri::HTML.parse(@html).css('#uf').first
-      @klass = HMachine::Microformat::HCard
-      @vcard = @klass.parse_first(@doc)
+      @vcard = self.class.before_all
     end
     
     test 'The honorific-prefix is a optional multiple value' do
@@ -230,11 +240,13 @@ class HCardTest < Test::Unit::TestCase
   
   # http://ufxtract.com/testsuite/hcard/hcard6.htm
   describe 'extracting email addresses text' do
+    def self.before_all
+      @doc ||= test_fixture('hcard/hcard6.html')
+      @vcard ||= @@klass.parse(@doc)
+    end
+    
     setup do
-      @html = get_fixture('test-fixture/hcard/hcard6.html')
-      @doc = Nokogiri::HTML.parse(@html).css('#uf').first
-      @klass = HMachine::Microformat::HCard
-      @vcard = @klass.parse(@doc)
+      @vcard = self.class.before_all
     end
     
     should 'collect the email address from href attribute' do
@@ -265,11 +277,13 @@ class HCardTest < Test::Unit::TestCase
   
   # http://ufxtract.com/testsuite/hcard/hcard7.htm
   describe 'extracting tel number test' do
+    def self.before_all
+      @doc ||= test_fixture('hcard/hcard7.html')
+      @vcard ||= @@klass.parse(@doc)
+    end
+    
     setup do
-      @html = get_fixture('test-fixture/hcard/hcard7.html')
-      @doc = Nokogiri::HTML.parse(@html).css('#uf').first
-      @klass = HMachine::Microformat::HCard
-      @vcard = @klass.parse(@doc)
+      @vcard = self.class.before_all
     end
     
     should 'collect the telephone number from the node text' do
@@ -289,6 +303,20 @@ class HCardTest < Test::Unit::TestCase
     end
   end
   
+  # http://ufxtract.com/testsuite/hcard/hcard8.htm
+  describe 'extracting URLs test' do
+    def self.before_all
+      @doc ||= test_fixture('hcard/hcard8.html')
+      @vcard ||= @@klass.parse(@doc)
+    end
+    
+    setup do
+      @vcard = self.class.before_all
+    end
+    
+    should 'collect the URL from the a element' do
+    end
+  end
   
   
   
