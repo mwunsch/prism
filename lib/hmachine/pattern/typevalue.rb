@@ -9,18 +9,11 @@ module HMachine
       
       extract do |node|
         if found_in?(node)
+          types_and_values = {}
           element = find_in(node)
           types = element.collect {|type| HMachine.normalize Pattern::ValueClass.extract_from(type.unlink) }
-          type = (types.length == 1) ? types.first : types
-          type_value = {}
-          if type.respond_to?(:collect)
-            type.each do |key|
-              type_value[key] = get_value(node)
-            end
-          else
-            type_value[type] = get_value(node)
-          end
-          type_value
+          types = (types.length == 1) ? types.first : types
+          {:type => types, :value => get_value(node)}
         else
           get_value(node)
         end

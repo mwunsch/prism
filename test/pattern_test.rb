@@ -41,9 +41,11 @@ class PatternTest < Test::Unit::TestCase
 	      <span class="type">internet</span> 
 	      <a href="mailto:notthis@example.com">john@example.com</a>
       </span>})
-      type_value = HMachine::Pattern::TypeValue.extract_from(html)
-      assert type_value.has_key?(:internet)
-      assert_equal 'john@example.com', type_value[:internet]
+      doc = html.css('.email').first
+      type_value = HMachine::Pattern::TypeValue.extract_from(doc)
+      assert type_value.has_key?(:type)
+      assert_equal :internet, type_value[:type]
+      assert_equal 'john@example.com', type_value[:value]
     end
   end
   

@@ -251,7 +251,7 @@ class HCardTest < Test::Unit::TestCase
     end
     
     should 'find the type value. types are case insensitive' do
-      assert @vcard[3].email.has_key?(:internet)
+      assert_equal :internet, @vcard[3].email[1][:type]
     end
     
     should 'not contain querystring "?subject=parser-test"' do
@@ -259,7 +259,7 @@ class HCardTest < Test::Unit::TestCase
     end
     
     test 'Where a type is specified, but the value is not then the node text is the value' do
-      assert_equal 'john@example.com', @vcard[6].email.values.first
+      assert_equal 'john@example.com', @vcard[6].email[:value]
     end
   end
   
@@ -277,15 +277,15 @@ class HCardTest < Test::Unit::TestCase
     end
     
     should 'collect the telephone number from a descendant node with value property' do
-      assert_equal "01273 700100", @vcard[1].tel[:pref]
+      assert_equal "01273 700100", @vcard[1].tel[:value]
     end
     
     should 'find the type value' do
-      assert @vcard[2].tel.keys.include?(:pcs)
+      assert @vcard[2].tel.first[:type].include?(:pcs)
     end
     
     test 'Where a type is specified, but the value is not then the node text is the value' do
-      assert_equal '01273 700301', @vcard[4].tel[:home]
+      assert_equal '01273 700301', @vcard[4].tel[:value]
     end
   end
   
