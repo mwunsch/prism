@@ -85,13 +85,9 @@ module HMachine
   # Parse the document, finding every instance of the desired element, and extract their contents
   def parse(document)
     if found_in?(document)
-      element_hash = {}
       contents = find_in(document).collect do |element|
-        values = extract_from(element)
-        element_hash.merge!(values) if values.respond_to?(:keys)
-        values
+        extract_from(element)
       end
-      return element_hash unless element_hash.empty?
       (contents.length == 1) ? contents.first : contents
     end
   end
