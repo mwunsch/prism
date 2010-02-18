@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hCard 17 -  implied organization-name optimization test</title>
+  
+   <!-- This will be replace with one CSS file and one JavaScipt file -->
+  <link rel="stylesheet" href="../css/uftestsuite.css" type="text/css" />
+  <link rel="stylesheet" href="../../testrunner/css/testrunner.css" type="text/css" />
+  
+  <script type="text/javascript" src="../../testrunner/javascript/prototype-1.6.0.2.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/beautify.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/sumo/microformat.js"></script>
+  <script type="application/javascript;version=1.7" src="http://svn.mozilla.org/labs/operator/chrome/operator/content/Microformats/Microformats.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/testrunner.js"></script>
+      
+</head>
+<body>
+    
+    <div class="test-fixture">
+    
+    <p>
+    <a href="../"><img border="0" id="testsuite-image" alt="Microformats test suite" src="../images/testsuite.gif" /></a><br />
+    </p>
+    
+    <h1 class="summary">hCard 17 -  implied organization-name optimization test</h1>
+    <p class="description">This page was design to test the implied "org" optimization which is explained 
+    on the wiki <a href="http://microformats.org/wiki/hcard#Implied_.22organization-name.22_Optimization">http://microformats.org/wiki/hcard#Implied_.22organization-name.22_Optimization</a>. 
+    Examples copied from the original test suite.
+    </p>
+    <p>From: <a href="default.htm"><span class="format">hCard</span> test suite 1.0</a></p>
+    <p class="author vcard">
+        Author: <a class="url fn" href="http://www.glennjones.net/">Glenn Jones</a> 
+    </p>
+    <!--
+    <p>Output examples: 
+    <ul>
+    <li class="output"><a class="url" href="hcard1.js"><span class="type">JSON</span></a></li>
+    <li class="output"><a class="url" href="hcard1.xml"><span class="type">XML</span></a></li>
+    </ul>
+    </p>
+    -->
+    
+    <p>Tests:</p>
+    <table id="assetTable" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="assert">
+            <td class="test">vcard[0].org[0].organization-name</td>
+            <td class="result">IsEqualTo("World Wide Web Consortium")</td>
+            <td class="comment">The organization-name value is implied from the org value</td>
+        </tr>
+         <tr class="assert">
+            <td class="test">vcard[1].org[0].organization-name</td>
+            <td class="result">IsEqualTo("World Wide Web Consortium")</td>
+            <td class="comment">The organization-name value is implied from the org value</td>
+        </tr>
+         <tr class="assert">
+            <td class="test">vcard[2].org[0].organization-name</td>
+            <td class="result">IsEqualTo("World Wide Web Consortium")</td>
+            <td class="comment">The organization-name value is implied from the org value</td>
+        </tr>
+         <tr class="assert">
+            <td class="test">vcard[3].org[0].organization-name</td>
+            <td class="result">IsEqualTo("World Wide Web Consortium")</td>
+            <td class="comment">The organization-name value is implied from the org value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[4].org[0].organization-name</td>
+            <td class="result">IsEqualTo("World Wide Web Consortium")</td>
+            <td class="comment">The organization-name value is implied from the org value</td>
+        </tr>
+         <tr class="assert">
+            <td class="test">vcard[5].org[0].organization-name</td>
+            <td class="result">IsEqualTo("World Wide Web Consortium")</td>
+            <td class="comment">The organization-name value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vcard[6].org[0].organization-name</td>
+            <td class="result">IsEqualTo("World Wide Web Consortium")</td>
+            <td class="comment">The organization-name value</td>
+        </tr>
+
+    </tbody>
+    </table> 
+    
+    
+    <p>History:</p>
+    <ul>
+    <li class="history vevent">
+        <span class="summary">Created</span>: <abbr class="dtstart" title="2008-06-01">1 June 2008</abbr> 
+        <span class="description">by Glenn Jones</span>
+    </li>
+    </ul>
+    
+    
+    
+    </div>
+  
+    <div id="uf">
+            <!-- This may not be the best semantic use of HTML element -->
+            
+            <!-- 0 -->
+       		<div class="vcard">
+			<div class="fn org">World Wide Web Consortium</div>
+			</div>
+			
+			<!-- 1 -->
+			<div class="vcard">
+			 <div class="fn">John Doe</div>
+			 <div class="org">World Wide Web Consortium</div>
+			</div>
+			
+			<!-- 2 -->
+			<div class="vcard">
+			 <img class="fn" src="http://www.ufxtract.com/testsuite/images/logo.gif" alt="W3C" />
+			 <div class="org">World Wide Web Consortium</div>
+			</div>
+			
+			<!-- 3 -->
+			<div class="vcard">
+			 <img class="fn org" src="http://www.ufxtract.com/testsuite/images/logo.gif"
+			      alt="World Wide Web Consortium" />
+			</div>
+			
+			<!-- 4 -->
+			<div class="vcard">
+			  <abbr class="fn org" title="World Wide Web Consortium">W3C</abbr>
+			</div>
+			
+			<!-- 5 -->
+			<div class="vcard">
+			 <div class="fn">John Doe</div>
+			 <div class="org">
+			 	<div class="organization-name">World Wide Web Consortium</div>
+			 </div>
+			</div>
+			
+			<!-- 6 -->
+			<div class="vcard">
+			 <div class="fn">John Doe</div>
+			 <div class="org">
+			 	<div class="organization-unit">HTML Working Group</div>, 
+			 	<div class="organization-name">World Wide Web Consortium</div>
+			 </div>
+			</div>
+	
+
+    </div>
+    
+    <p>
+        <a rel="license" href="../license.txt">Some rights reserved</a>
+    </p>
+        
+  
+</body>
+
+</html>

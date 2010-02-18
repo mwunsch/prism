@@ -463,6 +463,29 @@ class HCardTest < Test::Unit::TestCase
     end
   end
   
-  
+  # http://ufxtract.com/testsuite/hcard/hcard17.htm
+  describe 'implied organization-name optimization test' do
+    def self.before_all
+      @doc ||= test_fixture('hcard/hcard17.html')
+      @vcard ||= @@klass.parse(@doc)
+    end
+    
+    setup do
+      @vcard = self.class.before_all
+    end
+    
+    test 'The organization-name value is implied from the org value' do
+      assert_equal 'World Wide Web Consortium', @vcard[0].org[:organization_name]
+      assert_equal 'World Wide Web Consortium', @vcard[1].org[:organization_name]
+      assert_equal 'World Wide Web Consortium', @vcard[2].org[:organization_name]
+      assert_equal 'World Wide Web Consortium', @vcard[3].org[:organization_name]                  
+      assert_equal 'World Wide Web Consortium', @vcard[4].org[:organization_name]      
+    end
+    
+    test 'The organization name value' do
+      assert_equal 'World Wide Web Consortium', @vcard[5].org[:organization_name]      
+      assert_equal 'World Wide Web Consortium', @vcard[6].org[:organization_name]      
+    end
+  end
 
 end

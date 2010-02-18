@@ -46,6 +46,14 @@ module HMachine
             
       has_many :org do |org|
         org.has_one :organization_name, :organization_unit
+        org.extract do |node|
+          if org.properties[:organization_name].found_in?(node)
+            org.property_hash(node)
+          else
+            {:organization_name => Pattern::ValueClass.extract_from(node)}
+          end
+        end
+        
       end
       
       has_one :n do |n|
