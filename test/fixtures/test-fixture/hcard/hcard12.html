@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hCard 12 - abbr (abbreviation) element test</title>
+  
+ <!-- This will be replace with one CSS file and one JavaScipt file -->
+  <link rel="stylesheet" href="../css/uftestsuite.css" type="text/css" />
+  <link rel="stylesheet" href="../../../testrunner/css/testrunner.css" type="text/css" />
+  
+  <script type="text/javascript" src="../../testrunner/javascript/prototype-1.6.0.2.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/beautify.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/sumo/microformat.js"></script>
+  <script type="application/javascript;version=1.7" src="http://svn.mozilla.org/labs/operator/chrome/operator/content/Microformats/Microformats.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/testrunner.js"></script>
+     
+</head>
+<body>
+    
+    <div class="test-fixture">
+    
+    <p>
+    <a href="../"><img border="0" id="testsuite-image" alt="Microformats test suite" src="../images/testsuite.gif" /></a><br />
+    </p>
+    
+    <h1 class="summary">hCard 12 - abbr (abbreviation) element test</h1>
+    <p class="description">This page was design to comprehensively test the use of the abbreviation element.</p>
+    <p>From: <a href="default.htm"><span class="format">hCard</span> test suite 1.0</a></p>
+    <p class="author vcard">
+        Author: <a class="url fn" href="http://www.glennjones.net/">Glenn Jones</a> 
+    </p>
+    <!--
+    <p>Output examples: 
+    <ul>
+    <li class="output"><a class="url" href="hcard1.js"><span class="type">JSON</span></a></li>
+    <li class="output"><a class="url" href="hcard1.xml"><span class="type">XML</span></a></li>
+    </ul>
+    </p>
+    -->
+    
+    <p>Tests:</p>
+    <table id="assetTable" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+         <tr class="assert">
+            <td class="test">vcard[0].fn</td>
+            <td class="result">IsEqualTo("John Doe")</td>
+            <td class="comment">Should take the value from the abbr title attribute</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vcard[0].n.honorific-prefix[0]</td>
+            <td class="result">IsEqualTo("Mister")</td>
+            <td class="comment">Should take the value from the abbr title attribute</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vcard[0].n.given-name[0]</td>
+            <td class="result">IsEqualTo("Jonathan")</td>
+            <td class="comment">Should take the value from the abbr title attribute</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vcard[0].n.additional-name[0]</td>
+            <td class="result">IsEqualTo("John")</td>
+            <td class="comment">Should take the value from the abbr title attribute</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vcard[0].nickname</td>
+            <td class="result">IsEqualTo("JJ")</td>
+            <td class="comment">Should take the value from the abbr title attribute</td>
+        </tr>
+        
+         <tr class="assert">
+            <td class="test">vcard[0].adr[0].street-address[0]</td>
+            <td class="result">IsEqualTo("123 Fake Street")</td>
+            <td class="comment">Should take the value from the abbr title attribute</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vcard[0].adr[0].type[0]</td>
+            <td class="result">IsEqualToCaseInsensitive("WORK")</td>
+            <td class="comment">Should take the value from the abbr title attribute</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vcard[0].tel[0].value</td>
+            <td class="result">IsEqualToPhoneNumber("4155551234")</td>
+            <td class="comment">Should take the value from the abbr title attribute</td>
+        </tr>
+
+
+    </tbody>
+    </table> 
+    
+    
+    <p>History:</p>
+    <ul>
+	    <li class="history vevent">
+	        <span class="summary">Created</span>: <abbr class="dtstart" title="2008-05-15">15 May 2008</abbr> 
+	        <span class="description">by Glenn Jones</span>
+	    </li>
+    </ul>
+    
+    
+    
+    </div>
+  
+    <div id="uf">
+        <!-- This may not be the best semantic use of HTML element -->
+            
+    		<!-- 0 -->
+		    <p class="vcard">
+
+		      <abbr class="fn" title="John Doe">foo</abbr>
+		      <span class="n">
+		        <abbr class="honorific-prefix" title="Mister">Mr.</abbr>
+		        <abbr class="given-name" title="Jonathan">John</abbr>
+		        <abbr class="additional-name" title="John">J</abbr>
+		        <abbr class="family-name" title="Doe-Smith">Doe</abbr>
+		        <abbr class="honorific-suffix" title="Medical Doctor">M.D</abbr>
+		      </span>
+		      
+		      <abbr class="nickname" title="JJ">jj</abbr>
+		      <abbr class="bday" title="2006-04-04">April 4, 2006</abbr>
+		      
+		      <span class="adr">
+		        <abbr class="post-office-box" title="Box 1234">B. 1234</abbr>
+		        <abbr class="extended-address" title="Suite 100">Ste. 100</abbr>
+		        <abbr class="street-address" title="123 Fake Street">123 Fake St.</abbr>
+		        <abbr class="locality" title="San Francisco">San Fran</abbr>
+		        <abbr class="region" title="California">CA</abbr>
+		        <abbr class="postal-code" title="12345-6789">12345</abbr>
+		        <abbr class="country-name" title="United States of America">USA</abbr>
+		        <abbr class="type" title="work">workplace</abbr>
+		      </span>
+		      
+		      <abbr class="tel" title="415.555.1234">1234</abbr>
+		      <abbr class="tel-type-value" title="work">workplace</abbr>
+
+		      <abbr class="tz" title="-0700">Pacific Time</abbr>
+		      <span class="geo">
+		        <abbr class="latitude" title="37.77">Northern</abbr>
+		        <abbr class="longitude" title="-122.41">California</abbr>
+		      </span>
+		      <abbr class="title" title="President">pres.</abbr> and
+		      <abbr class="role" title="Chief">cat wrangler</abbr>
+
+		      <span class="org">
+		        <abbr class="organization-name" title="Intellicorp">foo</abbr>
+		        <abbr class="organization-unit" title="Intelligence">bar</abbr>
+		      </span>
+
+		      <abbr class="note" title="this is a note">this is not a note</abbr>
+		      <abbr class="uid" title="abcdefghijklmnopqrstuvwxyz">alpha</abbr>
+		      <abbr class="class" title="public">pub</abbr>
+			</p>		
+   		    
+    </div>
+    
+    
+    <p>
+        <a rel="license" href="../license.txt">Some rights reserved</a>
+    </p>
+        
+  
+</body>
+
+</html>

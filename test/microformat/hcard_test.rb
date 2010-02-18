@@ -378,9 +378,28 @@ class HCardTest < Test::Unit::TestCase
     end
   end
   
-  
-  
-  
+  # http://ufxtract.com/testsuite/hcard/hcard12.htm
+  describe 'abbr element test' do
+    def self.before_all
+      @doc ||= test_fixture('hcard/hcard12.html')
+      @vcard ||= @@klass.parse(@doc)
+    end
+    
+    setup do
+      @vcard = self.class.before_all
+    end
+    
+    should 'take the value from the abbr title attribute' do
+      assert_equal 'John Doe', @vcard.fn
+      assert_equal 'Mister', @vcard.n[:honorific_prefix]
+      assert_equal 'Jonathan', @vcard.n[:given_name]
+      assert_equal 'John', @vcard.n[:additional_name]
+      assert_equal 'JJ', @vcard.nickname
+      assert_equal '123 Fake Street', @vcard.adr[:work][:street_address]
+      assert @vcard.adr.has_key?(:work)
+      assert_equal "415.555.1234", @vcard.tel
+    end
+  end  
   
   
 
