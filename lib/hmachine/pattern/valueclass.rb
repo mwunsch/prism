@@ -24,10 +24,12 @@ module HMachine
       
       def self.get_values(node)
         find_in(node).collect do |val|
-          if (val.node_name.eql?('img') || val.node_name.eql?('area')) && val['alt']
-            val['alt']
+          if ((val.node_name.eql?('img') || val.node_name.eql?('area')) && val['alt'])
+            val['alt'].strip
+          elsif (val.node_name.eql?('object') && val['data'])
+            val['data'].strip
           elsif (Abbr.valid?(val) || val.matches?('.value-title'))
-            val['title']
+            val['title'].strip
           else
             val.content.strip
           end
@@ -35,8 +37,10 @@ module HMachine
       end
       
       def self.get_text(node)
-        if (node.node_name.eql?('img') && node['alt'])
+        if ((node.node_name.eql?('img') || node.node_name.eql?('area')) && node['alt'])
           node['alt'].strip
+        elsif (node.node_name.eql?('object') && node['data'])
+          node['data'].strip
         else
           node.content.strip
         end

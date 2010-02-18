@@ -399,7 +399,27 @@ class HCardTest < Test::Unit::TestCase
       assert @vcard.adr.has_key?(:work)
       assert_equal "415.555.1234", @vcard.tel
     end
-  end  
+  end
+  
+  # http://ufxtract.com/testsuite/hcard/hcard9.htm
+  describe 'extracting geo singular and paired values test' do
+    def self.before_all
+      @doc ||= test_fixture('hcard/hcard9.html')
+      @vcard ||= @@klass.parse(@doc)
+    end
+    
+    setup do
+      @vcard = self.class.before_all
+    end
+    
+    should 'find latitude value from single element' do
+      assert_equal '37.77', @vcard[0].geo[:latitude]
+    end
+    
+    should 'extract latitude value from paired value' do
+      assert_equal '37.77', @vcard[1].geo[:latitude]
+    end
+  end
   
   
 
