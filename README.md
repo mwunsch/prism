@@ -10,11 +10,14 @@ It is not even close to ready, yet.
 
 + [Nokogiri](http://github.com/tenderlove/nokogiri)
 
-## What hMachine should/will be:
+## What hMachine is:
 
 + A robust microformat parser
-+ A CLI for fetching microformats from a url or a string of html
 + A DSL for defining semantic markup patterns
+
+## What hMachine should/will do:
+
++ A CLI for fetching microformats from a url or a string of html
 + Export microformats to other standards. hCard => vCard.
 + HTML outliner (using HTML5 sectioning)
 + Extensions so you can do something like: `String.is_a_valid? :hcard` in your tests
@@ -31,8 +34,8 @@ Maybe more than that. It should be your lowercase semantic web friend.
 + [XOXO](http://microformats.org/wiki/xoxo)
 + [XMDP](http://microformats.org/wiki/XMDP)
 + [geo](http://microformats.org/wiki/geo)
-
-Working on hCard.
++ [adr](http://microformats.org/wiki/adr)
++ [hCard](http://microformats.org/wiki/hcard)
 
 ## POSH DSL
 
