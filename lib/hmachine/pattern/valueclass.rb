@@ -18,7 +18,7 @@ module HMachine
         elsif Abbr.valid?(node)
           Abbr.extract_from(node)
         else
-          node.content.strip
+          get_text(node)
         end
       end
       
@@ -31,6 +31,14 @@ module HMachine
           else
             val.content.strip
           end
+        end
+      end
+      
+      def self.get_text(node)
+        if (node.node_name.eql?('img') && node['alt'])
+          node['alt'].strip
+        else
+          node.content.strip
         end
       end
       

@@ -354,6 +354,30 @@ class HCardTest < Test::Unit::TestCase
     end
   end
   
+  # http://ufxtract.com/testsuite/hcard/hcard11.htm
+  describe 'img element test' do
+    def self.before_all
+      @doc ||= test_fixture('hcard/hcard11.html')
+      @vcard ||= @@klass.parse(@doc)
+    end
+    
+    setup do
+      @vcard = self.class.before_all
+    end
+    
+    test 'The fn value should be taken from the alt attribute on a img element' do
+      assert_equal 'John Doe', @vcard[0].fn
+    end
+    
+    test 'The given-name value should implied from the alt attribute' do
+      assert_equal 'John', @vcard[1].n[:given_name]
+    end
+    
+    test 'The family-name value should implied from the alt attribute' do
+      assert_equal 'Doe', @vcard[2].n[:family_name]
+    end
+  end
+  
   
   
   
