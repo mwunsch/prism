@@ -3,6 +3,21 @@ require File.join(File.dirname(__FILE__), '..', 'test_helper')
 class HCardTest < Test::Unit::TestCase
   @@klass = HMachine::Microformat::HCard
   
+  describe 'non test-fixture tests' do
+    def self.before_all
+      @doc ||= Nokogiri.parse(get_fixture('hcard/commercenet.html'))
+      @vcard ||= @@klass.parse(@doc)
+    end
+    
+    setup do
+      @vcard = self.class.before_all
+    end
+    
+    should 'be an organization' do
+      assert @vcard.organization?
+    end
+  end 
+  
   # http://www.ufxtract.com/testsuite/hcard/hcard1.htm
   describe 'single occurence test' do
     def self.before_all

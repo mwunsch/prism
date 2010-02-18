@@ -98,7 +98,7 @@ module HMachine
       end
       
       def organization?
-        fn == org
+        fn == org[:organization_name]
       end
       alias company? organization?
             
