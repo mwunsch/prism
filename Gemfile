@@ -1,9 +1,11 @@
+source :gemcutter
+
 gem 'nokogiri'
 
-only :test do
+group :test do
 	gem 'rake'
 	gem 'contest'
 	gem 'redgreen'
+	gem 'fakeweb'
+	gem 'jeweler'
 end
-
-bin_path 'vendor/bin'

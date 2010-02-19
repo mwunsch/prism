@@ -1,0 +1,51 @@
+--- 
+dependencies: 
+  fakeweb: 
+    group: 
+    - :test
+    version: ">= 0"
+  rake: 
+    group: 
+    - :test
+    version: ">= 0"
+  contest: 
+    group: 
+    - :test
+    version: ">= 0"
+  jeweler: 
+    group: 
+    - :test
+    version: ">= 0"
+  redgreen: 
+    group: 
+    - :test
+    version: ">= 0"
+  nokogiri: 
+    group: 
+    - :default
+    version: ">= 0"
+specs: 
+- nokogiri: 
+    version: 1.4.1
+- json_pure: 
+    version: 1.2.0
+- git: 
+    version: 1.2.5
+- redgreen: 
+    version: 1.2.2
+- rubyforge: 
+    version: 2.0.3
+- rake: 
+    version: 0.8.7
+- gemcutter: 
+    version: 0.3.0
+- jeweler: 
+    version: 1.4.0
+- contest: 
+    version: 0.1.2
+- fakeweb: 
+    version: 1.2.8
+hash: a411a98d29121a4b1d05b9fbe457c6e068325a09
+sources: 
+- Rubygems: 
+    uri: http://gemcutter.org
