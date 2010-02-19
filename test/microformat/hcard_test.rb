@@ -19,7 +19,6 @@ class HCardTest < Test::Unit::TestCase
     
     should 'convert to a vcard' do
       assert_respond_to @vcard, :to_vcard
-      File.open('/Users/mwunsch/Desktop/test.vcf','w') {|f| f.write(@vcard.to_vcard) }
     end
   end 
   

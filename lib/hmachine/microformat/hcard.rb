@@ -32,7 +32,7 @@ module HMachine
         end
       end
       
-      has_many :email, :tel do |email_and_tel|        
+      has_many :email, :tel do |email_and_tel|
         email_and_tel.extract :typevalue
       end
       
@@ -100,6 +100,7 @@ module HMachine
       alias company? organization?
       
       # http://tools.ietf.org/html/rfc2426
+      # TODO: Make this less ugly
       def to_vcard
         @vcard ||= ''
         if @vcard.empty?
@@ -161,7 +162,7 @@ module HMachine
           values.respond_to?(:join) ? values.join(',') : values.to_s.strip
         end
         
-        def type_value_vcard(communication)          
+        def type_value_vcard(communication)
           if communication.respond_to?(:keys)
             _comm = ";TYPE=#{join_vcard_values(communication[:type])}:#{communication[:value]}"
           else
