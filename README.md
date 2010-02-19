@@ -14,14 +14,15 @@ It is not even close to ready, yet.
 
 + A robust microformat parser
 + A DSL for defining semantic markup patterns
++ Export microformats to other standards:
+	+ hCard => vCard
 
 ## What hMachine should/will do:
 
 + A CLI for fetching microformats from a url or a string of html
-+ Export microformats to other standards. hCard => vCard.
 + HTML outliner (using HTML5 sectioning)
 + Extensions so you can do something like: `String.is_a_valid? :hcard` in your tests
-+ Extensions to turn Ruby objects into semantic HTML. Hash.to_definition_list, Arrays.to_ordered_list, etc. 
++ Extensions to turn Ruby objects into semantic HTML. Hash.to_definition_list, Array.to_ordered_list, etc. 
 
 Maybe more than that. It should be your lowercase semantic web friend.
 
