@@ -2,7 +2,8 @@ require 'uri'
 require 'nokogiri'
 
 module HMachine
-  VERSION = "0.0.1"  
+  VERSION = "0.0.1"
+  PRODID = "-//markwunsch.com//hMachine #{VERSION}//EN"
   # def self.find(document)
   #   html = get_document(document)
   #   Microformat.find_all html

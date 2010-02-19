@@ -16,6 +16,11 @@ class HCardTest < Test::Unit::TestCase
     should 'be an organization' do
       assert @vcard.organization?
     end
+    
+    should 'convert to a vcard' do
+      assert_respond_to @vcard, :to_vcard
+      File.open('/Users/mwunsch/Desktop/test.vcf','w') {|f| f.write(@vcard.to_vcard) }
+    end
   end 
   
   # http://www.ufxtract.com/testsuite/hcard/hcard1.htm
@@ -189,35 +194,35 @@ class HCardTest < Test::Unit::TestCase
     end
     
     test 'The type is a optional multiple value.' do
-      assert @vcard.adr.has_key?(:work)
+      assert @vcard.adr.type.eql?(:work)
     end
     
     test 'The post-office-box is a optional singular value' do
-      assert_equal 'PO Box 46', @vcard.adr[:work].post_office_box
+      assert_equal 'PO Box 46', @vcard.adr.post_office_box
     end
     
     test 'The street-address is a optional multiple value' do
-      assert_equal 'West Street', @vcard.adr[:work].street_address[1]
+      assert_equal 'West Street', @vcard.adr.street_address[1]
     end
     
     test 'The extended-address is a optional singular value' do
-      assert_equal 'Suite 2', @vcard.adr[:work].extended_address
+      assert_equal 'Suite 2', @vcard.adr.extended_address
     end
     
     test 'The region is a optional singular value' do
-      assert_equal 'East Sussex', @vcard.adr[:work].region
+      assert_equal 'East Sussex', @vcard.adr.region
     end
     
     test 'The locality is a optional singular value' do
-      assert_equal 'Brighton', @vcard.adr[:work].locality
+      assert_equal 'Brighton', @vcard.adr.locality
     end
     
     test 'The postal-code is a optional singular value' do
-      assert_equal 'BN1 3DF', @vcard.adr[:work].postal_code
+      assert_equal 'BN1 3DF', @vcard.adr.postal_code
     end
     
     test 'The country-name is a optional singular value' do
-      assert_equal 'United Kingdom', @vcard.adr[:work].country_name
+      assert_equal 'United Kingdom', @vcard.adr.country_name
     end
   end
   
@@ -410,8 +415,8 @@ class HCardTest < Test::Unit::TestCase
       assert_equal 'Jonathan', @vcard.n[:given_name]
       assert_equal 'John', @vcard.n[:additional_name]
       assert_equal 'JJ', @vcard.nickname
-      assert_equal '123 Fake Street', @vcard.adr[:work][:street_address]
-      assert @vcard.adr.has_key?(:work)
+      assert_equal '123 Fake Street', @vcard.adr[:street_address]
+      assert @vcard.adr[:type].eql?(:work)
       assert_equal "415.555.1234", @vcard.tel
     end
   end
