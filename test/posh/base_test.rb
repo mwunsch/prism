@@ -48,6 +48,7 @@ class PoshBaseTest < Test::Unit::TestCase
     setup do
       @klass = Class.new(HMachine::POSH::Base)
       property = 'vcard'
+      @doc = Nokogiri.parse(@html, 'http://foobar.com/')
       @klass.search { |doc| doc.css(".#{property}") }
       @klass.validate { |node| node['class'] && node['class'].split(' ').include?(property) }
       @node = @klass.find_in(@doc).first
