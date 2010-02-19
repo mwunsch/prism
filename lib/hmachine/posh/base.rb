@@ -36,11 +36,12 @@ module HMachine
         end
       end
       
-      attr_reader :node, :parent
+      attr_reader :node, :parent, :source
       
       def initialize(node, parent=nil)
         raise 'Uh OH' unless self.class.valid?(node)
         @node = node
+        @source = node.document.url if node.document.url
         @parent = parent if parent
         @first_node = self.class.remove_nested(node.dup)
       end

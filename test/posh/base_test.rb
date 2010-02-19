@@ -3,7 +3,7 @@ require File.join(File.dirname(__FILE__), '..', 'test_helper')
 class PoshBaseTest < Test::Unit::TestCase
   setup do
     @html = get_fixture('hcard/commercenet.html')
-    @doc = Nokogiri.parse(@html)
+    @doc = Nokogiri.parse(@html, 'http://foobar.com/')
   end
   
   describe 'Inheritance' do
@@ -100,6 +100,12 @@ class PoshBaseTest < Test::Unit::TestCase
       assert_respond_to vcard, :fn
       assert_respond_to vcard, :tel
       assert !vcard.respond_to?(:foobar)
+    end
+    
+    should 'recall the source (url) of the document' do
+      vcard = @klass.new(@node)
+      assert_respond_to vcard, :source
+      assert_equal 'http://foobar.com/', vcard.source
     end
     
   end
