@@ -9,15 +9,17 @@ rescue LoadError
 end
 
 require 'test/unit'
-
-lib_path = File.join(File.dirname(__FILE__), '..', 'lib')
-$LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
-
 require 'contest'
 require 'redgreen'
 require 'fakeweb'
 
-require 'hmachine'
+begin
+  require 'hmachine'
+rescue LoadError
+  lib_path = File.join(File.dirname(__FILE__), '..', 'lib')
+  $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
+  require 'hmachine'
+end
 
 def get_fixture(filename)
   open(File.join(File.dirname(__FILE__), 'fixtures', "#{filename}")).read
