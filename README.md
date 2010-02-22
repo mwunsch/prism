@@ -17,14 +17,14 @@ It is not even close to ready, yet.
 + Export microformats to other standards:
 	+ hCard => vCard
 
-## What hMachine should/will do:
+It is your lowercase semantic web friend.
+
+## Feature wishlist:
 
 + A CLI for fetching microformats from a url or a string of html
 + HTML outliner (using HTML5 sectioning)
 + Extensions so you can do something like: `String.is_a_valid? :hcard` in your tests
 + Extensions to turn Ruby objects into semantic HTML. Hash.to_definition_list, Array.to_ordered_list, etc. 
-
-Maybe more than that. It should be your lowercase semantic web friend.
 
 ## Microformats supported (right now, as of this very moment)
 
@@ -37,6 +37,38 @@ Maybe more than that. It should be your lowercase semantic web friend.
 + [geo](http://microformats.org/wiki/geo)
 + [adr](http://microformats.org/wiki/adr)
 + [hCard](http://microformats.org/wiki/hcard)
+
+## Finding Microformats:
+	
+	# All microformats
+	HMachine.find 'http://foobar.com'
+	
+	# A specific microformat
+	HMachine.find 'http://foobar.com', :hcard
+	
+	# Search HTML too
+	HMachine.find big_string_of_html
+	
+### Parsing Microformats:
+
+	twitter_contacts = HMachine.find 'http://twitter.com', :hcard
+	me = twitter_contacts.first
+	me.fn
+	#=> "Mark Wunsch"
+	me.n[:family_name]
+	#=> "Wunsch"
+	me.url
+	#=> "http://markwunsch.com/"
+	File.open('mark.vcf','w') {|f| f.write me.to_vcard }
+	## Add me to your address book!
+	
+## TODO:
+
++ Handle nested microformats better (I like HMachine::Pattern::ValueClass's search implementation the best)
++ Code is ugly. Especially XOXO.
++ Better recursive parsing of trees. See above.
++ Tests are all kinds of disorganized.
++ Broader support for some of the weirder Patterns, like object[data]
 
 ## POSH DSL
 
