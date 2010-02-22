@@ -43,7 +43,11 @@ module HMachine
       end
       alias me? identity?
       alias met? physical?
-    
+      
+      def inspect
+        "<#{self.class}:#{hash}: '#{node['rel'].split(' ').join(', ')}'>"
+      end
+      
     end
   end
 end
