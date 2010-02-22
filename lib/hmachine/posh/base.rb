@@ -18,7 +18,7 @@ module HMachine
       
       def self.has_one(*property_names, &block)
         property_names.collect do |name|
-          property = has_one!(name, block)
+          property = has_one!(name, &block)
           define_method property.name do 
             self[property.name]
           end
@@ -28,7 +28,7 @@ module HMachine
       
       def self.has_many(*property_names, &block)
         property_names.collect do |name|
-          property = has_many!(name, block)
+          property = has_many!(name, &block)
           define_method property.name do 
             self[property.name]
           end

@@ -18,7 +18,9 @@ class PoshBaseTest < Test::Unit::TestCase
   end
   
   should 'further refine a property with a block' do
-    property = @klass.add_property(:fn, lambda{|p| p.add_property(:n) } )
+    property = @klass.add_property(:fn) do |p|
+      p.add_property(:n)
+    end
     assert_equal property[:n], @klass.properties[:fn][:n]
   end
   

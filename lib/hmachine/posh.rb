@@ -52,12 +52,12 @@ module HMachine
       node
     end
     
-    def add_property(property_name, block=nil)
+    def add_property(property_name, &block)
       if property_name.respond_to?(:property_of?)
         property = property_name
       else
-        property = Property.new(property_name, self)
-        block.call(property) if block
+        property = HMachine::Property.new(property_name, self)
+        yield property if block_given?
       end
       properties[property.name] = property
       property
@@ -65,30 +65,28 @@ module HMachine
     
     def has_one(*property_names, &block)
       property_names.collect do |name|
-        property = has_one!(name, block)
+        property = has_one!(name, &block)
         property
       end
     end
     
     def has_many(*property_names, &block)
       property_names.collect do |name|
-        property = has_many!(name, block)
+        property = has_many!(name, &block)
         property
       end
     end
     
-    def has_one!(property_name, function=nil, &block)
-      block = function if (block.nil? && function)
+    def has_one!(property_name, &block)
       @has_one ||= []
-      property = add_property(property_name, block)
+      property = add_property(property_name, &block)
       @has_one << property
       property
     end
     
-    def has_many!(property_name, function=nil, &block)
-      block = function if (block.nil? && function)
+    def has_many!(property_name, &block)
       @has_many ||= []
-      property = add_property(property_name, block)
+      property = add_property(property_name, &block)
       @has_many << property
       property
     end
