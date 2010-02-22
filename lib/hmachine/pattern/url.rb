@@ -1,5 +1,3 @@
-require 'uri'
-
 module HMachine
   module Pattern
     module URL
