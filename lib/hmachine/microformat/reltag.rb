@@ -28,6 +28,10 @@ module HMachine
         tag
       end
       
+      def inspect
+        "<#{self.class}:#{hash}: '#{tag}'>"
+      end
+      
     end
   end
 end
