@@ -8,15 +8,15 @@ module HMachine
   module Pattern
     
     def self.map(name)
-      case name.to_s.strip.downcase.intern
+      case HMachine.normalize(name)
         when :value_class, :valueclass
-          ValueClass
+          HMachine::Pattern::ValueClass
         when :abbr
-          Abbr
+          HMachine::Pattern::Abbr
         when :uri, :url
-          URL
+          HMachine::Pattern::URL
         when :typevalue
-          TypeValue
+          HMachine::Pattern::TypeValue
         else
           raise "#{name} is not a recognized markup design pattern."
       end
