@@ -2,8 +2,13 @@ require File.join(File.dirname(__FILE__), 'test_helper')
 
 class HMachineTest < Test::Unit::TestCase
   setup do
+    FakeWeb.register_uri(:get, "http://markwunsch.com/", :body => "Nothing to be found 'round here")
     @html = get_fixture('hcard/commercenet.html')
     @doc = Nokogiri.parse(@html)
+  end
+  
+  teardown do
+    FakeWeb.clean_registry
   end
   
   describe 'Class Level Methods' do
@@ -13,6 +18,33 @@ class HMachineTest < Test::Unit::TestCase
     
     should 'map symbol names to Extraction methods' do
       assert_equal HMachine::Pattern::ValueClass, HMachine.map(:value_class)
+    end
+    
+    should 'parse an html document into a Nokogiri doc' do
+      assert HMachine.get_document('<div id="hello">World</div').is_a?(Nokogiri::XML::Node)
+    end
+    
+    should 'open a url and get the document' do
+      doc = HMachine.get_url('http://markwunsch.com')
+      assert doc.is_a?(Nokogiri::XML::Document)
+    end
+    
+    should 'get a document with a url or a string of html' do
+      doc = HMachine.get('http://markwunsch.com')
+      assert doc.is_a?(Nokogiri::XML::Document)
+      assert_equal 'http://markwunsch.com/', doc.url
+      assert HMachine.get('<p>Hello world</p>').is_a?(Nokogiri::XML::Document)
+    end
+    
+    should 'find all microformats in a document' do
+      huffduff = HMachine.find get_fixture('huffduffer.html')
+      assert_equal 45, huffduff.count
+    end
+    
+    should 'find a specific format in a document' do
+      huffduff = get_fixture('huffduffer.html')
+      hcards = HMachine.find huffduff, :hcard
+      assert_equal 10, hcards.count
     end
   end
   

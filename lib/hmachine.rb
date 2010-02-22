@@ -1,21 +1,41 @@
-require 'uri'
+require 'open-uri'
 require 'nokogiri'
 
 module HMachine
   VERSION = "0.0.1"
   PRODID = "-//markwunsch.com//hMachine #{VERSION}//EN"
-  # def self.find(document)
-  #   html = get_document(document)
-  #   Microformat.find_all html
-  # end
-  # 
-  # def self.find_with_url(url)
-  #   # open url and call find method on resulting document
-  # end
-  # 
-  # def self.get_document(html)
-  #   html.is_a?(Nokogiri::XML::Node) ? html : Nokogiri::HTML.parse(html)
-  # end
+
+  # Convenience method for HMachine::Microformat.find method
+  def self.find(document, format=nil)
+    HMachine::Microformat.find(document, format)
+  end
+  
+  # Get a string of html or a url and convert it to a Nokogiri Document
+  def self.get(html)
+    return html if html.is_a?(Nokogiri::XML::Node)
+    begin
+      url = URI.parse(html)
+      doc = url.is_a?(URI::HTTP) ? get_url(url.normalize.to_s) : get_document(html)
+    rescue URI::InvalidURIError
+      doc = get_document(html)
+    end
+    doc
+  end
+  
+  # Open a URL and convert the contents to a Nokogiri Document
+  def self.get_url(url)
+    uri = URI.parse(url)
+    doc = ''
+    uri.open do |web|
+      web.each_line {|line| doc += line }
+    end
+    get_document(doc, url)
+  end
+  
+  # Convert HTML to a Nokogiri Document
+  def self.get_document(html, url=nil)
+    html.is_a?(Nokogiri::XML::Node) ? html : Nokogiri::HTML.parse(html, url)
+  end
   
   def self.normalize(name)
     name.to_s.strip.downcase.intern
@@ -25,11 +45,11 @@ module HMachine
   def self.map(key)
     case normalize(key)
       when :value_class, :valueclass, :abbr, :uri, :url, :typevalue
-        Pattern.map(key)
+        HMachine::Pattern.map(key)
       when :hcard, :geo, :rellicense, :reltag, :votelinks, :xfn, :xmdp, :xoxo, :adr
-        Microformat.map(key)
+        HMachine::Microformat.map(key)
       when :base
-        POSH::Base
+        HMachine::POSH::Base
       else
         raise "#{key} is not a recognized parser."
     end

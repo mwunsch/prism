@@ -1,54 +1,39 @@
 module HMachine
   module Microformat
-    
+
     def self.map(name)
-      case name.to_s.strip.downcase.intern
-        when :hcard
-          HCard
-        when :geo
-          Geo
-        when :adr
-          Adr
-        when :rellicense
-          RelLicense
-        when :reltag
-          RelTag
-        when :votelinks
-          VoteLinks
-        when :xfn
-          XFN
-        when :xmdp
-          XMDP
-        when :xoxo
-          XOXO
-        else
-          raise "#{name} is not a recognized microformat."
+      map = microformats[HMachine.normalize(name)]
+      raise "#{name} is not a recognized microformat." unless map
+      map
+    end
+
+    def self.microformats
+      { :hcard      => HMachine::Microformat::HCard,
+        :geo        => HMachine::Microformat::Geo,
+        :adr        => HMachine::Microformat::Adr,
+        :rellicense => HMachine::Microformat::RelLicense,
+        :reltag     => HMachine::Microformat::RelTag,
+        :votelinks  => HMachine::Microformat::VoteLinks,
+        :xfn        => HMachine::Microformat::XFN,
+        :xmdp       => HMachine::Microformat::XMDP,
+        :xoxo       => HMachine::Microformat::XOXO }
+    end
+
+    def self.find(html, uformat = nil)
+      if uformat
+        map(uformat).parse HMachine.get(html)
+      else
+        find_all(html)
       end
     end
-    # def self.find_hcard(html)
-    #   doc = HMachine.get_document(html)
-    #   find_in_node(HCard, doc)
-    # end
-    # 
-    # def self.find_all(html)
-    #   find_hcard html
-    # end
-    # 
-    # def self.find_in_node(microformat, node)
-    #   hformat = normalize(microformat)
-    #   microformats = []
-    #   hformat.find_in(node) do |element|
-    #     microformats << create_for_node(hformat, element) if hformat.validate(element)
-    #   end
-    #   microformats
-    # end
-    # 
-    # def self.create_for_node(microformat, node)
-    #   hformat = normalize(microformat)
-    #   return unless hformat.validate(node)
-    #   hformat.new node
-    # end
-    # 
+    
+    def self.find_all(html)
+      doc = HMachine.get(html)
+      uformats = microformats.values.collect do |uf|
+        uf.parse(doc)
+      end
+      uformats.compact.flatten
+    end
     
   end
 end
