@@ -83,8 +83,8 @@ All microformats inherit from `HMachine::POSH::Base`, because all microformats b
 		validate {|node| node.matches?('ul#navigation') }
 		# Validate that a node is the right element we want
 		
-		has_many :items do |items|
-			items.search {|doc| doc.css('li') }
+		has_many :items do
+			search {|doc| doc.css('li') }
 		end
 		# has_many and has_one define Properties of the POSH format (HMachine::Property)
 		# Each Property object includes the HMachine module, so they can search, validate, and extract

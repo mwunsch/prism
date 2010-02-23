@@ -53,6 +53,7 @@ module HMachine
           if node.matches?(".#{name}")
             self.new(node)
           else
+            # Has to be a smarter way of doing this
             parent.n_optimization(node)
           end
         end  
