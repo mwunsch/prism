@@ -20,7 +20,7 @@ module HMachine
       
       validate do |a|
         return false unless a['rel']
-        !@@relationships.reject { |rel| a['rel'].split(' ').include?(rel) }.empty?
+        !@@relationships.reject { |rel| a['rel'].split.include?(rel) }.empty?
       end
       
       # Performant way to parse identity relationships
@@ -45,7 +45,7 @@ module HMachine
       alias met? physical?
       
       def inspect
-        "<#{self.class}:#{hash}: '#{node['rel'].split(' ').join(', ')}'>"
+        "<#{self.class}:#{hash}: '#{rel.join(', ')}'>"
       end
       
     end
