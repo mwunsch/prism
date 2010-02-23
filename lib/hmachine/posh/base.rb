@@ -134,6 +134,19 @@ module HMachine
           end
           node
         end
+        
+        def get_properties(node, props=properties)
+          hash ||= {}
+          props.each_pair do |key, property|
+            hash[key] = if one && one.include?(property)
+              property.parse_first(node)
+            else
+              property.parse(node)
+            end
+          end
+          hash.reject {|key,value| value.nil? }
+        end
+        
       end
       
       attr_reader :node, :parent, :source
@@ -157,16 +170,7 @@ module HMachine
       end
       
       def to_h
-        return @to_h if @to_h
-        hash ||= {}
-        properties.each_pair do |key, property|
-          hash[key] = if self.class.one && self.class.one.include?(property)
-            property.parse_first(@first_node)
-          else
-            property.parse(@first_node)
-          end
-        end
-        @to_h = hash.reject {|key,value| value.nil? }
+        @to_h ||= self.class.get_properties @first_node, properties
       end
       
       def inspect

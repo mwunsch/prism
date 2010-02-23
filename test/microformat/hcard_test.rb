@@ -497,13 +497,13 @@ class HCardTest < Test::Unit::TestCase
       assert_equal 'World Wide Web Consortium', @vcard[0].org[:organization_name]
       assert_equal 'World Wide Web Consortium', @vcard[1].org[:organization_name]
       assert_equal 'World Wide Web Consortium', @vcard[2].org[:organization_name]
-      assert_equal 'World Wide Web Consortium', @vcard[3].org[:organization_name]                  
-      assert_equal 'World Wide Web Consortium', @vcard[4].org[:organization_name]      
+      assert_equal 'World Wide Web Consortium', @vcard[3].org[:organization_name]
+      assert_equal 'World Wide Web Consortium', @vcard[4].org[:organization_name]
     end
     
     test 'The organization name value' do
-      assert_equal 'World Wide Web Consortium', @vcard[5].org[:organization_name]      
-      assert_equal 'World Wide Web Consortium', @vcard[6].org[:organization_name]      
+      assert_equal 'World Wide Web Consortium', @vcard[5].org[:organization_name]
+      assert_equal 'World Wide Web Consortium', @vcard[6].org[:organization_name]
     end
   end
 

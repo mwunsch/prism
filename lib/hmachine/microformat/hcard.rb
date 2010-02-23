@@ -4,9 +4,7 @@ module HMachine
       WIKI_URL = "http://microformats.org/wiki/hcard"
       XMDP = 'http://microformats.org/profile/hcard'
       
-      search {|doc| doc.css('.vcard') }
-      
-      validate {|vcard| vcard.matches?('.vcard') }
+      name :vcard
       
       has_one :fn, :bday, :tz, :sort_string, :uid, :rev 
       alias birthday bday
@@ -15,62 +13,47 @@ module HMachine
                :mailer, :nickname, :note, :role, :sound, 
                :title
                      
-      has_many :logo, :photo, :url do |uri|
-        uri.extract :url
+      has_many :logo, :photo, :url do
+        extract :url
       end
       
-      has_one :geo do |geo|
-        geo.has_one :latitude,  :longitude
-        
-        geo.extract do |node|
-          if geo[:latitude].found_in?(node) && geo[:longitude].found_in?(node)
-            Microformat::Geo.extract_from(node)
-          else
-            coords = Pattern::ValueClass.extract_from(node).split(';')
-            {:latitude => coords[0], :longitude => coords[1]}
-          end
-        end
+      has_one :geo do
+        extract :geo
       end
       
-      has_many :email, :tel do |email_and_tel|
-        email_and_tel.extract :typevalue
+      has_many :email, :tel do
+        extract :typevalue
       end
       
-      has_many :adr do |adr|
-        adr.extract :adr
+      has_many :adr do
+        extract :adr
       end
       alias address adr
             
-      has_many :org do |org|
-        org.has_one :organization_name, :organization_unit
-        org.extract do |node|
-          if org.properties[:organization_name].found_in?(node)
-            org.property_hash(node)
-          else
-            {:organization_name => Pattern::ValueClass.extract_from(node)}
+      has_many :org do
+        has_one :organization_unit
+        has_one :organization_name do
+          search do |org|
+            org_name = org.css(".organization-name")
+            !org_name.empty? ? org_name : org
           end
-        end
-        
+        end        
       end
       
-      has_one :n do |n|
-        n.search do |doc|
-          found = doc.css('.n')
-          if !found.empty?
-            found
-          else
-            properties[:fn].find_in(doc)
-          end
+      has_one :n do
+        search do |doc|
+          n = doc.css(".#{name}")
+          !n.empty? ? n : parent.properties[:fn].find_in(doc)
         end
         
-        n.has_many :family_name, :given_name, :additional_name,
+        has_many :family_name, :given_name, :additional_name,
                   :honorific_prefix, :honorific_suffix
         
-        n.extract do |node|
-          if node.matches?('.n')
-            n.property_hash(node)
+        extract do |node|
+          if node.matches?(".#{name}")
+            self.new(node)
           else
-            n_optimization(node)
+            parent.n_optimization(node)
           end
         end  
       end
@@ -151,10 +134,6 @@ module HMachine
         @vcard += "\x0D\x0ACLASS:#{to_h[:class]}" if has_property?(:class)
         key.each {|auth| @vcard += "\x0D\x0AKEY:#{key}" }if key
         @vcard += "\x0D\x0AEND:VCARD\x0D\x0A\x0D\x0A"
-      end
-      
-      def inspect
-        "<#{self.class}:#{hash}: FN:'#{fn}'>"
       end
       
       private
