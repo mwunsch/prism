@@ -9,19 +9,55 @@ class PoshBaseTest < Test::Unit::TestCase
   describe 'Inheritance' do
     setup do
       @test_class = Class.new(HMachine::POSH::Base)
-      property = 'vcard'
-      @test_class.search { |doc| doc.css(".#{property}") }
-      @test_class.validate { |node| node['class'] && node['class'].split(' ').include?(property) }
+      @test_class.name :vcard
+    end
+    
+    should "add a property to its group of properties" do
+      property = @test_class.add_property(:fn)
+      assert_equal property, @test_class.properties[:fn]
+    end
+
+    should 'further refine a property with a block' do
+      property = @test_class.add_property(:fn) do
+        add_property(:n)
+      end
+      assert_equal property[:n], @test_class.properties[:fn][:n]
+    end
+    
+    should 'find a property' do
+      property = @test_class.add_property(:fn)
+      assert_equal property, @test_class[:fn]
+    end
+    
+    should 'have one property' do
+      property = @test_class.has_one!(:fn)
+      assert_respond_to @test_class, :one
+      assert_equal 1, @test_class.one.length
+      assert @test_class.one.include?(property)
+    end
+
+    should 'has many properties' do
+      property = @test_class.has_many!(:tel)
+      assert_respond_to @test_class, :many
+      assert_equal 1, @test_class.many.length
+      assert_equal property, @test_class.many.first
+    end
+    
+    should 'parse by properties' do
+      property = @test_class.has_one :fn
+      assert_equal property.first, @test_class.one.first
+      assert_equal 'CommerceNet', @test_class.parse(@doc)[:fn]
     end
     
     should 'parse itself out of a document' do
+      @test_class.has_one :fn
       assert_instance_of @test_class, @test_class.parse(@doc)
     end
     
     should 'have one property and define an instance method' do
       property = @test_class.has_one :fn
       assert_equal property.first, @test_class.instance_variable_get(:@has_one).first
-      assert_respond_to @test_class.parse(@doc), :fn
+      assert_respond_to @test_class.parse_first(@doc), :fn
       assert_equal property.first.parse_first(@doc), @test_class.parse(@doc).fn
     end
     
@@ -34,6 +70,7 @@ class PoshBaseTest < Test::Unit::TestCase
       @test_class.has_one :fn
       @test_class.has_many :tel
       klass = Class.new(@test_class)
+      klass.name :vcard
       assert_equal @test_class.properties, klass.properties
       assert_equal @test_class.instance_variable_get(:@has_one), klass.instance_variable_get(:@has_one)
       assert_equal @test_class.instance_variable_get(:@has_many), klass.instance_variable_get(:@has_many)
