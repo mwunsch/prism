@@ -4,16 +4,13 @@ module HMachine
       WIKI_URL = 'http://microformats.org/wiki/vote-links'
       XMDP = 'http://microformats.org/profile/vote-links'
       
-      search do |doc| 
-        doc.css('a[rev~="vote-for"], a[rev~="vote-against"], a[rev~="vote-abstain"]')
-      end
+      selector 'a[rev~="vote-for"], a[rev~="vote-against"], a[rev~="vote-abstain"]'
       
       validate do |a|
         return false unless a['rev']
-        validator = %w(vote-for vote-against vote-abstain).reject do |vote|
-          a['rev'].split(' ').include?(vote)
-        end
-        !validator.empty?
+        !%w(vote-for vote-against vote-abstain).reject { |vote|
+          a['rev'].split.include?(vote)
+        }.empty?
       end
       
       def vote
