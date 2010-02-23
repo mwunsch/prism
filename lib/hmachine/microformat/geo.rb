@@ -3,11 +3,38 @@ module HMachine
     class Geo < POSH::Base
       WIKI_URL = 'http://microformats.org/wiki/geo'
       
-      search {|doc| doc.css('.geo') }
+      name :geo
       
-      validate {|geo| geo.matches?('.geo') }
+      has_one :latitude do
+        search do |geo| 
+          lat = geo.css(".#{name}")
+          !lat.empty? ? lat : geo
+        end
+        
+        extract do |geo|
+          if geo['class'] && geo['class'].split.include?("#{name}")
+            HMachine::Pattern::ValueClass.extract_from(geo)
+          else
+            HMachine::Pattern::ValueClass.extract_from(geo).split(';')[0]
+          end
+        end
+      end
+      
+      has_one :longitude do
+        search do |geo| 
+          long = geo.css(".#{name}")
+          !long.empty? ? long : geo
+        end
+        
+        extract do |geo|
+          if geo['class'] && geo['class'].split.include?("#{name}")
+            HMachine::Pattern::ValueClass.extract_from(geo)
+          else
+            HMachine::Pattern::ValueClass.extract_from(geo).split(';')[1]
+          end
+        end
+      end
             
-      has_one :latitude, :longitude
       alias lat latitude
       alias long longitude
       

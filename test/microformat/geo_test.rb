@@ -55,4 +55,12 @@ class GeoTest < Test::Unit::TestCase
     geo = @klass.parse(doc)
     assert_equal "http://maps.google.com/?q=37.408183,-122.13855", geo.to_google_maps
   end
+  
+  should 'extract lat/long values from paired value' do
+    doc = Nokogiri.parse(%q(<abbr class="geo" title="37.77;-122.41">Northern California</abbr>))
+    geo = @klass.parse(doc)
+    assert_respond_to geo, :latitude
+    assert_equal '37.77', geo.lat
+    assert_equal '-122.41', geo.long
+  end
 end
