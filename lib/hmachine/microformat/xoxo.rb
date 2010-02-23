@@ -4,9 +4,7 @@ module HMachine
       WIKI_URL = 'http://microformats.org/wiki/xoxo'
       XMDP = 'http://microformats.org/profile/xoxo'
       
-      search {|doc| doc.css('ol.xoxo, ul.xoxo, ol.blogroll, ul.blogroll') }
-      
-      validate {|list| list.matches?('ol.xoxo, ul.xoxo, ol.blogroll, ul.blogroll') }
+      selector 'ol.xoxo, ul.xoxo, ol.blogroll, ul.blogroll'
       
       # Seriously ugly WTF      
       def self.build_outline(node)
@@ -60,7 +58,7 @@ module HMachine
       end
       
       def blogroll?
-        node['class'].split(' ').include?('blogroll')
+        node['class'].split.include?('blogroll')
       end
       
       
