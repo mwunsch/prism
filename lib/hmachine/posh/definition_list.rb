@@ -2,9 +2,9 @@ module HMachine
   module POSH
     class DefinitionList < Base
       
-      search {|doc| doc.css('dl') }
+      selector 'dl'
       
-      validate {|node| node.elem? && (node.node_name == 'dl') }
+      extract {|dl| self.new(dl) }
       
       def self.build_dictionary(dl)
         dictionary = {}

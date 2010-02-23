@@ -7,7 +7,7 @@ class PoshDefinitionListTest < Test::Unit::TestCase
   end
   
   should 'pull itself out of a document' do
-    dl = HMachine::POSH::DefinitionList.parse(@doc).first
+    dl = HMachine::POSH::DefinitionList.parse_first(@doc)
     assert_equal HMachine::POSH::DefinitionList, dl.class
   end
   
@@ -19,19 +19,19 @@ class PoshDefinitionListTest < Test::Unit::TestCase
   end
   
   should 'parse a defintion list' do
-    dl = HMachine::POSH::DefinitionList.parse(@doc).first
+    dl = HMachine::POSH::DefinitionList.parse_first(@doc)
     assert_respond_to dl, :to_h
     assert dl.to_h.has_key?(:rel)
     assert dl.to_h[:rel].has_key?(:script)
   end
   
   should 'list its properties as its hash representation' do
-    dl = HMachine::POSH::DefinitionList.parse(@doc).first
+    dl = HMachine::POSH::DefinitionList.parse_first(@doc)
     assert_equal dl.to_h, dl.properties
   end
   
   should 'have key lookup methods' do
-    dl = HMachine::POSH::DefinitionList.parse(@doc).first
+    dl = HMachine::POSH::DefinitionList.parse_first(@doc)
     assert_equal dl.to_h[:rel], dl[:rel]
   end
   
