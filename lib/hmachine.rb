@@ -55,7 +55,6 @@ module HMachine
     end
   end
   
-  
   # Get/Set a function that defines how to find an element in a node.
   # The Search function should return a Nokogiri::XML::NodeSet.
   # eg. <tt>search {|node| node.css(element) }  
