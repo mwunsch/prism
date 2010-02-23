@@ -4,9 +4,9 @@ module HMachine
       WIKI_URL = "http://microformats.org/wiki/rel-tag"      
       XMDP = 'http://microformats.org/profile/rel-tag'
       
-      search {|doc| doc.css('a[rel~="tag"]') }
+      selector 'a[rel~="tag"]'
       
-      validate {|a| a['rel'] && a['rel'].split(' ').include?('tag') }
+      validate {|a| a['rel'] && a['rel'].split.include?('tag') }
             
       def tag
         @tag ||= { node['href'].split('/').last => node['href'] }
