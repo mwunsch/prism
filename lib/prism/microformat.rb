@@ -38,12 +38,12 @@ module Prism
   end
 end
 
-require 'hmachine/microformat/reltag'
-require 'hmachine/microformat/rellicense'
-require 'hmachine/microformat/votelinks'
-require 'hmachine/microformat/xoxo'
-require 'hmachine/microformat/xmdp'
-require 'hmachine/microformat/xfn'
-require 'hmachine/microformat/geo'
-require 'hmachine/microformat/adr'
-require 'hmachine/microformat/hcard'
+require 'prism/microformat/reltag'
+require 'prism/microformat/rellicense'
+require 'prism/microformat/votelinks'
+require 'prism/microformat/xoxo'
+require 'prism/microformat/xmdp'
+require 'prism/microformat/xfn'
+require 'prism/microformat/geo'
+require 'prism/microformat/adr'
+require 'prism/microformat/hcard'

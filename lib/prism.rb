@@ -3,7 +3,7 @@ require 'nokogiri'
 
 module Prism
   VERSION = "0.1.0"
-  PRODID = "-//markwunsch.com//hMachine #{VERSION}//EN"
+  PRODID = "-//markwunsch.com//Prism #{VERSION}//EN"
 
   # Convenience method for Prism::Microformat.find method
   def self.find(document, format=nil)
@@ -125,6 +125,6 @@ module Prism
   
 end
 
-require 'hmachine/pattern'
-require 'hmachine/posh'
-require 'hmachine/microformat'
+require 'prism/pattern'
+require 'prism/posh'
+require 'prism/microformat'

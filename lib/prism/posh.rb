@@ -1,3 +1,3 @@
-require 'hmachine/posh/base'
-require 'hmachine/posh/anchor'
-require 'hmachine/posh/definition_list'
+require 'prism/posh/base'
+require 'prism/posh/anchor'
+require 'prism/posh/definition_list'

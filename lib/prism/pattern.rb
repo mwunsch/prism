@@ -1,8 +1,8 @@
-require 'hmachine/pattern/url'
-require 'hmachine/pattern/datetime'
-require 'hmachine/pattern/abbr'
-require 'hmachine/pattern/valueclass'
-require 'hmachine/pattern/typevalue'
+require 'prism/pattern/url'
+require 'prism/pattern/datetime'
+require 'prism/pattern/abbr'
+require 'prism/pattern/valueclass'
+require 'prism/pattern/typevalue'
 
 module Prism
   module Pattern

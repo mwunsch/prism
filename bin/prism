@@ -5,7 +5,7 @@
 ##
 ## Find the Microformats in the given SOURCE. SOURCE can be a URL
 ## or a string of HTML. If no Microformat is specified in UFORMAT,
-## hmachine will just print a list of what has been found.
+## prism will just print a list of what has been found.
 ##
 ## If a Microformat is specified, Prism will convert it into a
 ## more suitable format. eg. hCard becomes a vCard.
