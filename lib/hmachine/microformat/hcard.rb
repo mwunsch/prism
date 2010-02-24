@@ -83,7 +83,9 @@ module HMachine
       has_one! :class
       
       def organization?
-        fn == org[:organization_name]
+        if org
+          fn == org[:organization_name]
+        end
       end
       alias company? organization?
       
