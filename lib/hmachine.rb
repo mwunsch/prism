@@ -2,7 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 
 module HMachine
-  VERSION = "0.0.1"
+  VERSION = "0.1.0"
   PRODID = "-//markwunsch.com//hMachine #{VERSION}//EN"
 
   # Convenience method for HMachine::Microformat.find method
