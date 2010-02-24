@@ -46,37 +46,41 @@ module HMachine
           !n.empty? ? n : parent.properties[:fn].find_in(doc)
         end
         
-        has_many :family_name, :given_name, :additional_name,
-                  :honorific_prefix, :honorific_suffix
-        
-        extract do |node|
-          if node.matches?(".#{name}")
-            self.new(node)
-          else
-            # Has to be a smarter way of doing this
-            parent.n_optimization(node)
+        # N Optimization from Sumo:
+        # http://www.danwebb.net/2007/2/9/sumo-a-generic-microformats-parser-for-javascript
+        # See: http://microformats.org/wiki/hcard#Implied_.22n.22_Optimization
+        has_many :family_name, :given_name do
+          search do |node|
+            name_parts = node.css(".#{name}".gsub('_','-'))
+            !name_parts.empty? ? name_parts : node
           end
-        end  
+          
+          extract do |node|
+            if node['class'].split.include?("#{name}".gsub('_','-'))
+              HMachine::Pattern::ValueClass.extract_from(node)
+            else
+              fn = parent.parent[:fn].extract_from(node)
+              if (fn =~ /^(\w+) (\w+)$/)
+                if name.eql? :given_name
+                  Regexp.last_match[1]
+                elsif name.eql? :family_name
+                  Regexp.last_match[2]
+                end
+              elsif (fn =~ /^(\w+), (\w+)\.?$/)
+                if name.eql? :given_name
+                  Regexp.last_match[2]
+                elsif name.eql? :family_name
+                  Regexp.last_match[1]
+                end
+              end
+            end
+          end
+        end
+        
+        has_many :additional_name, :honorific_prefix, :honorific_suffix
       end
       
       has_one! :class
-      
-      # N Optimization from Sumo:
-      # http://www.danwebb.net/2007/2/9/sumo-a-generic-microformats-parser-for-javascript
-      # See: http://microformats.org/wiki/hcard#Implied_.22n.22_Optimization
-      def self.n_optimization(node)
-        fn = properties[:fn].parse_first(node.parent)
-        org = properties[:org].parse_first(node.parent)
-        if (fn != org)
-          if (fn =~ /^(\w+) (\w+)$/)
-            { :given_name => Regexp.last_match[1],
-              :family_name => Regexp.last_match[2] }
-          elsif (fn =~ /^(\w+), (\w+)\.?$/)
-            { :given_name => Regexp.last_match[2],
-              :family_name => Regexp.last_match[1] }
-          end
-        end
-      end
       
       def organization?
         fn == org[:organization_name]

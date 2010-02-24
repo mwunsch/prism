@@ -105,10 +105,13 @@ module HMachine
   # Parse the document, finding every instance of the desired element, and extract their contents
   def parse(document)
     if found_in?(document)
-      contents = find_in(document).collect do |element|
-        extract_from(element)
+      contents = if find_in(document).respond_to?(:collect)
+        find_in(document).collect { |element| extract_from(element) }
+      else
+        extract_from(document)
       end
-      (contents.length == 1) ? contents.first : contents
+      return contents.first if contents.respond_to?(:length) && (contents.length == 1)
+      contents
     end
   end
   
@@ -116,8 +119,7 @@ module HMachine
   def parse_first(document)
     if found_in?(document)
       elements = find_in(document)
-      first_element = elements.respond_to?(:first) ? elements.first : elements 
-      extract_from(first_element)
+      extract_from elements.respond_to?(:first) ? elements.first : elements 
     end
   end 
   

@@ -55,7 +55,7 @@ It is your lowercase semantic web friend.
 	me = twitter_contacts.first
 	me.fn
 	#=> "Mark Wunsch"
-	me.n[:family_name]
+	me.n.family_name
 	#=> "Wunsch"
 	me.url
 	#=> "http://markwunsch.com/"

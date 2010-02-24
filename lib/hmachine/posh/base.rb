@@ -144,7 +144,9 @@ module HMachine
               property.parse(node)
             end
           end
-          hash.reject {|key,value| value.nil? }
+          hash.reject do |key,value| 
+            value.respond_to?(:empty?) ? value.empty? : value.nil?
+          end
         end
         
       end
@@ -187,6 +189,10 @@ module HMachine
       
       def to_html
         node.to_html
+      end
+      
+      def empty?
+        to_h.empty?
       end
 
     end
