@@ -51,7 +51,7 @@ It is your lowercase semantic web friend.
 	
 ### Parsing Microformats:
 
-	twitter_contacts = HMachine.find 'http://twitter.com', :hcard
+	twitter_contacts = HMachine.find 'http://twitter.com/markwunsch', :hcard
 	me = twitter_contacts.first
 	me.fn
 	#=> "Mark Wunsch"
