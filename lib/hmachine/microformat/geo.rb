@@ -1,6 +1,7 @@
 module HMachine
   module Microformat
     class Geo < POSH::Base
+      FRIENDLY_NAME = "geo"
       WIKI_URL = 'http://microformats.org/wiki/geo'
       
       name :geo

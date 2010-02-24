@@ -1,6 +1,7 @@
 module HMachine
   module Microformat
     class XFN < POSH::Anchor
+      FRIENDLY_NAME = "XFN"
       WIKI_URL = 'http://microformats.org/wiki/XFN'
       XMDP = 'http://gmpg.org/xfn/11'
       

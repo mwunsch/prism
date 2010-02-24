@@ -1,6 +1,7 @@
 module HMachine
   module Microformat
     class RelTag < POSH::Anchor
+      FRIENDLY_NAME = "rel-tag"
       WIKI_URL = "http://microformats.org/wiki/rel-tag"      
       XMDP = 'http://microformats.org/profile/rel-tag'
       

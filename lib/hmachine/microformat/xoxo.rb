@@ -1,6 +1,7 @@
 module HMachine
   module Microformat
     class XOXO < POSH::Base
+      FRIENDLY_NAME = "XOXO"
       WIKI_URL = 'http://microformats.org/wiki/xoxo'
       XMDP = 'http://microformats.org/profile/xoxo'
       

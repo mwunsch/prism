@@ -1,6 +1,7 @@
 module HMachine
   module Microformat
     class HCard < POSH::Base
+      FRIENDLY_NAME = "hCard"
       WIKI_URL = "http://microformats.org/wiki/hcard"
       XMDP = 'http://microformats.org/profile/hcard'
       

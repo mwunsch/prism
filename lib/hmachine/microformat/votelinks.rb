@@ -1,6 +1,7 @@
 module HMachine
   module Microformat
     class VoteLinks < POSH::Anchor
+      FRIENDLY_NAME = "VoteLinks"
       WIKI_URL = 'http://microformats.org/wiki/vote-links'
       XMDP = 'http://microformats.org/profile/vote-links'
       

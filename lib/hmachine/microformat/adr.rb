@@ -1,6 +1,7 @@
 module HMachine
   module Microformat
     class Adr < POSH::Base
+      FRIENDLY_NAME = "adr"
       WIKI_URL = 'http://microformats.org/wiki/adr'
       
       name :adr
