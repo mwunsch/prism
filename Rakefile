@@ -25,8 +25,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "hmachine"
-    gemspec.summary = "Ruby microformat parser"
-    gemspec.description = "A Ruby microformat parser powered by Nokogiri"
+    gemspec.summary = "Ruby microformat parser and HTML toolkit"
+    gemspec.description = "A Ruby microformat parser and HTML toolkit powered by Nokogiri"
     gemspec.version = HMachine::VERSION
     gemspec.homepage = "http://github.com/mwunsch/hmachine"
     gemspec.authors = ["Mark Wunsch"]
