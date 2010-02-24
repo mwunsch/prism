@@ -4,16 +4,16 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{hmachine}
+  s.name = %q{prism}
   s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Wunsch"]
   s.date = %q{2010-02-24}
-  s.default_executable = %q{hmachine}
+  s.default_executable = %q{prism}
   s.description = %q{A Ruby microformat parser and HTML toolkit powered by Nokogiri}
   s.email = ["mark@markwunsch.com"]
-  s.executables = ["hmachine"]
+  s.executables = ["prism"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.md"
@@ -25,29 +25,29 @@ Gem::Specification.new do |s|
      "LICENSE",
      "README.md",
      "Rakefile",
-     "bin/hmachine",
+     "bin/prism",
      "hmachine.gemspec",
-     "lib/hmachine.rb",
-     "lib/hmachine/microformat.rb",
-     "lib/hmachine/microformat/adr.rb",
-     "lib/hmachine/microformat/geo.rb",
-     "lib/hmachine/microformat/hcard.rb",
-     "lib/hmachine/microformat/rellicense.rb",
-     "lib/hmachine/microformat/reltag.rb",
-     "lib/hmachine/microformat/votelinks.rb",
-     "lib/hmachine/microformat/xfn.rb",
-     "lib/hmachine/microformat/xmdp.rb",
-     "lib/hmachine/microformat/xoxo.rb",
-     "lib/hmachine/pattern.rb",
-     "lib/hmachine/pattern/abbr.rb",
-     "lib/hmachine/pattern/datetime.rb",
-     "lib/hmachine/pattern/typevalue.rb",
-     "lib/hmachine/pattern/url.rb",
-     "lib/hmachine/pattern/valueclass.rb",
-     "lib/hmachine/posh.rb",
-     "lib/hmachine/posh/anchor.rb",
-     "lib/hmachine/posh/base.rb",
-     "lib/hmachine/posh/definition_list.rb",
+     "lib/prism.rb",
+     "lib/prism/microformat.rb",
+     "lib/prism/microformat/adr.rb",
+     "lib/prism/microformat/geo.rb",
+     "lib/prism/microformat/hcard.rb",
+     "lib/prism/microformat/rellicense.rb",
+     "lib/prism/microformat/reltag.rb",
+     "lib/prism/microformat/votelinks.rb",
+     "lib/prism/microformat/xfn.rb",
+     "lib/prism/microformat/xmdp.rb",
+     "lib/prism/microformat/xoxo.rb",
+     "lib/prism/pattern.rb",
+     "lib/prism/pattern/abbr.rb",
+     "lib/prism/pattern/datetime.rb",
+     "lib/prism/pattern/typevalue.rb",
+     "lib/prism/pattern/url.rb",
+     "lib/prism/pattern/valueclass.rb",
+     "lib/prism/posh.rb",
+     "lib/prism/posh/anchor.rb",
+     "lib/prism/posh/base.rb",
+     "lib/prism/posh/definition_list.rb",
      "test/fixtures/hcard/commercenet.html",
      "test/fixtures/hcard/geo.html",
      "test/fixtures/huffduffer.html",
@@ -71,7 +71,6 @@ Gem::Specification.new do |s|
      "test/fixtures/xfn.html",
      "test/fixtures/xmdp.html",
      "test/fixtures/xoxo.html",
-     "test/hmachine_test.rb",
      "test/microformat/adr_test.rb",
      "test/microformat/geo_test.rb",
      "test/microformat/hcard_test.rb",
@@ -88,16 +87,16 @@ Gem::Specification.new do |s|
      "test/posh/anchor_test.rb",
      "test/posh/base_test.rb",
      "test/posh/definition_list_test.rb",
+     "test/prism_test.rb",
      "test/test_helper.rb"
   ]
-  s.homepage = %q{http://github.com/mwunsch/hmachine}
+  s.homepage = %q{http://github.com/mwunsch/prism}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Ruby microformat parser and HTML toolkit}
   s.test_files = [
-    "test/hmachine_test.rb",
-     "test/microformat/adr_test.rb",
+    "test/microformat/adr_test.rb",
      "test/microformat/geo_test.rb",
      "test/microformat/hcard_test.rb",
      "test/microformat/rellicense_test.rb",
@@ -113,6 +112,7 @@ Gem::Specification.new do |s|
      "test/posh/anchor_test.rb",
      "test/posh/base_test.rb",
      "test/posh/definition_list_test.rb",
+     "test/prism_test.rb",
      "test/test_helper.rb"
   ]
 
