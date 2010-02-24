@@ -9,7 +9,7 @@ rescue LoadError
 end
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
-require 'hmachine'
+require 'prism'
 require 'rake'
 
 task :default => :test
@@ -24,11 +24,11 @@ end
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
-    gemspec.name = "hmachine"
+    gemspec.name = "prism"
     gemspec.summary = "Ruby microformat parser and HTML toolkit"
     gemspec.description = "A Ruby microformat parser and HTML toolkit powered by Nokogiri"
-    gemspec.version = HMachine::VERSION
-    gemspec.homepage = "http://github.com/mwunsch/hmachine"
+    gemspec.version = Prism::VERSION
+    gemspec.homepage = "http://github.com/mwunsch/prism"
     gemspec.authors = ["Mark Wunsch"]
     gemspec.email = ["mark@markwunsch.com"]
     gemspec.add_dependency 'nokogiri'
@@ -41,7 +41,7 @@ end
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'doc'
-  rdoc.title    = 'hMachine'
+  rdoc.title    = 'Prism'
   rdoc.main     = 'README.md'
   rdoc.rdoc_files.include('README.*', 'lib/**/*.rb', 'LICENSE')
   rdoc.options  << '--inline-source'
@@ -49,5 +49,5 @@ end
 
 desc "Open an irb session preloaded with this library"
 task :console do
-  sh "irb -rubygems -I lib -r hmachine"
+  sh "irb -rubygems -I lib -r prism"
 end

@@ -4,7 +4,7 @@ class XOXOTest < Test::Unit::TestCase
   setup do
     html = get_fixture('xoxo.html')
     doc = Nokogiri::HTML.parse(html)
-    @klass = HMachine::Microformat::XOXO
+    @klass = Prism::Microformat::XOXO
     @node = @klass.find_in(doc).first
   end
     

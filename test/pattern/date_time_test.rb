@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__),'..','test_helper')
 
 class DateTimePatternTest < Test::Unit::TestCase
   setup do
-    @pattern = HMachine::Pattern::DateTime
+    @pattern = Prism::Pattern::DateTime
   end
   
   should 'recognize a simple iso8601 date' do

@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), '..', 'test_helper')
 
 class GeoTest < Test::Unit::TestCase
   setup do
-    @klass = HMachine::Microformat::Geo
+    @klass = Prism::Microformat::Geo
   end
   
   should 'has a latitude and longitude' do

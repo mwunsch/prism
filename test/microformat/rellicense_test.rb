@@ -8,13 +8,13 @@ class RelLicenseTest < Test::Unit::TestCase
   
   describe 'Class' do    
     should 'find itself in a document' do
-      assert_equal 2, HMachine::Microformat::RelLicense.find_in(@doc).count
+      assert_equal 2, Prism::Microformat::RelLicense.find_in(@doc).count
     end
   end
   
   describe 'Instance' do
     setup do
-      @klass = HMachine::Microformat::RelLicense
+      @klass = Prism::Microformat::RelLicense
       @node = @klass.find_in(@doc).first
     end
     

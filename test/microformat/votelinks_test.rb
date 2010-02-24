@@ -8,13 +8,13 @@ class VoteLinksTest < Test::Unit::TestCase
   
   describe 'Class' do    
     should 'find itself in a document' do
-      assert_equal 3, HMachine::Microformat::VoteLinks.find_in(@doc).count
+      assert_equal 3, Prism::Microformat::VoteLinks.find_in(@doc).count
     end
   end
   
   describe 'Instance' do
     setup do
-      @klass = HMachine::Microformat::VoteLinks
+      @klass = Prism::Microformat::VoteLinks
       @node = @klass.find_in(@doc).first
     end
     

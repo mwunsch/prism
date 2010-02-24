@@ -9,18 +9,18 @@ class RelTagTest < Test::Unit::TestCase
   describe 'Class' do    
     should 'find itself in a document' do
       first_entry = @doc.css('.hfeed > .hentry').first
-      assert_equal 8, HMachine::Microformat::RelTag.find_in(first_entry).count
+      assert_equal 8, Prism::Microformat::RelTag.find_in(first_entry).count
     end
     
     should 'parse itself out of a document' do
       first_entry = @doc.css('.hfeed > .hentry').first
-      assert_equal HMachine::Microformat::RelTag, HMachine::Microformat::RelTag.parse(first_entry).first.class
+      assert_equal Prism::Microformat::RelTag, Prism::Microformat::RelTag.parse(first_entry).first.class
     end
   end
   
   describe 'Instance' do
     setup do
-      @klass = HMachine::Microformat::RelTag
+      @klass = Prism::Microformat::RelTag
       first_entry = @doc.css('.hfeed > .hentry').first
       @node = @klass.find_in(first_entry).first
     end
@@ -48,7 +48,7 @@ class RelTagTest < Test::Unit::TestCase
   
   describe 'Parsing' do
     setup do
-      @klass = HMachine::Microformat::RelTag
+      @klass = Prism::Microformat::RelTag
     end
     
     should "get a tag" do

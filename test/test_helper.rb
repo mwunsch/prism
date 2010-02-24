@@ -14,11 +14,11 @@ require 'redgreen'
 require 'fakeweb'
 
 begin
-  require 'hmachine'
+  require 'prism'
 rescue LoadError
   lib_path = File.join(File.dirname(__FILE__), '..', 'lib')
   $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include?(lib_path)
-  require 'hmachine'
+  require 'prism'
 end
 
 def get_fixture(filename)

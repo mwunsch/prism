@@ -7,25 +7,25 @@ class PoshAnchorTest < Test::Unit::TestCase
   end
   
   should 'parse all anchor tags from a document' do
-    link = HMachine::POSH::Anchor.parse(@doc)
-    assert_equal HMachine::POSH::Anchor, link.class
+    link = Prism::POSH::Anchor.parse(@doc)
+    assert_equal Prism::POSH::Anchor, link.class
   end
   
   should 'have rel values' do
-    link = HMachine::POSH::Anchor.parse(@doc)
+    link = Prism::POSH::Anchor.parse(@doc)
     assert_respond_to link, :rel
     assert_equal 2, link.rel.count
     assert_equal 'me', link.rel.first
   end
   
   should 'have a url' do
-    link = HMachine::POSH::Anchor.parse(@doc)
+    link = Prism::POSH::Anchor.parse(@doc)
     assert_respond_to link, :url
     assert_equal 'http://something.com', link.url
   end
   
   should 'have some text' do
-    link = HMachine::POSH::Anchor.parse(@doc)
+    link = Prism::POSH::Anchor.parse(@doc)
     assert_respond_to link, :text
     assert_respond_to link, :content
     assert_equal 'Link to something', link.text
@@ -33,7 +33,7 @@ class PoshAnchorTest < Test::Unit::TestCase
   end
   
   should 'have a title' do
-    link = HMachine::POSH::Anchor.parse(@doc)
+    link = Prism::POSH::Anchor.parse(@doc)
     assert_respond_to link, :type
     assert_equal 'good', link.type
   end

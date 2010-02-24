@@ -1,10 +1,12 @@
-# hMachine
+# Prism
 
 **Ruby microformat parser and HTML toolkit**
 
-[RDoc](http://rdoc.info/projects/mwunsch/hmachine) | [Gem](http://rubygems.org/gems/hmachine) | [Metrics](http://getcaliper.com/caliper/project?repo=git%3A%2F%2Fgithub.com%2Fmwunsch%2Fhmachine.git)
+_Formerly known as hMachine_
 
-## What hMachine is:
+[RDoc](http://rdoc.info/projects/mwunsch/prism) | [Gem](http://rubygems.org/gems/prism) | [Metrics](http://getcaliper.com/caliper/project?repo=git%3A%2F%2Fgithub.com%2Fmwunsch%2Fprism.git)
+
+## What Prism is:
 
 + A robust microformat parser
 + A command-line tool for parsing microformats from a url or a string of markup
@@ -22,17 +24,17 @@ Learn more about Microformats at http://microformats.org.
 
 The command line tool takes a SOURCE from the Standard Input or as an argument:
 
-	$: curl http://markwunsch.com | hmachine --hcard > ~/Desktop/me.vcf
+	$: curl http://markwunsch.com | prism --hcard > ~/Desktop/me.vcf
 	
 OR
 
-	$: hmachine --hcard http://markwunsch.com > ~/Desktop/me.vcf
+	$: prism --hcard http://markwunsch.com > ~/Desktop/me.vcf
 
 ## Installation
 
 With Ruby and Rubygems:
 
-	gem install hmachine
+	gem install prism
 	
 Or clone the repository and run `bundle install` to get the development dependencies.	
 
@@ -57,17 +59,17 @@ More on the way.
 ## Finding Microformats:
 	
 	# All microformats
-	HMachine.find 'http://foobar.com'
+	Prism.find 'http://foobar.com'
 	
 	# A specific microformat
-	HMachine.find 'http://foobar.com', :hcard
+	Prism.find 'http://foobar.com', :hcard
 	
 	# Search HTML too
-	HMachine.find big_string_of_html
+	Prism.find big_string_of_html
 	
 ### Parsing Microformats:
 
-	twitter_contacts = HMachine.find 'http://twitter.com/markwunsch', :hcard
+	twitter_contacts = Prism.find 'http://twitter.com/markwunsch', :hcard
 	me = twitter_contacts.first
 	me.fn
 	#=> "Mark Wunsch"
@@ -80,11 +82,11 @@ More on the way.
 
 ## POSH DSL
 
-The `HMachine` module defines a group of methods to search, validate, and extract nodes out of a Nokogiri document.
+The `Prism` module defines a group of methods to search, validate, and extract nodes out of a Nokogiri document.
 
-All microformats inherit from `HMachine::POSH::Base`, because all microformats begin as [POSH formats](http://microformats.org/wiki/posh). If you wanted to create your own POSH format, you'd do something like this:
+All microformats inherit from `Prism::POSH::Base`, because all microformats begin as [POSH formats](http://microformats.org/wiki/posh). If you wanted to create your own POSH format, you'd do something like this:
 
-	class Navigation < HMachine::POSH::Base
+	class Navigation < Prism::POSH::Base
 		search {|document| document.css('ul#navigation') }
 		# Search a Nokogiri document for nodes of a certain type
 		
@@ -94,8 +96,8 @@ All microformats inherit from `HMachine::POSH::Base`, because all microformats b
 		has_many :items do
 			search {|doc| doc.css('li') }
 		end
-		# has_many and has_one define Properties of the POSH format (HMachine::Property)
-		# Each Property object includes the HMachine module, so they can search, validate, and extract
+		# has_many and has_one define Properties of the POSH format (Prism::Property)
+		# Each Property object includes the Prism module, so they can search, validate, and extract
 	end
 	
 Now you can do:
@@ -124,7 +126,7 @@ Now you can do:
 	
 ## TODO:
 
-+ Handle nested microformats better (I like HMachine::Pattern::ValueClass's search implementation the best)
++ Handle nested microformats better (I like Prism::Pattern::ValueClass's search implementation the best)
 + Code is ugly. Especially XOXO.
 + Better recursive parsing of trees. See above.
 + Tests are all kinds of disorganized.
@@ -132,4 +134,4 @@ Now you can do:
 
 ## License
 
-hMachine is licensed under the [MIT License](http://creativecommons.org/licenses/MIT/) and is Copyright (c) 2010 Mark Wunsch.
+Prism is licensed under the [MIT License](http://creativecommons.org/licenses/MIT/) and is Copyright (c) 2010 Mark Wunsch.

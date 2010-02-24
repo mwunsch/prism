@@ -4,7 +4,7 @@ class XMDPTest < Test::Unit::TestCase
   setup do
     html = get_fixture('xmdp.html')
     doc = Nokogiri::HTML.parse(html)
-    @klass = HMachine::Microformat::XMDP
+    @klass = Prism::Microformat::XMDP
     @node = @klass.find_in(doc).first
   end
   

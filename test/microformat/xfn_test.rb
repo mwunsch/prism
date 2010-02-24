@@ -4,7 +4,7 @@ class XFNTest < Test::Unit::TestCase
   setup do
     html = get_fixture('xfn.html')
     @doc = Nokogiri::HTML.parse(html)
-    @klass = HMachine::Microformat::XFN
+    @klass = Prism::Microformat::XFN
   end
   
   should 'search the document for relationships' do

@@ -1,7 +1,7 @@
 require File.join(File.dirname(__FILE__), '..', 'test_helper')
 
 class HCardTest < Test::Unit::TestCase
-  @@klass = HMachine::Microformat::HCard
+  @@klass = Prism::Microformat::HCard
   
   describe 'non test-fixture tests' do
     def self.before_all

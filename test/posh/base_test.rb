@@ -8,7 +8,7 @@ class PoshBaseTest < Test::Unit::TestCase
   
   describe 'Inheritance' do
     setup do
-      @test_class = Class.new(HMachine::POSH::Base)
+      @test_class = Class.new(Prism::POSH::Base)
       @test_class.name :vcard
     end
     
@@ -83,7 +83,7 @@ class PoshBaseTest < Test::Unit::TestCase
   
   describe 'Instance' do
     setup do
-      @klass = Class.new(HMachine::POSH::Base)
+      @klass = Class.new(Prism::POSH::Base)
       property = 'vcard'
       @doc = Nokogiri.parse(@html, 'http://foobar.com/')
       @klass.search { |doc| doc.css(".#{property}") }

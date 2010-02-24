@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__),'..','test_helper')
 
 class ValueClassPatternTest < Test::Unit::TestCase
   setup do
-    @pattern = HMachine::Pattern::ValueClass    
+    @pattern = Prism::Pattern::ValueClass    
   end
   
   should 'concatenate two html elements to create one datetime value' do

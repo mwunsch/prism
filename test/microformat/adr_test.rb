@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), '..', 'test_helper')
 
 class AdrTest < Test::Unit::TestCase
   setup do
-    @klass = HMachine::Microformat::Adr
+    @klass = Prism::Microformat::Adr
     @html = %Q{<div class="adr">
      <div class="street-address">665 3rd St.</div>
      <div class="extended-address">Suite 207</div>

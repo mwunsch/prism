@@ -3,30 +3,30 @@ require File.join(File.dirname(__FILE__), 'test_helper')
 class PatternTest < Test::Unit::TestCase
   describe 'Mapper' do
     should 'map a symbol to a design pattern' do
-      assert HMachine::Pattern::ValueClass, HMachine::Pattern.map(:value_class)
+      assert Prism::Pattern::ValueClass, Prism::Pattern.map(:value_class)
     end
   end
   
   describe 'URI Design Pattern' do
     should 'have an extraction method' do
-      assert_respond_to HMachine::Pattern::URL, :extract
+      assert_respond_to Prism::Pattern::URL, :extract
     end
     
     should 'normalize URLs' do
-      assert_respond_to HMachine::Pattern::URL, :normalize
-      assert_equal 'http://foobar.com/', HMachine::Pattern::URL.normalize('http://foobar.com')
+      assert_respond_to Prism::Pattern::URL, :normalize
+      assert_equal 'http://foobar.com/', Prism::Pattern::URL.normalize('http://foobar.com')
     end
     
     should 'extract the href out of an a element' do
       doc = Nokogiri.parse('<a href="http://foobar.com">Hello</a>')
       a = doc.css('a').first
-      assert_equal 'http://foobar.com/', HMachine::Pattern::URL.extract_from(a)
+      assert_equal 'http://foobar.com/', Prism::Pattern::URL.extract_from(a)
     end
     
     should 'extract the src out of an img element' do
       doc = Nokogiri.parse('<img src="http://foobar.com" alt="Foobar" />')
       img = doc.css('img').first
-      assert_equal 'http://foobar.com/', HMachine::Pattern::URL.extract_from(img)
+      assert_equal 'http://foobar.com/', Prism::Pattern::URL.extract_from(img)
     end
   end
   
@@ -42,7 +42,7 @@ class PatternTest < Test::Unit::TestCase
 	      <a href="mailto:notthis@example.com">john@example.com</a>
       </span>})
       doc = html.css('.email').first
-      type_value = HMachine::Pattern::TypeValue.extract_from(doc)
+      type_value = Prism::Pattern::TypeValue.extract_from(doc)
       assert type_value.has_key?(:type)
       assert_equal :internet, type_value[:type]
       assert_equal 'john@example.com', type_value[:value]
@@ -51,19 +51,19 @@ class PatternTest < Test::Unit::TestCase
   
   describe 'Abbr Design Pattern' do
     should 'have an extraction method' do
-      assert_respond_to HMachine::Pattern::Abbr, :extract
+      assert_respond_to Prism::Pattern::Abbr, :extract
     end
     
     should 'extract the title out of an abbreviation element' do
       doc = Nokogiri.parse('<abbr title="Hello machine">Hello Human</abbr>')
       node = doc.css('abbr').first
-      assert_equal 'Hello machine', HMachine::Pattern::Abbr.extract_from(node)
+      assert_equal 'Hello machine', Prism::Pattern::Abbr.extract_from(node)
     end
     
     should 'continue as usual if no title is found' do
       doc = Nokogiri.parse('<abbr>Hello human</abbr>')
       node = doc.css('abbr').first
-      assert_equal 'Hello human', HMachine::Pattern::Abbr.extract_from(node)
+      assert_equal 'Hello human', Prism::Pattern::Abbr.extract_from(node)
     end
   end
   
@@ -76,7 +76,7 @@ class PatternTest < Test::Unit::TestCase
           <span class="value">+44</span> (0) <span class="value">1223 123 123</span>
         </span>
       })
-      assert HMachine::Pattern::ValueClass.found_in?(doc)
+      assert Prism::Pattern::ValueClass.found_in?(doc)
     end
     
     should 'ignore nested value classes' do
@@ -88,14 +88,14 @@ class PatternTest < Test::Unit::TestCase
          </span>
         </p>
       })
-      assert_equal 1, HMachine::Pattern::ValueClass.find_in(doc).size
-      assert_not_equal 'Puppies Rule!', HMachine::Pattern::ValueClass.extract_from(doc)
-      assert HMachine::Pattern::ValueClass.valid?(HMachine::Pattern::ValueClass.find_in(doc).first)
+      assert_equal 1, Prism::Pattern::ValueClass.find_in(doc).size
+      assert_not_equal 'Puppies Rule!', Prism::Pattern::ValueClass.extract_from(doc)
+      assert Prism::Pattern::ValueClass.valid?(Prism::Pattern::ValueClass.find_in(doc).first)
     end
     
     should 'extract the value' do
       doc = Nokogiri.parse(%q{<p class="description"><span class="value">Value Class Pattern</span></p>})
-      assert_equal 'Value Class Pattern', HMachine::Pattern::ValueClass.extract_from(doc)
+      assert_equal 'Value Class Pattern', Prism::Pattern::ValueClass.extract_from(doc)
     end
     
     should 'concatenate values' do
@@ -105,18 +105,18 @@ class PatternTest < Test::Unit::TestCase
           <span class="value">+44</span> (0) <span class="value">1223 123 123</span>
         </span>
       })
-      assert_equal '+441223 123 123', HMachine::Pattern::ValueClass.extract_from(doc)
+      assert_equal '+441223 123 123', Prism::Pattern::ValueClass.extract_from(doc)
     end
     
     should 'extract the value intelligently from an abbr element' do
       doc = Nokogiri.parse(%q{<span class="dtstart"><abbr class="value" title="hello">this Tuesday</abbr></span>})
-      assert_not_equal 'this Tuesday', HMachine::Pattern::ValueClass.extract_from(doc)
-      assert_equal 'hello', HMachine::Pattern::ValueClass.extract_from(doc)
+      assert_not_equal 'this Tuesday', Prism::Pattern::ValueClass.extract_from(doc)
+      assert_equal 'hello', Prism::Pattern::ValueClass.extract_from(doc)
     end
     
     should 'use the alt attribute for images or areas' do
       doc = Nokogiri.parse(%q{<div class="photo">Here's me: <img src="photo.jpg" class="value" alt="Whatever" /></div>})
-      assert_equal "Whatever", HMachine::Pattern::ValueClass.extract_from(doc)
+      assert_equal "Whatever", Prism::Pattern::ValueClass.extract_from(doc)
     end
     
     should 'understand the value-title pattern' do
@@ -125,7 +125,7 @@ class PatternTest < Test::Unit::TestCase
         <span class="value-title" title="hi"> </span>
         Friday, June 5th at 8pm
       </span>})
-      assert_equal 'hi', HMachine::Pattern::ValueClass.extract_from(doc)
+      assert_equal 'hi', Prism::Pattern::ValueClass.extract_from(doc)
     end
     
   end
