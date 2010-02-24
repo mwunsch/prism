@@ -5,13 +5,15 @@
 
 Gem::Specification.new do |s|
   s.name = %q{hmachine}
-  s.version = "0.0.1"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Wunsch"]
-  s.date = %q{2010-01-09}
-  s.description = %q{A Ruby microformat parser powered by Nokogiri}
+  s.date = %q{2010-02-24}
+  s.default_executable = %q{hmachine}
+  s.description = %q{A Ruby microformat parser and HTML toolkit powered by Nokogiri}
   s.email = ["mark@markwunsch.com"]
+  s.executables = ["hmachine"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.md"
@@ -19,29 +21,98 @@ Gem::Specification.new do |s|
   s.files = [
     ".gitignore",
      "Gemfile",
+     "Gemfile.lock",
      "LICENSE",
      "README.md",
      "Rakefile",
+     "bin/hmachine",
+     "hmachine.gemspec",
      "lib/hmachine.rb",
      "lib/hmachine/microformat.rb",
-     "lib/hmachine/microformat/base.rb",
+     "lib/hmachine/microformat/adr.rb",
+     "lib/hmachine/microformat/geo.rb",
      "lib/hmachine/microformat/hcard.rb",
+     "lib/hmachine/microformat/rellicense.rb",
+     "lib/hmachine/microformat/reltag.rb",
+     "lib/hmachine/microformat/votelinks.rb",
+     "lib/hmachine/microformat/xfn.rb",
+     "lib/hmachine/microformat/xmdp.rb",
+     "lib/hmachine/microformat/xoxo.rb",
+     "lib/hmachine/pattern.rb",
+     "lib/hmachine/pattern/abbr.rb",
+     "lib/hmachine/pattern/datetime.rb",
+     "lib/hmachine/pattern/typevalue.rb",
+     "lib/hmachine/pattern/url.rb",
+     "lib/hmachine/pattern/valueclass.rb",
+     "lib/hmachine/posh.rb",
+     "lib/hmachine/posh/anchor.rb",
+     "lib/hmachine/posh/base.rb",
+     "lib/hmachine/posh/definition_list.rb",
      "test/fixtures/hcard/commercenet.html",
      "test/fixtures/hcard/geo.html",
+     "test/fixtures/huffduffer.html",
+     "test/fixtures/likeorhate.html",
+     "test/fixtures/rel_license.html",
+     "test/fixtures/test-fixture/hcard/hcard1.html",
+     "test/fixtures/test-fixture/hcard/hcard11.html",
+     "test/fixtures/test-fixture/hcard/hcard12.html",
+     "test/fixtures/test-fixture/hcard/hcard17.html",
+     "test/fixtures/test-fixture/hcard/hcard2.html",
+     "test/fixtures/test-fixture/hcard/hcard3.html",
+     "test/fixtures/test-fixture/hcard/hcard4.html",
+     "test/fixtures/test-fixture/hcard/hcard5.html",
+     "test/fixtures/test-fixture/hcard/hcard6.html",
+     "test/fixtures/test-fixture/hcard/hcard7.html",
+     "test/fixtures/test-fixture/hcard/hcard8.html",
+     "test/fixtures/test-fixture/hcard/hcard9.html",
+     "test/fixtures/test-fixture/hcard/hcard99.html",
+     "test/fixtures/test-fixture/value-class-date-time/value-dt-test-YYYY-MM-DD--HH-MM.html",
+     "test/fixtures/test-fixture/value-class-date-time/value-dt-test-abbr-YYYY-MM-DD--HH-MM.html",
+     "test/fixtures/xfn.html",
+     "test/fixtures/xmdp.html",
+     "test/fixtures/xoxo.html",
      "test/hmachine_test.rb",
+     "test/microformat/adr_test.rb",
+     "test/microformat/geo_test.rb",
      "test/microformat/hcard_test.rb",
+     "test/microformat/rellicense_test.rb",
+     "test/microformat/reltag_test.rb",
+     "test/microformat/votelinks_test.rb",
+     "test/microformat/xfn_test.rb",
+     "test/microformat/xmdp_test.rb",
+     "test/microformat/xoxo_test.rb",
      "test/microformat_test.rb",
+     "test/pattern/date_time_test.rb",
+     "test/pattern/value_class_test.rb",
+     "test/pattern_test.rb",
+     "test/posh/anchor_test.rb",
+     "test/posh/base_test.rb",
+     "test/posh/definition_list_test.rb",
      "test/test_helper.rb"
   ]
   s.homepage = %q{http://github.com/mwunsch/hmachine}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
-  s.summary = %q{Ruby microformat parser}
+  s.rubygems_version = %q{1.3.6}
+  s.summary = %q{Ruby microformat parser and HTML toolkit}
   s.test_files = [
     "test/hmachine_test.rb",
+     "test/microformat/adr_test.rb",
+     "test/microformat/geo_test.rb",
      "test/microformat/hcard_test.rb",
+     "test/microformat/rellicense_test.rb",
+     "test/microformat/reltag_test.rb",
+     "test/microformat/votelinks_test.rb",
+     "test/microformat/xfn_test.rb",
+     "test/microformat/xmdp_test.rb",
+     "test/microformat/xoxo_test.rb",
      "test/microformat_test.rb",
+     "test/pattern/date_time_test.rb",
+     "test/pattern/value_class_test.rb",
+     "test/pattern_test.rb",
+     "test/posh/anchor_test.rb",
+     "test/posh/base_test.rb",
+     "test/posh/definition_list_test.rb",
      "test/test_helper.rb"
   ]
 
