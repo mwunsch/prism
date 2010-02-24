@@ -194,6 +194,10 @@ module HMachine
       def empty?
         to_h.empty?
       end
+      
+      def each_pair(&block)
+        to_h.each_pair(&block)
+      end
 
     end
   end
