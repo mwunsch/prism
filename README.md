@@ -2,29 +2,43 @@
 
 **Ruby microformat parser and HTML toolkit**
 
-It is not even close to ready, yet.
-
-[RDoc](http://rdoc.info/projects/mwunsch/hmachine)
-
-## Requirements
-
-+ [Nokogiri](http://github.com/tenderlove/nokogiri)
+[RDoc](http://rdoc.info/projects/mwunsch/hmachine) | [Gem](http://rubygems.org/gems/hmachine) | [Metrics](http://getcaliper.com/caliper/project?repo=git%3A%2F%2Fgithub.com%2Fmwunsch%2Fhmachine.git)
 
 ## What hMachine is:
 
 + A robust microformat parser
++ A command-line tool for parsing microformats from a url or a string of markup
 + A DSL for defining semantic markup patterns
 + Export microformats to other standards:
 	+ hCard => vCard
 
-It is your lowercase semantic web friend.
+It is your [lowercase semantic web](http://tantek.com/presentations/2004etech/realworldsemanticspres.html) friend.
 
-## Feature wishlist:
+>Designed for humans first and machines second, microformats are a set of simple, open data formats built upon existing and widely adopted standards. Instead of throwing away what works today, microformats intend to solve simpler problems first by adapting to current behaviors and usage patterns (e.g. XHTML, blogging).
 
-+ A CLI for fetching microformats from a url or a string of html
-+ HTML outliner (using HTML5 sectioning)
-+ Extensions so you can do something like: `String.is_a_valid? :hcard` in your tests
-+ Extensions to turn Ruby objects into semantic HTML. Hash.to_definition_list, Array.to_ordered_list, etc. 
+Learn more about Microformats at http://microformats.org.
+
+## Usage
+
+The command line tool takes a SOURCE from the Standard Input or as an argument:
+
+	$: curl http://markwunsch.com | hmachine --hcard > ~/Desktop/me.vcf
+	
+OR
+
+	$: hmachine --hcard http://markwunsch.com > ~/Desktop/me.vcf
+
+## Installation
+
+With Ruby and Rubygems:
+
+	gem install hmachine
+	
+Or clone the repository and run `bundle install` to get the development dependencies.	
+
+#### Requirements:
+
++ [Nokogiri](http://github.com/tenderlove/nokogiri)
 
 ## Microformats supported (right now, as of this very moment)
 
@@ -37,6 +51,8 @@ It is your lowercase semantic web friend.
 + [geo](http://microformats.org/wiki/geo)
 + [adr](http://microformats.org/wiki/adr)
 + [hCard](http://microformats.org/wiki/hcard)
+
+More on the way.
 
 ## Finding Microformats:
 	
@@ -60,15 +76,7 @@ It is your lowercase semantic web friend.
 	me.url
 	#=> "http://markwunsch.com/"
 	File.open('mark.vcf','w') {|f| f.write me.to_vcard }
-	## Add me to your address book!
-	
-## TODO:
-
-+ Handle nested microformats better (I like HMachine::Pattern::ValueClass's search implementation the best)
-+ Code is ugly. Especially XOXO.
-+ Better recursive parsing of trees. See above.
-+ Tests are all kinds of disorganized.
-+ Broader support for some of the weirder Patterns, like object[data]
+	## Add me to your address book!	
 
 ## POSH DSL
 
@@ -99,6 +107,28 @@ Now you can do:
 	nav.items
 	# Returns an array of contents
 	# This method comes from the has_many call up above that defines the Property
+
+## Other Microformat parsers
+
++ [Mofo](http://mofo.rubyforge.org/) is a Ruby microformat parser backed by Hpricot.
++ [Sumo](http://www.danwebb.net/2007/2/9/sumo-a-generic-microformats-parser-for-javascript) is a JavaScript microformat parser.
++ [Operator](https://addons.mozilla.org/en-US/firefox/addon/4106) is a Firefox extension.
++ [hKit](http://code.google.com/p/hkit/) is a microformat parser for PHP.
++ [Oomph](http://visitmix.com/labs/oomph/) is a microformat toolkit add-in for Internet Explorer.
+	
+## Feature wishlist:
+
++ HTML outliner (using HTML5 sectioning)
++ Extensions so you can do something like: `String.is_a_valid? :hcard` in your tests
++ Extensions to turn Ruby objects into semantic HTML. Hash.to_definition_list, Array.to_ordered_list, etc.	
+	
+## TODO:
+
++ Handle nested microformats better (I like HMachine::Pattern::ValueClass's search implementation the best)
++ Code is ugly. Especially XOXO.
++ Better recursive parsing of trees. See above.
++ Tests are all kinds of disorganized.
++ Broader support for some of the weirder Patterns, like object[data]	
 
 ## License
 
