@@ -35,6 +35,15 @@ class PoshBaseTest < Test::Unit::TestCase
       assert_equal 1, @test_class.one.length
       assert @test_class.one.include?(property)
     end
+    
+    should 'have a set of requirements' do
+      property = @test_class.has_one!(:fn)
+      assert_respond_to @test_class, :requirements
+      assert @test_class.requirements.empty?
+      assert_respond_to property, :required!
+      property.required!
+      assert @test_class.requirements.include?(property)
+    end
 
     should 'has many properties' do
       property = @test_class.has_many!(:tel)

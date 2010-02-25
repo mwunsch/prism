@@ -20,7 +20,8 @@ module Prism
         end
               
         def inherited(subclass)
-          inheritable = [:@properties, :@has_one, :@has_many, :@search, :@extract, :@validate]
+          inheritable = [ :@properties, :@has_one, :@has_many, :@search, 
+                          :@extract, :@validate, :@requirements ]
           inheritable.each do |var|
             subclass.instance_variable_set(var, instance_variable_get(var).dup) if instance_variable_get(var)
           end
@@ -126,6 +127,10 @@ module Prism
         def many
           @has_many
         end
+        
+        def requirements
+          @requirements ||= []
+        end
 
         # Remove a format from a node if it is nested.
         def remove_nested(node)
@@ -147,6 +152,10 @@ module Prism
           hash.reject do |key,value| 
             value.respond_to?(:empty?) ? value.empty? : value.nil?
           end
+        end
+        
+        def required!
+          parent.requirements << self if parent
         end
         
       end
