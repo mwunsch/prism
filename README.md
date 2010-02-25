@@ -96,8 +96,8 @@ All microformats inherit from `Prism::POSH::Base`, because all microformats begi
 		has_many :items do
 			search {|doc| doc.css('li') }
 		end
-		# has_many and has_one define Properties of the POSH format (Prism::Property)
-		# Each Property object includes the Prism module, so they can search, validate, and extract
+		# has_many and has_one define properties, which themselves inherit from
+		# Prism::POSH::Base, so you can do :has_one, :has_many, :search, :extract, etc.
 	end
 	
 Now you can do:
@@ -108,7 +108,7 @@ Now you can do:
 	
 	nav.items
 	# Returns an array of contents
-	# This method comes from the has_many call up above that defines the Property
+	# This method comes from the has_many call up above that defines the :items property
 
 ## Other Microformat parsers
 
@@ -121,6 +121,7 @@ Now you can do:
 ## Feature wishlist:
 
 + HTML outliner (using HTML5 sectioning)
++ HTML5 article, time, etc POSH support
 + Extensions so you can do something like: `String.is_a_valid? :hcard` in your tests
 + Extensions to turn Ruby objects into semantic HTML. Hash.to_definition_list, Array.to_ordered_list, etc.	
 	
@@ -129,8 +130,9 @@ Now you can do:
 + Handle nested microformats better (I like Prism::Pattern::ValueClass's search implementation the best)
 + Code is ugly. Especially XOXO.
 + Better recursive parsing of trees. See above.
-+ Tests are all kinds of disorganized.
-+ Broader support for some of the weirder Patterns, like object[data]	
++ Tests are all kinds of disorganized. And slow.
++ Broader support for some of the weirder Patterns, like object[data]
++ Smarter ISO8601 support, E.123 support. Standards.
 
 ## License
 
