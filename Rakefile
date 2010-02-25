@@ -32,6 +32,7 @@ begin
     gemspec.authors = ["Mark Wunsch"]
     gemspec.email = ["mark@markwunsch.com"]
     gemspec.add_dependency 'nokogiri'
+    gemspec.add_development_dependency "bundler", ">= 0.9.7"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
