@@ -2,7 +2,7 @@
 
 **Ruby microformat parser and HTML toolkit**
 
-[RDoc](http://rdoc.info/projects/mwunsch/prism) | [Gem](http://rubygems.org/gems/prism) | [Metrics](http://getcaliper.com/caliper/project?repo=git%3A%2F%2Fgithub.com%2Fmwunsch%2Fprism.git)
+[RDoc](http://rdoc.info/projects/mwunsch/prism) | [Gem](http://rubygems.org/gems/prism) | [Metrics](http://getcaliper.com/caliper/project?repo=git%3A%2F%2Fgithub.com%2Fmwunsch%2Fprism.git) | [Microformats.org](http://microformats.org/wiki/Prism)
 
 ## What Prism is:
 

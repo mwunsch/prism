@@ -34,10 +34,26 @@ def usage
 end
 
 begin
+  require 'nokogiri'
+rescue LoadError
+  if !defined?(Gem)
+    warn "warn: #{$!.to_s}. trying again with rubygems."
+    require 'rubygems'
+    retry
+  end
+end
+
+begin
   require 'prism'
 rescue LoadError
-  $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-  require 'prism'
+  raise if $!.to_s !~ /prism/
+  libdir = File.expand_path("../../lib", __FILE__).sub(/^#{Dir.pwd}/, '.')
+  if !$:.include?(libdir)
+    warn "warn: #{$!.to_s}. trying again with #{libdir} on load path."
+    $:.unshift libdir
+    retry
+  end
+  raise
 end
 
 options = {}
