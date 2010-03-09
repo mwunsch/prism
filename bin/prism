@@ -37,8 +37,8 @@ begin
   require 'nokogiri'
 rescue LoadError
   if !defined?(Gem)
-    warn "warn: #{$!.to_s}. trying again with rubygems."
-    require 'rubygems'
+    warn "warn: #{$!.to_s}. trying again with bundler."
+    require File.expand_path('../../.bundle/environment', __FILE__)
     retry
   end
 end
