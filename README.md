@@ -74,7 +74,7 @@ More on the way.
 	me.n.family_name
 	#=> "Wunsch"
 	me.url
-	#=> "http://markwunsch.com/"
+	#=> ["http://markwunsch.com/"]
 	File.open('mark.vcf','w') {|f| f.write me.to_vcard }
 	## Add me to your address book!	
 
