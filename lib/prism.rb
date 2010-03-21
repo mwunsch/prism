@@ -105,13 +105,11 @@ module Prism
   # Parse the document, finding every instance of the desired element, and extract their contents
   def parse(document)
     if found_in?(document)
-      contents = if find_in(document).respond_to?(:collect)
+      if find_in(document).respond_to?(:collect)
         find_in(document).collect { |element| extract_from(element) }
       else
         extract_from(document)
       end
-      return contents.first if contents.respond_to?(:length) && (contents.length == 1)
-      contents
     end
   end
   
