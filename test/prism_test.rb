@@ -110,7 +110,7 @@ class PrismTest < Test::Unit::TestCase
     should "parse a node, extracting its contents" do
       test = @klass.new
       test.search {|node| node.css('.fn') }
-      assert_equal @doc.css('.fn').first.content, test.parse(@doc)
+      assert_equal @doc.css('.fn').first.content, test.parse(@doc).first
     end
     
     should 'parse a document, and return an array of contents' do

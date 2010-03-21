@@ -55,24 +55,24 @@ class PoshBaseTest < Test::Unit::TestCase
     should 'parse by properties' do
       property = @test_class.has_one :fn
       assert_equal property.first, @test_class.one.first
-      assert_equal 'CommerceNet', @test_class.parse(@doc)[:fn]
+      assert_equal 'CommerceNet', @test_class.parse_first(@doc)[:fn]
     end
     
     should 'parse itself out of a document' do
       @test_class.has_one :fn
-      assert_instance_of @test_class, @test_class.parse(@doc)
+      assert_instance_of @test_class, @test_class.parse(@doc).first
     end
     
     should 'have one property and define an instance method' do
       property = @test_class.has_one :fn
       assert_equal property.first, @test_class.instance_variable_get(:@has_one).first
       assert_respond_to @test_class.parse_first(@doc), :fn
-      assert_equal property.first.parse_first(@doc), @test_class.parse(@doc).fn
+      assert_equal property.first.parse_first(@doc), @test_class.parse_first(@doc).fn
     end
     
     should 'have many of a type of properties and define an instance method' do
       property = @test_class.has_many :tel
-      assert_respond_to @test_class.parse(@doc), :tel
+      assert_respond_to @test_class.parse_first(@doc), :tel
     end
     
     should 'subclasses retain properties' do
@@ -136,7 +136,7 @@ class PoshBaseTest < Test::Unit::TestCase
       @klass.has_many :fn
       vcard = @klass.parse_first(doc)
       assert vcard.instance_variable_get(:@first_node) != vcard.node
-      assert_equal "Mark Wunsch", vcard.fn
+      assert_equal "Mark Wunsch", vcard.fn[0]
     end
     
     should 'have a DSL for defining properties' do
