@@ -14,11 +14,11 @@ class HCardTest < Test::Unit::TestCase
     end
     
     should 'be an organization' do
-      assert @vcard.organization?
+      assert @vcard[0].organization?
     end
     
     should 'convert to a vcard' do
-      assert_respond_to @vcard, :to_vcard
+      assert_respond_to @vcard[0], :to_vcard
     end
   end 
   
@@ -69,7 +69,7 @@ class HCardTest < Test::Unit::TestCase
     
     test 'The role is a singular value' do
       assert @vcard.has_property?(:role)
-      assert_equal 'Designer', @vcard.role
+      assert_equal 'Designer', @vcard.role[0]
     end
     
     test 'The sort-string is a singular value' do
@@ -162,12 +162,12 @@ class HCardTest < Test::Unit::TestCase
     
     test 'The photo is a optional multiple value' do
       assert @vcard.has_property?(:photo)
-      assert_equal "../images/photo.gif", @vcard.photo
+      assert_equal "../images/photo.gif", @vcard.photo[0]
     end
     
     test 'The sound is a optional multiple value' do
       assert @vcard.has_property?(:sound)
-      assert_equal 'Pronunciation of my name', @vcard.sound
+      assert_equal 'Pronunciation of my name', @vcard.sound[0]
     end
     
     test 'The title is a optional multiple value' do
@@ -193,35 +193,35 @@ class HCardTest < Test::Unit::TestCase
     end
     
     test 'The type is a optional multiple value.' do
-      assert @vcard.adr.type.eql?(:work)
+      assert @vcard.adr[0].type[0].eql?(:work)
     end
     
     test 'The post-office-box is a optional singular value' do
-      assert_equal 'PO Box 46', @vcard.adr.post_office_box
+      assert_equal 'PO Box 46', @vcard.adr[0].post_office_box
     end
     
     test 'The street-address is a optional multiple value' do
-      assert_equal 'West Street', @vcard.adr.street_address[1]
+      assert_equal 'West Street', @vcard.adr[0].street_address[1]
     end
     
     test 'The extended-address is a optional singular value' do
-      assert_equal 'Suite 2', @vcard.adr.extended_address
+      assert_equal 'Suite 2', @vcard.adr[0].extended_address[0]
     end
     
     test 'The region is a optional singular value' do
-      assert_equal 'East Sussex', @vcard.adr.region
+      assert_equal 'East Sussex', @vcard.adr[0].region[0]
     end
     
     test 'The locality is a optional singular value' do
-      assert_equal 'Brighton', @vcard.adr.locality
+      assert_equal 'Brighton', @vcard.adr[0].locality[0]
     end
     
     test 'The postal-code is a optional singular value' do
-      assert_equal 'BN1 3DF', @vcard.adr.postal_code
+      assert_equal 'BN1 3DF', @vcard.adr[0].postal_code
     end
     
     test 'The country-name is a optional singular value' do
-      assert_equal 'United Kingdom', @vcard.adr.country_name
+      assert_equal 'United Kingdom', @vcard.adr[0].country_name[0]
     end
   end
   
@@ -237,19 +237,19 @@ class HCardTest < Test::Unit::TestCase
     end
     
     test 'The honorific-prefix is a optional multiple value' do
-      assert_equal 'Dr', @vcard.n[:honorific_prefix]
+      assert_equal 'Dr', @vcard.n[:honorific_prefix][0]
     end
     
     test 'The given-name is a optional multiple value' do
-      assert_equal 'John', @vcard.n[:given_name]
+      assert_equal 'John', @vcard.n[:given_name][0]
     end
     
     test 'The additional-name is a optional multiple value' do
-      assert_equal 'Peter', @vcard.n[:additional_name]
+      assert_equal 'Peter', @vcard.n[:additional_name][0]
     end
     
     test 'The family-name is a optional multiple value' do
-      assert_equal 'Doe', @vcard.n[:family_name]
+      assert_equal 'Doe', @vcard.n[:family_name][0]
     end
     
     test 'The honorific-suffix is a optional multiple value' do
@@ -269,16 +269,16 @@ class HCardTest < Test::Unit::TestCase
     end
     
     should 'collect the email address from href attribute' do
-      assert_equal 'john@example.com', @vcard[0].email
+      assert_equal 'john@example.com', @vcard[0].email[0]
     end
     
     test 'Where a type is specified, but the value is not then the node text is the value' do
-      assert @vcard[1].email.has_key?(:internet)
-      assert_equal 'john@example.com', @vcard[1].email.values.first
+      assert @vcard[1].email[0].has_key?(:internet)
+      assert_equal 'john@example.com', @vcard[1].email[0].values.first
     end
     
     should 'collect the email address from the node text' do
-      assert_equal 'john@example.com', @vcard[2].email
+      assert_equal 'john@example.com', @vcard[2].email[0]
     end
     
     should 'find the type value. types are case insensitive' do
@@ -286,11 +286,11 @@ class HCardTest < Test::Unit::TestCase
     end
     
     should 'not contain querystring "?subject=parser-test"' do
-      assert_equal 'john@example.com', @vcard[5].email
+      assert_equal 'john@example.com', @vcard[5].email[0]
     end
     
     test 'Where a type is specified, but the value is not then the node text is the value' do
-      assert_equal 'john@example.com', @vcard[6].email[:value]
+      assert_equal 'john@example.com', @vcard[6].email[0][:value]
     end
   end
   
@@ -306,11 +306,11 @@ class HCardTest < Test::Unit::TestCase
     end
     
     should 'collect the telephone number from the node text' do
-      assert_equal '01273 700100', @vcard[0].tel
+      assert_equal '01273 700100', @vcard[0].tel[0]
     end
     
     should 'collect the telephone number from a descendant node with value property' do
-      assert_equal "01273 700100", @vcard[1].tel[:value]
+      assert_equal "01273 700100", @vcard[1].tel[0][:value]
     end
     
     should 'find the type value' do
@@ -318,7 +318,7 @@ class HCardTest < Test::Unit::TestCase
     end
     
     test 'Where a type is specified, but the value is not then the node text is the value' do
-      assert_equal '01273 700301', @vcard[4].tel[:value]
+      assert_equal '01273 700301', @vcard[4].tel[0][:value]
     end
   end
   
@@ -334,15 +334,15 @@ class HCardTest < Test::Unit::TestCase
     end
     
     should 'collect the URL from the a element' do
-      assert_equal 'http://example.com/johndoe/', @vcard.first.url
+      assert_equal 'http://example.com/johndoe/', @vcard.first.url[0]
     end
     
     should 'collect the URL from the area element' do
-      assert_equal 'http://example.com/johndoe/', @vcard[1].url
+      assert_equal 'http://example.com/johndoe/', @vcard[1].url[0]
     end
     
     should 'collect the URL of the image element' do
-      assert_equal 'http://ufxtract.com/testsuite/images/photo.gif', @vcard[2].photo
+      assert_equal 'http://ufxtract.com/testsuite/images/photo.gif', @vcard[2].photo[0]
     end
   end
   
@@ -358,18 +358,18 @@ class HCardTest < Test::Unit::TestCase
     end
     
     should 'find given-name value even if class attribute has multiple values' do
-      assert_equal 'John', @vcard.n[:given_name]
+      assert_equal 'John', @vcard[0].n[:given_name][0]
     end
     
     should 'find category value even if class and rel attribute have multiple values' do
-      assert_equal 'development', @vcard.category[1]
+      assert_equal 'development', @vcard[0].category[1]
     end
     
     should 'find rev value even if class attribute has multiple values' do
-      assert @vcard.has_property?(:rev)
-      assert_equal 2008, @vcard.rev.year
-      assert_equal 1, @vcard.rev.mon
-      assert_equal 1, @vcard.rev.day
+      assert @vcard[0].has_property?(:rev)
+      assert_equal 2008, @vcard[0].rev.year
+      assert_equal 1, @vcard[0].rev.mon
+      assert_equal 1, @vcard[0].rev.day
     end
   end
   
@@ -389,11 +389,11 @@ class HCardTest < Test::Unit::TestCase
     end
     
     test 'The given-name value should implied from the alt attribute' do
-      assert_equal 'John', @vcard[1].n[:given_name]
+      assert_equal 'John', @vcard[1].n[:given_name][0]
     end
     
     test 'The family-name value should implied from the alt attribute' do
-      assert_equal 'Doe', @vcard[2].n[:family_name]
+      assert_equal 'Doe', @vcard[2].n[:family_name][0]
     end
   end
   
@@ -409,14 +409,14 @@ class HCardTest < Test::Unit::TestCase
     end
     
     should 'take the value from the abbr title attribute' do
-      assert_equal 'John Doe', @vcard.fn
-      assert_equal 'Mister', @vcard.n[:honorific_prefix]
-      assert_equal 'Jonathan', @vcard.n[:given_name]
-      assert_equal 'John', @vcard.n[:additional_name]
-      assert_equal 'JJ', @vcard.nickname
-      assert_equal '123 Fake Street', @vcard.adr[:street_address]
-      assert @vcard.adr[:type].eql?(:work)
-      assert_equal "415.555.1234", @vcard.tel
+      assert_equal 'John Doe', @vcard[0].fn
+      assert_equal 'Mister', @vcard[0].n[:honorific_prefix][0]
+      assert_equal 'Jonathan', @vcard[0].n[:given_name][0]
+      assert_equal 'John', @vcard[0].n[:additional_name][0]
+      assert_equal 'JJ', @vcard[0].nickname[0]
+      assert_equal '123 Fake Street', @vcard[0].adr[0][:street_address][0]
+      assert @vcard[0].adr[0][:type][0].eql?(:work)
+      assert_equal "415.555.1234", @vcard[0].tel[0]
     end
   end
   
@@ -494,16 +494,16 @@ class HCardTest < Test::Unit::TestCase
     end
     
     test 'The organization-name value is implied from the org value' do
-      assert_equal 'World Wide Web Consortium', @vcard[0].org[:organization_name]
-      assert_equal 'World Wide Web Consortium', @vcard[1].org[:organization_name]
-      assert_equal 'World Wide Web Consortium', @vcard[2].org[:organization_name]
-      assert_equal 'World Wide Web Consortium', @vcard[3].org[:organization_name]
-      assert_equal 'World Wide Web Consortium', @vcard[4].org[:organization_name]
+      assert_equal 'World Wide Web Consortium', @vcard[0].org[0][:organization_name]
+      assert_equal 'World Wide Web Consortium', @vcard[1].org[0][:organization_name]
+      assert_equal 'World Wide Web Consortium', @vcard[2].org[0][:organization_name]
+      assert_equal 'World Wide Web Consortium', @vcard[3].org[0][:organization_name]
+      assert_equal 'World Wide Web Consortium', @vcard[4].org[0][:organization_name]
     end
     
     test 'The organization name value' do
-      assert_equal 'World Wide Web Consortium', @vcard[5].org[:organization_name]
-      assert_equal 'World Wide Web Consortium', @vcard[6].org[:organization_name]
+      assert_equal 'World Wide Web Consortium', @vcard[5].org[0][:organization_name]
+      assert_equal 'World Wide Web Consortium', @vcard[6].org[0][:organization_name]
     end
   end
 

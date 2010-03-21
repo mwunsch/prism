@@ -84,8 +84,8 @@ module Prism
       has_one! :class
       
       def organization?
-        if org
-          fn == org[:organization_name]
+        if org && !org.empty?
+          fn == org.first[:organization_name]
         end
       end
       alias company? organization?
