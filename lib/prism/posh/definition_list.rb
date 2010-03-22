@@ -1,6 +1,6 @@
 module Prism
   class POSH
-    class DefinitionList < Base
+    class DefinitionList < POSH
       
       selector 'dl'
       

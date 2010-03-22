@@ -1,6 +1,6 @@
 module Prism
   class POSH
-    class Anchor < Base
+    class Anchor < POSH
       
       selector "a"
             
