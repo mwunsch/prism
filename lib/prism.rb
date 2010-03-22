@@ -27,7 +27,7 @@ module Prism
     uri = URI.parse(url)
     doc = ''
     uri.open do |web|
-      web.each_line {|line| doc += line }
+      doc = web.read
     end
     get_document(doc, url)
   end
@@ -87,12 +87,12 @@ module Prism
   end
   
   # Define the pattern used to extract contents from node
-  # Can be a symbols that match to an Element parser, or a block
+  # Can be a symbol that match to an Element parser, or a block
   def extract(pattern = nil, &block)
     if block_given?
       @extract = block 
-    else
-      @extract = Prism.map(pattern).extract if pattern
+    elsif pattern
+      @extract = Prism.map(pattern).extract
     end
     @extract || lambda{|node| node.content.strip }
   end
@@ -105,8 +105,9 @@ module Prism
   # Parse the document, finding every instance of the desired element, and extract their contents
   def parse(document)
     if found_in?(document)
-      if find_in(document).respond_to?(:collect)
-        find_in(document).collect { |element| extract_from(element) }
+      nodes = find_in(document)
+      if nodes.respond_to?(:collect)
+        nodes.collect { |element| extract_from(element) }
       else
         extract_from(document)
       end
