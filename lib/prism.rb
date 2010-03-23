@@ -44,7 +44,7 @@ module Prism
   # Map a key to an element or design pattern
   def self.map(key)
     case normalize(key)
-      when :value_class, :valueclass, :abbr, :uri, :url, :typevalue
+      when :valueclass, :abbr, :uri, :url, :typevalue
         Prism::Pattern.map(key)
       when :hcard, :geo, :rellicense, :reltag, :votelinks, :xfn, :xmdp, :xoxo, :adr
         Prism::Microformat.map(key)
@@ -61,6 +61,12 @@ module Prism
   def search(&block)
     @search = block if block_given?
     @search || lambda {|node| node }
+  end
+  
+  # Define a function to search a node with a specific selector
+  def search_for(selector=nil)
+    search {|node| node.css(selector) } if selector
+    search
   end
   
   # Search for the element in a document 

@@ -17,7 +17,7 @@ class PrismTest < Test::Unit::TestCase
     end
     
     should 'map symbol names to Extraction methods' do
-      assert_equal Prism::Pattern::ValueClass, Prism.map(:value_class)
+      assert_equal Prism::Pattern::ValueClass, Prism.map(:valueclass)
     end
     
     should 'parse an html document into a Nokogiri doc' do
@@ -27,6 +27,7 @@ class PrismTest < Test::Unit::TestCase
     should 'open a url and get the document' do
       doc = Prism.get_url('http://markwunsch.com')
       assert doc.is_a?(Nokogiri::XML::Document)
+      assert_equal "Nothing to be found 'round here", doc.text
     end
     
     should 'get a document with a url or a string of html' do
@@ -57,6 +58,12 @@ class PrismTest < Test::Unit::TestCase
       test = @klass.new
       test.search {|node| node.css('div') }
       assert_respond_to test.search, :call
+    end
+    
+    should 'search for a specific selector in a node' do
+      test = @klass.new
+      test.search_for 'div'
+      assert_respond_to test.search_for, :call 
     end
     
     should 'find an element in a node' do
