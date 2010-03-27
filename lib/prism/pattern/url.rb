@@ -7,24 +7,22 @@ module Prism
       
       extract do |url|
         if valid?(url)
-          value = if (url.node_name.eql?('a') || url.node_name.eql?('area'))
-            url['href']
-          elsif url.node_name.eql?('img')
-            url['src']
-          elsif url.node_name.eql?('object')
-            url['data']
+          value = case url.node_name
+            when 'a','area'
+              url['href']
+            when 'img'
+              url['src']
+            when 'object'
+              url['data']
           end
           normalize(value) if value
         end
       end
       
       def self.normalize(url)
-        uri = URI.parse(url).normalize.to_s
-        if uri.index('mailto:').eql?(0)
-          email = uri.split('mailto:')[1].split('?').first
-        else
-          uri
-        end
+        uri = URI.parse(url).normalize
+        return uri.to if uri.is_a?(URI::MailTo)
+        uri.to_s
       end
       
     end
