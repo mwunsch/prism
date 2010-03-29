@@ -130,9 +130,7 @@ Now you can do:
 + Better recursive parsing of trees. See above.
 + Tests are all kinds of disorganized. And slow.
 + Broader support for some of the weirder Patterns, like object[data]
-+ Smarter ISO8601 support, E.123 support. Standards.
 + Man pages (see [Ron](http://github.com/rtomayko/ron))
-+ Pass all [Value Class Pattern Tests](http://microformats.org/wiki/value-class-pattern-tests)
 
 ## License
 
