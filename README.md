@@ -125,7 +125,6 @@ Now you can do:
 	
 ## TODO:
 
-+ Handle nested microformats better (I like Prism::Pattern::ValueClass's search implementation the best)
 + Code is ugly. Especially XOXO.
 + Better recursive parsing of trees. See above.
 + Tests are all kinds of disorganized. And slow.
