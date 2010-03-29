@@ -1,6 +1,6 @@
 module Prism
   module Microformat
-    class Geo < POSH::Base
+    class Geo < POSH
       FRIENDLY_NAME = "geo"
       WIKI_URL = 'http://microformats.org/wiki/geo'
       

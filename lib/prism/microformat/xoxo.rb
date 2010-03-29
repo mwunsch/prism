@@ -1,6 +1,6 @@
 module Prism
   module Microformat
-    class XOXO < POSH::Base
+    class XOXO < POSH
       FRIENDLY_NAME = "XOXO"
       WIKI_URL = 'http://microformats.org/wiki/xoxo'
       XMDP = 'http://microformats.org/profile/xoxo'

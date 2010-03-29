@@ -1,6 +1,6 @@
 module Prism
   module Microformat
-    class HCard < POSH::Base
+    class HCard < POSH
       FRIENDLY_NAME = "hCard"
       WIKI_URL = "http://microformats.org/wiki/hcard"
       XMDP = 'http://microformats.org/profile/hcard'

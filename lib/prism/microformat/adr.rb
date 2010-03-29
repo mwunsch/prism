@@ -1,6 +1,6 @@
 module Prism
   module Microformat
-    class Adr < POSH::Base
+    class Adr < POSH
       FRIENDLY_NAME = "adr"
       WIKI_URL = 'http://microformats.org/wiki/adr'
       
