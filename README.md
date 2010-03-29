@@ -82,9 +82,9 @@ More on the way.
 
 The `Prism` module defines a group of methods to search, validate, and extract nodes out of a Nokogiri document.
 
-All microformats inherit from `Prism::POSH::Base`, because all microformats begin as [POSH formats](http://microformats.org/wiki/posh). If you wanted to create your own POSH format, you'd do something like this:
+All microformats inherit from `Prism::POSH`, because all microformats begin as [POSH formats](http://microformats.org/wiki/posh). If you wanted to create your own POSH format, you'd do something like this:
 
-	class Navigation < Prism::POSH::Base
+	class Navigation < Prism::POSH
 		search {|document| document.css('ul#navigation') }
 		# Search a Nokogiri document for nodes of a certain type
 		
