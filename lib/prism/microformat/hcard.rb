@@ -47,6 +47,8 @@ module Prism
           !n.empty? ? n : parent.properties[:fn].find_in(doc)
         end
         
+        has_many :additional_name, :honorific_prefix, :honorific_suffix
+        
         # N Optimization from Sumo:
         # http://www.danwebb.net/2007/2/9/sumo-a-generic-microformats-parser-for-javascript
         # See: http://microformats.org/wiki/hcard#Implied_.22n.22_Optimization
@@ -77,8 +79,7 @@ module Prism
             end
           end
         end
-        
-        has_many :additional_name, :honorific_prefix, :honorific_suffix
+                
       end
       
       has_one! :class
@@ -114,7 +115,7 @@ module Prism
           if tel.respond_to?(:join)
             tel.each { |phone| @vcard += "\x0D\x0ATEL#{type_value_vcard(phone)}" }
           else
-            @vcard += "\x0D\x0ATEL#{type_value_vcard(phone)}"
+            @vcard += "\x0D\x0ATEL#{type_value_vcard(tel)}"
           end
         end
         if email
