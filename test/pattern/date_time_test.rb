@@ -25,8 +25,8 @@ class DateTimePatternTest < Test::Unit::TestCase
   end
   
   should 'build an iso8601 time' do
-    assert_equal 'T12:0:0-18000', @pattern.time('12:00')
-    assert_equal 'T13:0:0-18000', @pattern.time('1:00pm')
+    assert_equal "T12:0:0#{Time.now.utc_offset}", @pattern.time('12:00')
+    assert_equal 'T13:0:0-18000', @pattern.time('1:00pm-18000')
     assert_equal 'T4:45:30Z', @pattern.time('4:45:30Z')
     assert !@pattern.time('12')
   end

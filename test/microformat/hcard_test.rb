@@ -79,7 +79,7 @@ class HCardTest < Test::Unit::TestCase
     
     test 'The tz is a singular value' do
       assert @vcard.has_property?(:tz)
-      assert_equal -18000, @vcard.tz.utc_offset
+      assert_equal Time.now.utc_offset, @vcard.tz.utc_offset
     end
     
     test 'The uid is a singular value' do
