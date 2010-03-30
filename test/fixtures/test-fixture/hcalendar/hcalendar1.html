@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hCalendar 1 - single occurrence test</title>
+  
+  <!-- This will be replace with one CSS file and one JavaScipt file -->
+  <link rel="stylesheet" href="../css/uftestsuite.css" type="text/css" />
+  <link rel="stylesheet" href="../../testrunner/css/testrunner.css" type="text/css" />
+  
+  <script type="text/javascript" src="../../testrunner/javascript/prototype-1.6.0.2.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/beautify.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/sumo/microformat.js"></script>
+  <script type="application/javascript;version=1.7" src="http://svn.mozilla.org/labs/operator/chrome/operator/content/Microformats/Microformats.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/testrunner.js"></script>
+   
+</head>
+<body>
+    
+    
+    <div class="test-fixture">
+    
+    <p>
+    <a href="../"><img border="0" id="testsuite-image" alt="Microformats test suite" src="../images/testsuite.gif" /></a><br />
+    </p>
+    
+    <h1 class="summary">hCalendar 1 - single occurrence test</h1>
+    <p class="description">This page was design to test that values of a hCalendar which are meant to have only a single occurrence are parsed correctly.
+    The IsEqualToISODate method uses date <a href="../documentation/iso-date-normalisation.htm">normalisation and compare</a> methods.</p>
+    <p>From: <a href="default.htm"><span class="format">hCalendar</span> test suite 1.0</a></p>
+    <p class="author vcard">
+        Author: <a class="url fn" href="http://www.glennjones.net/">Glenn Jones</a> 
+    </p>
+      
+    <p>Tests:</p>
+    <table id="assetTable" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="assert">
+            <td class="test">vevent[0].summary</td>
+            <td class="result">IsEqualTo("Barcamp Brighton 1")</td>
+            <td class="comment">The summary is a singular value</td>
+        </tr>
+         <tr class="assert">
+            <td class="test">vevent[0].duration</td>
+            <td class="result">IsEqualTo("P2D")</td>
+            <td class="comment">The duration is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vevent[0].dtstart</td>
+            <td class="result">IsEqualToISODate("2007-09-08")</td>
+            <td class="comment">The dtstart is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vevent[0].dtend</td>
+            <td class="result">IsEqualToISODate("2007-09-09")</td>
+            <td class="comment">The dtend is a singular value</td>
+        </tr>
+       	<tr class="assert">
+            <td class="test">vevent[0].location</td>
+            <td class="result">IsEqualTo("Madgex Office, Brighton")</td>
+            <td class="comment">The location is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vevent[0].description</td>
+            <td class="result">IsEqualTo("Barcamp is an ad-hoc gathering born from the desire to share and learn in an open environment.")</td>
+            <td class="comment">The description is a singular value</td>
+        </tr>
+        
+       <tr class="assert">
+            <td class="test">vevent[0].url</td>
+            <td class="result">IsEqualTo("http://www.barcampbrighton.org/")</td>
+            <td class="comment">The url is a singular value</td>
+        </tr>
+
+        <tr class="assert">
+            <td class="test">vevent[0].class</td>
+            <td class="result">IsEqualToCaseInsensitive("Public")</td>
+            <td class="comment">The class is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vevent[0].dtstamp</td>
+            <td class="result">IsEqualToISODate("2007-05-01")</td>
+            <td class="comment">The dtstamp is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vevent[0].last-modified</td>
+            <td class="result">IsEqualToISODate("2007-05-02")</td>
+            <td class="comment">The last-modified is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vevent[0].uid</td>
+            <td class="result">IsEqualTo("guid1.example.com")</td>
+            <td class="comment">The uid is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vevent[0].status</td>
+            <td class="result">IsEqualToCaseInsensitive("Confirmed")</td>
+            <td class="comment">The status is a singular value</td>
+        </tr>
+        <tr class="assert">
+            <td class="test">vevent[0].geo</td>
+            <td class="result">HasProperty(true)</td>
+            <td class="comment">The geo is a singular value</td>
+        </tr>
+                
+        <tr class="assert">
+            <td class="test">vevent[0].contact</td>
+            <td class="result">HasProperty(true)</td>
+            <td class="comment">The contact is a singular value</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vevent[0].organizer</td>
+            <td class="result">HasProperty(true)</td>
+            <td class="comment">The organizer is a singular value</td>
+        </tr>
+
+
+
+    </tbody>
+    </table> 
+    
+    
+    <p>History:</p>
+    
+    <ul>
+    <li class="history vevent">
+        <span class="summary">Created</span>: <abbr class="dtstart" title="2008-06-02">2 June 2008</abbr> 
+        <span class="description">by Glenn Jones</span>
+    </li>
+    </ul>
+    
+    
+    
+    </div>
+  
+    <div id="uf">
+    
+    	<!-- This may not be the best semantic use of HTML element -->
+		<div class="vevent">
+			
+			
+			<h2 class="summary">Barcamp Brighton 1</h2>
+			
+			<div>
+				<abbr class="duration" title="P2D">2 day</abbr> event.  
+			</div>
+			<div>
+				<abbr class="dtstart" title="2007-09-08">8</abbr> - 
+				<abbr class="dtend" title="2007-09-09">9 September 2007</abbr>
+			</div>
+			<div>Loaction: <span class="location">Madgex Office, Brighton</span></div>
+			<div class="description" >Barcamp is an ad-hoc gathering born from the desire to share and learn in an open environment.</div>
+			
+			<a class="url" href="http://www.barcampbrighton.org/">http://www.barcampbrighton.org/</a>
+			<div>This meeting is <strong class="class">public</strong>.</div>
+			
+			<div>Created: <abbr class="dtstamp" title="2007-05-01">1 May 2007</abbr></div>
+			<div>Last modified: <abbr class="last-modified" title="2007-05-02">2 May 2007</abbr></div>
+			
+			<div>Ref: <span class="uid" >guid1.example.com</span></div>
+			<div>Status: <span class="status">Confirmed</span></div>
+			<abbr class="geo" title="37.77;-122.41">Northern California</abbr>
+
+			<div class="contact vcard">
+				Contact: <span class="fn">John Doe</span>
+			</div>
+			
+			<div class="organizer vcard">
+				Managed by: <span class="fn org">Example Company</span>
+			</div>
+					
+		</div>
+    
+    </div>
+    
+    <p>
+        <a rel="license" href="../license.txt">Some rights reserved</a>
+    </p>
+      
+</body>
+
+</html>
