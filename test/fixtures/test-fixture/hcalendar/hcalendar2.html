@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hCalendar 2 - multiple occurrence test</title>
+  
+  <!-- This will be replace with one CSS file and one JavaScipt file -->
+  <link rel="stylesheet" href="../css/uftestsuite.css" type="text/css" />
+  <link rel="stylesheet" href="../../testrunner/css/testrunner.css" type="text/css" />
+  
+  <script type="text/javascript" src="../../testrunner/javascript/prototype-1.6.0.2.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/beautify.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/sumo/microformat.js"></script>
+  <script type="application/javascript;version=1.7" src="http://svn.mozilla.org/labs/operator/chrome/operator/content/Microformats/Microformats.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/testrunner.js"></script>
+   
+</head>
+<body>
+    
+    
+    <div class="test-fixture">
+    
+    <p>
+    <a href="../"><img border="0" id="testsuite-image" alt="Microformats test suite" src="../images/testsuite.gif" /></a><br />
+    </p>
+    
+    <h1 class="summary">hCalendar 2 - multiple occurrence test</h1>
+    
+    <p class="description">This page was design to test that values of a hCalendar which are meant to have multiple occurrences are parsed correctly.
+    </p>
+    <p>From: <a href="default.htm"><span class="format">hCalendar</span> test suite 1.0</a></p>
+    <p class="author vcard">
+        Author: <a class="url fn" href="http://www.glennjones.net/">Glenn Jones</a> 
+    </p>
+      
+    <p>Tests:</p>
+    <table id="assetTable" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    	<tbody>
+	        <tr class="assert">
+	            <td class="test">vevent[0].category[1]</td>
+	            <td class="result">IsEqualToCaseInsensitive("Unconference")</td>
+	            <td class="comment">The category is a multiple value</td>
+	        </tr>
+	        
+	        <tr class="assert">
+	            <td class="test">vevent[0].rrule[0].freq</td>
+	            <td class="result">IsEqualTo("yearly")</td>
+	            <td class="comment">The rdate is a singular value</td>
+	        </tr>
+	        
+	        <tr class="assert">
+	            <td class="test">vevent[0].rdate[0].freq</td>
+	            <td class="result">IsEqualTo("2001-06-01/2001-08-29/2002-06-05/2002-08-30")</td>
+	            <td class="comment">The rdate is a singular value</td>
+	        </tr>
+	        
+	        <tr class="assert">
+	            <td class="test">vevent[0].attendee[0]</td>
+	            <td class="result">HasProperty(true)</td>
+	            <td class="comment">The attendee is a singular value</td>
+	        </tr>
+
+
+	        
+         </tbody>
+    </table> 
+    
+    
+    <p>History:</p>
+    
+    <ul>
+    <li class="history vevent">
+        <span class="summary">Created</span>: <abbr class="dtstart" title="2008-06-02">2 June 2008</abbr> 
+        <span class="description">by Glenn Jones</span>
+    </li>
+    </ul>
+    
+    
+    
+    </div>
+  
+    <div id="uf">
+    
+    	<!-- This may not be the best semantic use of HTML element -->
+		<div class="vevent">
+			
+			<h2 class="summary">Barcamp Brighton 1</h2>
+			<div>
+				<abbr class="dtstart" title="2007-09-08">8</abbr> - 
+				<abbr class="dtend" title="2007-09-09">9 September 2007</abbr>
+			</div>
+			<div>Tags: 
+				<a rel="tag" class="category" href="http://en.wikipedia.org/wiki/barcamp">Barcamp</a>, 
+				<a rel="tag" class="category" href="http://en.wikipedia.org/wiki/unconference">Unconference</a>,
+			</div>
+			<div>Created: <abbr class="dtstamp" title="2007-05-01">1 May 2007</abbr></div>			
+			<div>Ref: <span class="uid" >guid1.example.com</span></div>
+			
+			<div>Attendees</div>
+			<ul>
+				<li class="attendee vcard"><span class="fn">John Doe</span></li>
+				<li class="attendee vcard"><span class="fn">Jane Doe</span></li>
+			</ul>
+
+	
+		</div>
+    
+    </div>
+    
+    <p>
+        <a rel="license" href="../license.txt">Some rights reserved</a>
+    </p>
+      
+</body>
+
+</html>

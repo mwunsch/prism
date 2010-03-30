@@ -25,6 +25,10 @@ module Prism
         
         has_one(:url) { extract :url }
         
+        has_many :category
+        
+        has_many(:attendee)
+        
         has_one! :class
         
         required!

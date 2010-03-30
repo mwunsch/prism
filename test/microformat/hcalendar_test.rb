@@ -95,4 +95,29 @@ class HCalendarTest < Test::Unit::TestCase
     end
     
   end  
+
+  # http://ufxtract.com/testsuite/hcalendar/hcalendar2.htm
+  describe 'multiple occurence test' do
+    def self.before_all
+      @doc ||= test_fixture('hcalendar/hcalendar2.html')
+      @vcalendar ||= @@klass.parse(@doc)
+    end
+    
+    setup do
+      @vcalendar ||= self.class.before_all
+    end
+    
+    test 'The category is a multiple value' do
+      vevent = @vcalendar.vevent
+      assert_equal 'Unconference', vevent[0].category[1]
+    end
+    
+    # The test fixture tests for rrule and rdate, but these values aren't in the fixture
+    
+    test 'The attendee is a multiple value' do
+      vevent = @vcalendar.vevent
+      assert vevent[0].has_property? :attendee
+    end
+    
+  end
 end
