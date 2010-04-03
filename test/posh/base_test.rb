@@ -155,5 +155,14 @@ class PoshBaseTest < Test::Unit::TestCase
       assert_equal 'http://foobar.com/', vcard.source
     end
     
+    should 'convert hash representation to yaml' do
+      @klass.has_one :fn
+      @klass.has_many(:tel) { extract :typevalue }
+      vcard = @klass.new(@node)
+      assert_respond_to vcard, :to_yaml
+      yaml = YAML.load(vcard.to_yaml)
+      assert_equal 'CommerceNet', yaml[:fn]
+    end
+    
   end
 end
