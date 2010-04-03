@@ -166,7 +166,8 @@ module Prism
     end
     
     def [](property_key)
-      to_h[property_key]
+      @get_properties ||= self.class.get_properties(@first_node, properties)
+      @get_properties[property_key]
     end
     
     def properties
@@ -176,7 +177,23 @@ module Prism
     end
     
     def to_h
-      @to_h ||= self.class.get_properties @first_node, properties
+      return @to_h if @to_h
+      @get_properties ||= self.class.get_properties(@first_node, properties)
+      @to_h = {}
+      @get_properties.each_pair do |key,value|
+        @to_h[key] = if value.respond_to?(:to_h)
+          value.to_h
+        elsif value.respond_to?(:flatten)
+          value.map {|v| v.respond_to?(:to_h) ? v.to_h : v }
+        else
+          value
+        end
+      end
+      @to_h
+    end
+    
+    def to_yaml
+      to_h.to_yaml
     end
     
     def inspect
