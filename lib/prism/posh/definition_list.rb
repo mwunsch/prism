@@ -28,6 +28,10 @@ module Prism
         dictionary
       end
       
+      def [](key)
+        to_h[key]
+      end
+      
       def properties
         to_h
       end
