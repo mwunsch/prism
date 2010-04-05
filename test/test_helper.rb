@@ -10,8 +10,13 @@ end
 
 require 'test/unit'
 require 'contest'
-require 'redgreen'
 require 'fakeweb'
+# redgreen does not work in ruby 1.9.1
+begin
+  require 'redgreen'
+rescue LoadError
+end
+
 
 begin
   require 'prism'
