@@ -14,7 +14,7 @@ module Prism
       end
       
       def name
-        tag.keys.to_s
+        tag.keys.join
       end
       
       def to_s
@@ -22,7 +22,7 @@ module Prism
       end
       
       def url
-        tag.values.to_s
+        tag.values.join
       end
       
       def to_h
