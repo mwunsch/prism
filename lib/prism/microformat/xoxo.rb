@@ -7,7 +7,9 @@ module Prism
       
       selector 'ol.xoxo, ul.xoxo, ol.blogroll, ul.blogroll'
       
-      # Seriously ugly WTF      
+      extract {|node| self.new(node) }
+      
+      # Seriously ugly WTF
       def self.build_outline(node)
         tree = []
         node.children.each do |child|
@@ -60,9 +62,7 @@ module Prism
       
       def blogroll?
         node['class'].split.include?('blogroll')
-      end
-      
-      
+      end      
       
     end
   end
