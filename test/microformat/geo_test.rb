@@ -1,5 +1,5 @@
 # encoding: utf-8
-require File.join(File.dirname(__FILE__), '..', 'test_helper')
+require File.join(File.dirname(File.absolute_path(__FILE__)),'..','test_helper')
 
 class GeoTest < Test::Unit::TestCase
   setup do

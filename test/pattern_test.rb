@@ -1,9 +1,9 @@
-require File.join(File.dirname(__FILE__), 'test_helper')
+require File.join(File.dirname(File.absolute_path(__FILE__)), 'test_helper')
 
 class PatternTest < Test::Unit::TestCase
   describe 'Mapper' do
     should 'map a symbol to a design pattern' do
-      assert Prism::Pattern::ValueClass, Prism::Pattern.map(:value_class)
+      assert_equal Prism::Pattern::ValueClass, Prism::Pattern.map(:value_class)
     end
   end
   

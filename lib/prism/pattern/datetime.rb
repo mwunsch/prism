@@ -43,16 +43,33 @@ module Prism
           hour = datetime[:hour]
           min = datetime[:min] || 0
           sec = datetime[:sec] || 0
-          zone = datetime[:zone] || local.utc_offset
+          zone = datetime[:zone] || local.zone
           "T#{hour}:#{min}:#{sec}#{zone}"
         end
       end
       
       # Build a normalized iso8601 datetime string
       def self.iso8601(datetime)
+	# Extra validation added by Nimlhug: If the date contains 1 space, date and time are required.
+	# If more than one space is present, it's invalid. Without this extra step certain other numbers
+	# like phone numbers could be considered dates. Bad.
+	# Note that these only apply if the dates are all-"numeric" ^(\+|-)?[0-9 :_-]+$
+
         datestamp = date(datetime) || ''
         timestamp = time(datetime) || ''
-        datestamp + timestamp
+
+	if datetime =~ /^(\+|-)?[0-9 :_-]+$/ then
+		spaces = datetime.strip.count(' ')
+		if spaces > 1 then
+			return ''
+		end
+
+		if spaces == 1 && (datestamp.nil? || timestamp.nil?) then
+			return ''
+		end
+	end
+
+	datestamp + timestamp
       end
       
       validate do |datetime|

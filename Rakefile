@@ -31,7 +31,7 @@ begin
     gemspec.homepage = "http://github.com/mwunsch/prism"
     gemspec.authors = ["Mark Wunsch"]
     gemspec.email = ["mark@markwunsch.com"]
-    gemspec.add_dependency 'nokogiri'
+    gemspec.add_dependency 'nokogiri', '= 1.4.1'
     gemspec.add_development_dependency "bundler", ">= 0.9.7"
   end
   Jeweler::GemcutterTasks.new
