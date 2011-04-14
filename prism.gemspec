@@ -138,13 +138,13 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<nokogiri>, ["= 1.4.1"])
       s.add_development_dependency(%q<bundler>, [">= 0.9.7"])
     else
-      s.add_dependency(%q<nokogiri>, ["= 1.4.1"])
-      s.add_dependency(%q<nokogiri>, ["= 1.4.1"])
+      s.add_dependency(%q<nokogiri>)
+      s.add_dependency(%q<nokogiri>)
       s.add_dependency(%q<bundler>, [">= 0.9.7"])
     end
   else
-    s.add_dependency(%q<nokogiri>, ["= 1.4.1"])
-    s.add_dependency(%q<nokogiri>, ["= 1.4.1"])
+    s.add_dependency(%q<nokogiri>)
+    s.add_dependency(%q<nokogiri>)
     s.add_dependency(%q<bundler>, [">= 0.9.7"])
   end
 end
