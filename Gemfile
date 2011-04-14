@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem 'nokogiri', '= 1.4.1'
+gem 'nokogiri'
 
 group :test do
 	gem 'rake'

@@ -112,7 +112,7 @@ module Prism
   def parse(document)
     if found_in?(document)
       nodes = find_in(document)
-      if nodes.respond_to?(:collect)
+      if nodes.respond_to?(:collect) and !nodes.instance_of? Nokogiri::XML::Element
         nodes.collect { |element| extract_from(element) }
       else
         extract_from(document)
@@ -124,7 +124,11 @@ module Prism
   def parse_first(document)
     if found_in?(document)
       elements = find_in(document)
-      extract_from elements.respond_to?(:first) ? elements.first : elements 
+	# Fix for https://github.com/mwunsch/prism/issues/5
+	if elements.respond_to?(:first) and !elements.instance_of? Nokogiri::XML::Element then 
+	  elements = elements.first
+	end
+      extract_from elements 
     end
   end 
   

@@ -5,7 +5,7 @@ class GeoTest < Test::Unit::TestCase
   setup do
     @klass = Prism::Microformat::Geo
   end
-  
+
   should 'has a latitude and longitude' do
     doc = Nokogiri.parse(%q{
       <div class="geo">GEO: 
