@@ -50,26 +50,26 @@ module Prism
       
       # Build a normalized iso8601 datetime string
       def self.iso8601(datetime)
-	# Extra validation added by Nimlhug: If the date contains 1 space, date and time are required.
-	# If more than one space is present, it's invalid. Without this extra step certain other numbers
-	# like phone numbers could be considered dates. Bad.
-	# Note that these only apply if the dates are all-"numeric" ^(\+|-)?[0-9 :_-]+$
+        # If the date contains 1 space, date and time are required.
+        # If more than one space is present, it's invalid. Without this extra step certain other numbers
+        # like phone numbers could be considered dates. Bad.
+        # Note that these only apply if the dates are all-"numeric" ^(\+|-)?[0-9 :_-]+$
 
         datestamp = date(datetime) || ''
         timestamp = time(datetime) || ''
 
-	if datetime =~ /^(\+|-)?[0-9 :_-]+$/ then
-		spaces = datetime.strip.count(' ')
-		if spaces > 1 then
-			return ''
-		end
+        if datetime =~ /^(\+|-)?[0-9 :_-]+$/ then
+          spaces = datetime.strip.count(' ')
+          if spaces > 1 then
+            return ''
+          end
 
-		if spaces == 1 && (datestamp.nil? || timestamp.nil?) then
-			return ''
-		end
-	end
+          if spaces == 1 && (datestamp.nil? || timestamp.nil?) then
+            return ''
+          end
+        end
 
-	datestamp + timestamp
+        datestamp + timestamp
       end
       
       validate do |datetime|
