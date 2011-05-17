@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{prism}
-  s.version = "0.1.1"
+  s.version = "0.1.0.pre"
 
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Wunsch"]
-  s.date = %q{2011-04-13}
+  s.date = %q{2011-05-17}
   s.description = %q{A Ruby microformat parser and HTML toolkit powered by Nokogiri}
   s.email = ["mark@markwunsch.com"]
   s.executables = ["prism"]
@@ -108,43 +108,22 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.7.2}
   s.summary = %q{Ruby microformat parser and HTML toolkit}
-  s.test_files = [
-    "test/microformat/adr_test.rb",
-    "test/microformat/geo_test.rb",
-    "test/microformat/hcalendar_test.rb",
-    "test/microformat/hcard_test.rb",
-    "test/microformat/rellicense_test.rb",
-    "test/microformat/reltag_test.rb",
-    "test/microformat/votelinks_test.rb",
-    "test/microformat/xfn_test.rb",
-    "test/microformat/xmdp_test.rb",
-    "test/microformat/xoxo_test.rb",
-    "test/microformat_test.rb",
-    "test/pattern/date_time_test.rb",
-    "test/pattern/value_class_test.rb",
-    "test/pattern_test.rb",
-    "test/posh/anchor_test.rb",
-    "test/posh/base_test.rb",
-    "test/posh/definition_list_test.rb",
-    "test/prism_test.rb",
-    "test/test_helper.rb"
-  ]
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<nokogiri>, ["= 1.4.1"])
-      s.add_runtime_dependency(%q<nokogiri>, ["= 1.4.1"])
+      s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
+      s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
       s.add_development_dependency(%q<bundler>, [">= 0.9.7"])
     else
-      s.add_dependency(%q<nokogiri>)
-      s.add_dependency(%q<nokogiri>)
+      s.add_dependency(%q<nokogiri>, [">= 0"])
+      s.add_dependency(%q<nokogiri>, [">= 0"])
       s.add_dependency(%q<bundler>, [">= 0.9.7"])
     end
   else
-    s.add_dependency(%q<nokogiri>)
-    s.add_dependency(%q<nokogiri>)
+    s.add_dependency(%q<nokogiri>, [">= 0"])
+    s.add_dependency(%q<nokogiri>, [">= 0"])
     s.add_dependency(%q<bundler>, [">= 0.9.7"])
   end
 end

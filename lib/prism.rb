@@ -2,7 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 
 module Prism
-  VERSION = "0.1.1"
+  VERSION = "0.1.0.pre"
   PRODID = "-//markwunsch.com//Prism #{VERSION}//EN"
 
   # Convenience method for Prism::Microformat.find method
