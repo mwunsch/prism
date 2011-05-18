@@ -35,5 +35,6 @@ module Prism
       end
       
     end
+    register(:hcalendar, HCalendar)
   end
 end

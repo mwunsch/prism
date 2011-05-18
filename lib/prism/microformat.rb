@@ -1,23 +1,22 @@
 module Prism
   module Microformat
 
+    # Register a microformat
+    # +microformat+ is the symbol for this microformat and +klass+ is the
+    # class that describes it.
+    def self.register(microformat, klass)
+      @microformats ||= {}
+      @microformats[microformat] = klass
+    end
+
+    def self.microformats
+      @microformats || {}
+    end
+
     def self.map(name)
       map = microformats[Prism.normalize(name)]
       raise "#{name} is not a recognized microformat." unless map
       map
-    end
-
-    def self.microformats
-      { :hcard      => Prism::Microformat::HCard,
-        :hcalendar  => Prism::Microformat::HCalendar,
-        :geo        => Prism::Microformat::Geo,
-        :adr        => Prism::Microformat::Adr,
-        :rellicense => Prism::Microformat::RelLicense,
-        :reltag     => Prism::Microformat::RelTag,
-        :votelinks  => Prism::Microformat::VoteLinks,
-        :xfn        => Prism::Microformat::XFN,
-        :xmdp       => Prism::Microformat::XMDP,
-        :xoxo       => Prism::Microformat::XOXO }
     end
 
     def self.find(html, uformat = nil)

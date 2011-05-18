@@ -127,7 +127,7 @@ module Prism
       if elements.respond_to?(:first) and !elements.instance_of? Nokogiri::XML::Element
         elements = elements.first
       end
-      extract_from elements 
+      extract_from(elements)
     end
   end 
   

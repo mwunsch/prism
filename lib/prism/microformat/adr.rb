@@ -18,5 +18,6 @@ module Prism
       end
       
     end
+    register(:adr, Adr)
   end
 end

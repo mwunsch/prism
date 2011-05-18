@@ -10,5 +10,6 @@ module Prism
       validate {|dl| dl.matches?('dl.profile') }
       
     end
+    register(:xmdp, XMDP)
   end
 end

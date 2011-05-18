@@ -34,5 +34,6 @@ module Prism
       end
       
     end
+    register(:reltag, RelTag)
   end
 end
