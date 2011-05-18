@@ -7,6 +7,9 @@ module Prism
       name :adr
                   
       # http://microformats.org/wiki/adr-singular-properties      
+      # Note that some of these properties have different singular or
+      # multiple use to the microformat test-suite used elsewhere, such as from:
+      # http://ufxtract.com/testsuite/hcard/hcard3.htm
       has_one :post_office_box, :postal_code
       has_many :street_address, :locality, :region, :extended_address, :country_name
       

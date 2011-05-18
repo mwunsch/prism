@@ -204,15 +204,15 @@ class HCardTest < Test::Unit::TestCase
       assert_equal 'West Street', @vcard.adr[0].street_address[1]
     end
     
-    test 'The extended-address is a optional singular value' do
+    test 'The extended-address is a optional multiple value (Different from test suite use)' do
       assert_equal 'Suite 2', @vcard.adr[0].extended_address[0]
     end
     
-    test 'The region is a optional singular value' do
+    test 'The region is a optional multiple value (Different from test suite use)' do
       assert_equal 'East Sussex', @vcard.adr[0].region[0]
     end
     
-    test 'The locality is a optional singular value' do
+    test 'The locality is a optional multiple value (Different from test suite use)' do
       assert_equal 'Brighton', @vcard.adr[0].locality[0]
     end
     
@@ -220,7 +220,7 @@ class HCardTest < Test::Unit::TestCase
       assert_equal 'BN1 3DF', @vcard.adr[0].postal_code
     end
     
-    test 'The country-name is a optional singular value' do
+    test 'The country-name is a optional multiple value (Different from test suite use)' do
       assert_equal 'United Kingdom', @vcard.adr[0].country_name[0]
     end
   end
