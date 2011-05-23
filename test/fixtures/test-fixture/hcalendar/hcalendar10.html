@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hCalendar 10 - extracting contact</title>
+  
+  <!-- This will be replace with one CSS file and one JavaScipt file -->
+  <link rel="stylesheet" href="../css/uftestsuite.css" type="text/css" />
+  <link rel="stylesheet" href="../../testrunner/css/testrunner.css" type="text/css" />
+  
+  <script type="text/javascript" src="../../testrunner/javascript/prototype-1.6.0.2.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/beautify.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/sumo/microformat.js"></script>
+  <script type="application/javascript;version=1.7" src="http://svn.mozilla.org/labs/operator/chrome/content/Microformats/Microformats.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/shiv/microformats-shiv.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/shiv/microformats-definition.js"></script>  
+  <script type="text/javascript" src="../../testrunner/javascript/testrunner.js"></script>
+   
+</head>
+<body>
+    
+    
+    <div class="test-fixture">
+    
+    <p>
+    <a href="../"><img border="0" id="testsuite-image" alt="Microformats test suite" src="../images/testsuite.gif" /></a><br />
+    </p>
+    
+    <h1 class="summary">hCalendar 10 - extracting contact test</h1>
+    
+    <p class="description">This page was design to test the extracting contact information from hCalendar. The test includes those elements of hCard most 
+	likely to be used as contact information for a event</p>
+	
+    <p>From: <a href="default.htm"><span class="format">hCalendar</span> test suite 1.0</a></p>
+    <p class="author vcard">
+        Author: <a class="url fn" href="http://www.glennjones.net/">Glenn Jones</a> 
+    </p>
+    
+        <input id="unittestbutton" type="button" onclick="microformatsTestRunner.displayTestOptionForm()" value="Unit Test Runner"/>
+
+      
+    <p>Tests:</p>
+    <table id="assetTable" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    	<tbody>
+    	
+	  	 <tr class="assert">
+            <td class="test">vevent[0].contact.n.honorific-prefix[0]</td>
+            <td class="result">IsEqualTo("Dr")</td>
+            <td class="comment">The honorific-prefix is a optional multiple value</td>
+        </tr>
+        
+         <tr class="assert">
+            <td class="test">vevent[0].contact.n.given-name[0]</td>
+            <td class="result">IsEqualTo("John")</td>
+            <td class="comment">The given-name is a optional multiple value</td>
+        </tr>
+
+        <tr class="assert">
+            <td class="test">vevent[0].contact.n.additional-name[0]</td>
+            <td class="result">IsEqualTo("Peter")</td>
+            <td class="comment">The additional-name is a optional multiple value</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vevent[0].contact.n.family-name[0]</td>
+            <td class="result">IsEqualTo("Doe")</td>
+            <td class="comment">The family-name is a optional multiple value</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vevent[0].contact.n.honorific-suffix[1]</td>
+            <td class="result">IsEqualTo("PHD")</td>
+            <td class="comment">The honorific-suffix is a optional multiple value</td>
+        </tr>    
+        
+        <tr class="assert">
+            <td class="test">vevent[0].contact.adr[0].type[0]</td>
+            <td class="result">IsEqualToCaseInsensitive("home")</td>
+            <td class="comment">The type is a optional multiple value. Types are case insensitive</td>
+        </tr>
+        
+         <tr class="assert">
+            <td class="test">vevent[0].contact.adr[0].post-office-box</td>
+            <td class="result">IsEqualTo("PO Box 46")</td>
+            <td class="comment">The post-office-box is a optional singular value</td>
+        </tr>
+
+        <tr class="assert">
+            <td class="test">vevent[0].contact.adr[0].street-address[1]</td>
+            <td class="result">IsEqualTo("West Street")</td>
+            <td class="comment">The street-address is a optional multiple value</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vevent[0].contact.adr[0].extended-address</td>
+            <td class="result">IsEqualTo("Flat 2")</td>
+            <td class="comment">The extended-address is a optional singular value</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vevent[0].contact.adr[0].region</td>
+            <td class="result">IsEqualTo("East Sussex")</td>
+            <td class="comment">The region is a optional singular value</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vevent[0].contact.adr[0].locality</td>
+            <td class="result">IsEqualTo("Brighton")</td>
+            <td class="comment">The locality is a optional singular value</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vevent[0].contact.adr[0].postal-code</td>
+            <td class="result">IsEqualTo("BN1 3DF")</td>
+            <td class="comment">The postal-code is a optional singular value</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vevent[0].contact.adr[0].country-name</td>
+            <td class="result">IsEqualTo("United Kingdom")</td>
+            <td class="comment">The country-name is a optional singular value</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vevent[0].contact.email[0].value</td>
+            <td class="result">IsEqualTo("john@example.com")</td>
+            <td class="comment">Should collect the email address from href attribute</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vevent[0].contact.tel[0].value</td>
+            <td class="result">IsEqualToPhoneNumber("01273 700100")</td>
+            <td class="comment">Should collect the telephone number from a descendant node with value property</td>
+        </tr>
+        
+        <tr class="assert">
+            <td class="test">vevent[0].contact.url[0]</td>
+            <td class="result">IsEqualTo("http://www.example.com/")</td>
+            <td class="comment">Should collect the url value</td>
+        </tr>
+
+	       
+
+         </tbody>
+    </table> 
+    
+    
+    <p>History:</p>
+    
+    <ul>
+    <li class="history vevent">
+        <span class="summary">Created</span>: <abbr class="dtstart" title="2008-06-08">8 June 2008</abbr> 
+        <span class="description">by Glenn Jones</span>
+    </li>
+    <li class="history vevent">
+        <span class="summary">Updated</span>: Corrected value for URL test<abbr class="dtstart" title="2008-06-08">19 July 2010</abbr> 
+        <span class="description">by Glenn Jones</span>
+    </li>
+
+    </ul>
+    
+    
+    
+    </div>
+  
+    <div id="uf">
+    
+    	<!-- This may not be the best semantic use of HTML element -->
+    	
+ 		<!-- 0  -->
+		<div class="vevent">
+			<div class="summary">Web Standards meet up</div>
+			<div>Starts: <abbr class="dtstart" title="200801">1 June </abbr></div>
+			<div><a class="url uid" href="http://1.example.com">1.example.com</a></div>
+			
+			<div class="vcard contact">
+          		<div class="fn n">
+		            <span class="honorific-prefix">Dr</span> 
+		            <span class="given-name">John</span> 
+		            <span class="additional-name">Peter</span> 
+		            <span class="family-name">Doe</span> 
+		            <span class="honorific-suffix">MSc</span>, 
+		            <span class="honorific-suffix">PHD</span>
+            	</div>            	
+	            <div class="adr">
+	                <span class="type">Home</span>: 
+	                <div class="label">
+	                    <span class="post-office-box">PO Box 46</span>, 
+	                    <span class="extended-address">Flat 2</span>,
+	                    <span class="street-address">Sunny House</span>, 
+	                    <span class="street-address">West Street</span>, 
+	                    <span class="locality">Brighton</span>, 
+	                    <span class="region">East Sussex</span>, 
+	                    <span class="country-name">United Kingdom</span>, 
+	                    <span class="postal-code">BN1 3DF</span>
+	                </div>
+	            </div>
+	            <div><a href="mailto:john@example.com" class="email">notthis@example.com</a></div>
+	           <div class="tel">
+			      <span class="type">Pref</span>erred contact number: 
+			      <span class="value">01273 700100</span>
+		      	</div>
+	            <div><a href="http://www.example.com" class="url">blog</a></div>
+	            
+            </div>
+
+		</div>
+
+    
+    </div>
+    
+    <p>
+        <a rel="license" href="../license.txt">Some rights reserved</a>
+    </p>
+      
+</body>
+
+</html>

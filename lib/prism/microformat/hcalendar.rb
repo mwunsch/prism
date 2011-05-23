@@ -21,13 +21,19 @@ module Prism
         
         has_one :duration, :dtend, :location, :description, :dtstamp,
                 :last_modified, :uid, :status, 
-                :geo, :contact, :organizer
+                :geo
         
+        has_one(:contact, :organizer) do
+          extract :hcard, :valueclass
+        end
+
         has_one(:url) { extract :url }
         
         has_many :category
         
-        has_many(:attendee)
+        has_many(:attendee) do
+          extract :hcard, :valueclass
+        end
         
         has_one! :class
         

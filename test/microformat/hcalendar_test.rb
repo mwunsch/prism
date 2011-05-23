@@ -120,4 +120,168 @@ class HCalendarTest < Test::Unit::TestCase
     end
     
   end
+
+  # http://ufxtract.com/testsuite/hcalendar/hcalendar10.htm
+  # This is particularly important as it also tests that other
+  # microformats can be extracted.
+  describe 'extracting contact test' do
+    def self.before_all
+      @doc ||= test_fixture('hcalendar/hcalendar10.html')
+      @vcalendar ||= @@klass.parse(@doc)
+    end
+
+    setup do
+      @vcalendar ||= self.class.before_all
+    end
+
+    test 'The honorific-prefix is an optional multiple value' do
+      vevent = @vcalendar.vevent
+      assert_equal "Dr", vevent[0].contact.n.honorific_prefix[0]
+    end
+
+    test 'The given-name is an optional multiple value' do
+      vevent = @vcalendar.vevent
+      assert_equal "John", vevent[0].contact.n.given_name[0]
+    end
+
+    test 'The additional-name is an optional multiple value' do
+      vevent = @vcalendar.vevent
+      assert_equal "Peter", vevent[0].contact.n.additional_name[0]
+    end
+
+    test 'The family-name is an optional multiple value' do
+      vevent = @vcalendar.vevent
+      assert_equal "Doe", vevent[0].contact.n.family_name[0]
+    end
+
+    test 'The honorific-suffix is an optional multiple value' do
+      vevent = @vcalendar.vevent
+      assert_equal "PHD", vevent[0].contact.n.honorific_suffix[1]
+    end
+
+    test 'The type is an optional multiple value. Types are case insensitive' do
+      vevent = @vcalendar.vevent
+      assert_equal :home, vevent[0].contact.adr[0].type[0]
+    end
+
+    test 'The post-office-box is an optional singular value' do
+      vevent = @vcalendar.vevent
+      assert_equal "PO Box 46", vevent[0].contact.adr[0].post_office_box
+    end
+
+    test 'The street-address is an optional multiple value' do
+      vevent = @vcalendar.vevent
+      assert_equal "West Street", vevent[0].contact.adr[0].street_address[1]
+    end
+
+    test 'The extended-address is an optional multiple value (Different from test suite use)' do
+      vevent = @vcalendar.vevent
+      assert_equal "Flat 2", vevent[0].contact.adr[0].extended_address[0]
+    end
+
+    test 'The region is an optional multiple value (Different from test suite use)' do
+      vevent = @vcalendar.vevent
+      assert_equal "East Sussex", vevent[0].contact.adr[0].region[0]
+    end
+
+    test 'The locality is an optional multiple value (Different from test suite use)' do
+      vevent = @vcalendar.vevent
+      assert_equal "Brighton", vevent[0].contact.adr[0].locality[0]
+    end
+
+    test 'The postal-code is an optional singular value' do
+      vevent = @vcalendar.vevent
+      assert_equal "BN1 3DF", vevent[0].contact.adr[0].postal_code
+    end
+
+    test 'The country-name is an optional multiple value (Different from test suite use)' do
+      vevent = @vcalendar.vevent
+      assert_equal "United Kingdom", vevent[0].contact.adr[0].country_name[0]
+    end
+
+    test 'Should collect the email address from href attribute' do
+      vevent = @vcalendar.vevent
+      assert_equal "john@example.com", vevent[0].contact.email[0]
+      # FIX: Need to look at typevalue pattern so that above can read email[0].value
+      # FIX: This seems messy to sometimes return a string, other times return a hash
+    end
+
+    test 'Should collect the telephone number from a descendant node with value property' do
+      vevent = @vcalendar.vevent
+      assert_equal "01273 700100", vevent[0].contact.tel[0][:value]
+      # FIX: Need to look at typevalue pattern so that above can read tel[0].value
+    end
+
+    test 'Should collect the url value' do
+      vevent = @vcalendar.vevent
+      assert_equal "http://www.example.com/", vevent[0].contact.url[0]
+    end
+  end
+
+  # hcalendar10a.html
+  describe 'extracting contact without using hCard test' do
+    def self.before_all
+      @doc ||= test_fixture('hcalendar/hcalendar10a.html')
+      @vcalendar ||= @@klass.parse(@doc)
+    end
+
+    setup do
+      @vcalendar ||= self.class.before_all
+    end
+
+    test 'The contact an optional singular value and can be a string' do
+      vevent = @vcalendar.vevent
+      assert_equal "Dr John Peter Doe", vevent[0].contact
+    end
+  end
+
+  # Base on http://ufxtract.com/testsuite/hcalendar/hcalendar11.htm
+  # with corrections
+  describe 'extracting organizer and attendee test' do
+    def self.before_all
+      @doc ||= test_fixture('hcalendar/hcalendar11.html')
+      @vcalendar ||= @@klass.parse(@doc)
+    end
+
+    setup do
+      @vcalendar ||= self.class.before_all
+    end
+
+    test 'The organizer given-name' do
+      vevent = @vcalendar.vevent
+      assert_equal "John", vevent[0].organizer.n.given_name[0]
+    end
+
+    test 'The organizer family-name' do
+      vevent = @vcalendar.vevent
+      assert_equal "Doe", vevent[0].organizer.n.family_name[0]
+    end
+
+    test 'The attendee fn value' do
+      vevent = @vcalendar.vevent
+      assert_equal "Jane Doe", vevent[0].attendee[1].fn
+    end
+  end
+
+  # hcalendar11a.html
+  describe 'extracting organizer and attendee without using hCard test' do
+    def self.before_all
+      @doc ||= test_fixture('hcalendar/hcalendar11a.html')
+      @vcalendar ||= @@klass.parse(@doc)
+    end
+
+    setup do
+      @vcalendar ||= self.class.before_all
+    end
+
+    test 'The organizer given-name' do
+      vevent = @vcalendar.vevent
+      assert_equal "John Doe", vevent[0].organizer
+    end
+
+    test 'The attendee fn value' do
+      vevent = @vcalendar.vevent
+      assert_equal "Jane Doe", vevent[0].attendee[1]
+    end
+  end
 end

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Wunsch"]
-  s.date = %q{2011-05-17}
+  s.date = %q{2011-05-23}
   s.description = %q{A Ruby microformat parser and HTML toolkit powered by Nokogiri}
   s.email = ["mark@markwunsch.com"]
   s.executables = ["prism"]
@@ -52,6 +52,10 @@ Gem::Specification.new do |s|
     "test/fixtures/likeorhate.html",
     "test/fixtures/rel_license.html",
     "test/fixtures/test-fixture/hcalendar/hcalendar1.html",
+    "test/fixtures/test-fixture/hcalendar/hcalendar10.html",
+    "test/fixtures/test-fixture/hcalendar/hcalendar10a.html",
+    "test/fixtures/test-fixture/hcalendar/hcalendar11.html",
+    "test/fixtures/test-fixture/hcalendar/hcalendar11a.html",
     "test/fixtures/test-fixture/hcalendar/hcalendar2.html",
     "test/fixtures/test-fixture/hcard/hcard1.html",
     "test/fixtures/test-fixture/hcard/hcard11.html",

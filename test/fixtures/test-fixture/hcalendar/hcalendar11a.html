@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hCalendar 11a - extracting organizer and attendee without using hCard</title>
+  
+  <!-- This will be replace with one CSS file and one JavaScipt file -->
+  <link rel="stylesheet" href="../css/uftestsuite.css" type="text/css" />
+  <link rel="stylesheet" href="../../testrunner/css/testrunner.css" type="text/css" />
+  
+  <script type="text/javascript" src="../../testrunner/javascript/prototype-1.6.0.2.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/beautify.js"></script> 
+  <script type="text/javascript" src="../../testrunner/javascript/sumo/microformat.js"></script>
+  <script type="application/javascript;version=1.7" src="http://svn.mozilla.org/labs/operator/chrome/content/Microformats/Microformats.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/shiv/microformats-shiv.js"></script>
+  <script type="text/javascript" src="../../testrunner/javascript/shiv/microformats-definition.js"></script>  
+  <script type="text/javascript" src="../../testrunner/javascript/testrunner.js"></script>
+   
+</head>
+<body>
+    
+    
+    <div class="test-fixture">
+    
+    <p>
+    <a href="../"><img border="0" id="testsuite-image" alt="Microformats test suite" src="../images/testsuite.gif" /></a><br />
+    </p>
+    
+    <h1 class="summary">hCalendar 11a - extracting organizer and attendee without using hCard test</h1>
+    
+    <p class="description">This page was designed to test the extraction of organizer and attendee information from hCalendar without using hCard.</p>
+	
+    <p>From: <a href="default.htm"><span class="format">hCalendar</span> test suite 1.0</a></p>
+    <p class="author vcard">
+        Author: <a class="url fn" href="http://techtinkering.com">Lawrence Woodman</a> 
+    </p>
+    
+    <input id="unittestbutton" type="button" onclick="microformatsTestRunner.displayTestOptionForm()" value="Unit Test Runner"/>
+
+      
+    <p>Tests:</p>
+    <table id="assetTable" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    	<tbody>
+        
+	         <tr class="assert">
+	            <td class="test">vevent[0].organizer</td>
+	            <td class="result">IsEqualTo("John Doe")</td>
+	            <td class="comment">The organizer value</td>
+	        </tr>
+	        
+	         <tr class="assert">
+	            <td class="test">vevent[0].attendee[1]</td>
+	            <td class="result">IsEqualTo("Jane Doe")</td>
+	            <td class="comment">The attendee value</td>
+	        </tr>
+
+         </tbody>
+    </table> 
+    
+    
+    <p>History:</p>
+    
+    <ul>
+	    <li class="history vevent">
+	        <span class="summary">Created</span>: <abbr class="dtstart" title="2011-05-23">23 May 2011</abbr> 
+	        <span class="description">by Lawrence Woodman</span>
+	    </li>
+
+    </ul>
+    
+    
+    
+    </div>
+  
+    <div id="uf">
+    
+    	<!-- This may not be the best semantic use of HTML element -->
+    	
+ 		<!-- 0  -->
+		<div class="vevent">
+			<div class="summary">Web Standards meet up</div>
+			<div>Starts: <abbr class="dtstart" title="200801">1 June </abbr></div>
+			<div><a class="url uid" href="http://1.example.com">1.example.com</a></div>
+			
+			<div>Organizer:</div>
+			<span class="organizer">John Doe</span>
+            
+      <div>Attendees:</div>
+      <ul>
+        <li class="attendee">Peter Doe</li>
+        <li class="attendee">Jane Doe</li>
+      </ul>
+
+		</div>
+
+    
+    </div>
+    
+    <p>
+        <a rel="license" href="../license.txt">Some rights reserved</a>
+    </p>
+      
+</body>
+
+</html>
