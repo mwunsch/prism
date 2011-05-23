@@ -27,19 +27,38 @@ module Prism
 
     # Instead of getting the contents of a node, this creates
     # a POSH format from the node
-    def self.extract(pattern = nil, &block)
+    def self.extract(*patterns, &block)
       if !@extract
-        if pattern
-          @extract = Prism.map(pattern).extract
-        elsif block_given?
+        case
+        when patterns.size == 1
+          @extract = Prism.map(patterns.first).extract
+        when patterns.size > 1
+          @extract = lambda {|node| find_one_of(node, *patterns)}
+        when block_given?
           @extract = block
-        elsif properties.empty?
+        when properties.empty?
           @extract = Prism::Pattern::ValueClass.extract
         end
       end
       @extract || lambda{|node| self.new(node) } 
     end
-    
+
+    # Finds the first matching pattern in the node
+    def self.find_one_of(node, *patterns)
+      value = nil
+      patterns.each do |pattern|
+        pattern_class = Prism.map(pattern)
+        name = Prism.normalize(pattern_class.name).to_s
+        if node['class'].split.include?(name) ||
+           [:valueclass, :url, :typevalue].include?(pattern)
+          if (value = Prism.map(pattern).extract_from(node))
+            break
+          end
+        end
+      end
+      value
+    end
+
     def self.search(&block)
       @search = block if block_given?
       @search || lambda do |node|
