@@ -57,7 +57,7 @@ module Prism
   
   # Get/Set a function that defines how to find an element in a node.
   # The Search function should return a Nokogiri::XML::NodeSet.
-  # eg. <tt>search {|node| node.css(element) }  
+  # eg. <tt>search {|node| node.css(element) }</tt>
   def search(&block)
     @search = block if block_given?
     @search || lambda {|node| node }
