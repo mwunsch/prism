@@ -3,14 +3,14 @@
 
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-  <title>hReview 1 - Single occurence test</title>
+  <title>hReview 2 - Extracting item hCard test</title>
 </head>
 <body>
 
   <div class="test-fixture">
 
-    <h1 class="summary">hReview 1 - Single occurrence test</h1>
-    <p class="description">This page was designed to test that values of a hreview which are meant to have only a single occurrence are parsed correctly.</p>
+    <h1 class="summary">hReview 2 - Extracting item hCard test</h1>
+    <p class="description">This page was designed to test the extraction of an hCard from the item of hreview.</p>
     <p>Inspired by: <a href="http://ufxtract.com/testsuite/">Glenn Jones' Microformat Test Suite</a></p>
 
     <p class="author vcard">
@@ -29,44 +29,19 @@
     </thead>
     <tbody>
       <tr class="assert">
-        <td class="test">hreview[0].version</td>
-        <td class="result">IsEqualTo("0.3")</td>
-        <td class="comment">version is a singular value</td>
+        <td class="test">hreview[0].item.fn</td>
+        <td class="result">IsEqualTo("Crepes on Cole")</td>
+        <td class="comment">fn is a singular value</td>
       </tr>
       <tr class="assert">
-        <td class="test">hreview[0].summary</td>
-        <td class="result">IsEqualTo("Crepes on Cole is awesome")</td>
-        <td class="comment">summary is a singular value</td>
+        <td class="test">hreview[0].org[0].organization_name</td>
+        <td class="result">IsEqualTo("Crepes on Cole")</td>
+        <td class="comment">organization_name is a singular value</td>
       </tr>
       <tr class="assert">
-        <td class="test">hreview[0].rating</td>
-        <td class="result">IsEqualTo("5")</td>
-        <td class="comment">rating is a singular value</td>
-      </tr>
-      <tr class="assert">
-        <td class="test">hreview[0].type</td>
-        <td class="result">IsEqualTo("business")</td>
-        <td class="comment">type (item type) is a singular value</td>
-      </tr>
-      <tr class="assert">
-        <td class="test">hreview[0].item</td>
-        <td class="result">HasProperty(true)</td>
-        <td class="comment">item is a singular value</td>
-      </tr>
-      <tr class="assert">
-        <td class="test">hreview[0].review</td>
-        <td class="result">HasProperty(true)</td>
-        <td class="comment">reviewer is a singular value</td>
-      </tr>
-      <tr class="assert">
-        <td class="test">hreview[0].dtreviewed</td>
-        <td class="result">IsEqualToISODate("20050418")</td>
-        <td class="comment">dtreviewed (dated reviewed) is a singular value</td>
-      </tr>
-      <tr class="assert">
-        <td class="test">hreview[0].description</td>
-        <td class="result">IsEqualTo("Crepes on Cole is one of the best little creperies in San Francisco. Excellent food and service. Plenty of tables in a variety of sizes for parties large and small.")</td>
-        <td class="comment">description is a singular value</td>
+        <td class="test">hreview[0].adr[0].locality</td>
+        <td class="result">IsEqualTo("San Francisco")</td>
+        <td class="comment">locality is a singular value</td>
       </tr>
     </tbody>
     </table>

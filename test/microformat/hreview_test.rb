@@ -3,9 +3,7 @@ require File.join(File.dirname(File.absolute_path(__FILE__)),'..','test_helper')
 class HReviewTest < Test::Unit::TestCase
   @@klass = Prism::Microformat::HReview
   
-  # Adapted from:
-  # http://microformats.org/wiki/hreview#Restaurant_reviews
-  # FIX: Descriptions
+  # hreview1.html
   describe 'single occurence test' do
     def self.before_all
       @doc ||= Nokogiri.parse(get_fixture('hreview/hreview1.html'))
@@ -66,27 +64,31 @@ class HReviewTest < Test::Unit::TestCase
                    "tables in a variety of sizes for parties large and small.",
                    @hreview.description.gsub(/\n|\r/, "").squeeze(' ')
     end
+  end
 
-    describe 'Check item nested in description' do
-
-      setup do
-        @item = @hreview.item
-      end
-
-      test 'The item is a singular value' do
-        assert_respond_to @hreview, :item
-        assert @hreview.has_property?(:item)
-      end
-
-      test 'item[:fn] is a singular value' do
-        assert_equal 'Crepes on Cole', @item[:fn]
-      end
-
-      test 'item[:adr] is a singular value' do
-        assert_equal ['San Francisco'], @item.adr.first[:locality]
-        # TODO: Decide if this is the correct outcome
-      end
-
+  # hreview2.html
+  describe 'extracting item hCard test' do
+    def self.before_all
+      @doc ||= Nokogiri.parse(get_fixture('hreview/hreview2.html'))
+      @hreview ||= @@klass.parse_first(@doc)
     end
+
+    setup do
+      @hreview ||= self.class.before_all
+      @item = @hreview.item
+    end
+
+    test 'item.fn is a singular value' do
+      assert_equal 'Crepes on Cole', @item.fn
+    end
+
+    test 'item.org[0].organization_name is a singular value' do
+      assert_equal 'Crepes on Cole', @item.org[0].organization_name
+    end
+
+    test 'item.adr[0].locality is a singular value' do
+      assert_equal ['San Francisco'], @item.adr[0].locality
+    end
+
   end
 end
