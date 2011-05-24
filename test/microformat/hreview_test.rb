@@ -16,10 +16,10 @@ class HReviewTest < Test::Unit::TestCase
       @hreview ||= self.class.before_all
     end
     
-    test 'The rating is a singular value' do
-      assert_respond_to @hreview, :rating
-      assert @hreview.has_property?(:rating)
-      assert_equal '5', @hreview.rating
+    test 'The version is a singular value' do
+      assert_respond_to @hreview, :version
+      assert @hreview.has_property?(:version)
+      assert_equal '0.3', @hreview.version
     end
 
     test 'The summary is a singular value' do
@@ -28,19 +28,43 @@ class HReviewTest < Test::Unit::TestCase
       assert_equal 'Crepes on Cole is awesome', @hreview.summary
     end
 
+    test 'The rating is a singular value' do
+      assert_respond_to @hreview, :rating
+      assert @hreview.has_property?(:rating)
+      assert_equal '5', @hreview.rating
+    end
+
+    test 'The type is a singular value' do
+      assert_respond_to @hreview, :type
+      assert @hreview.has_property?(:type)
+      assert_equal "business", @hreview.type
+    end
+
+    test 'The item is a singular value' do
+      assert_respond_to @hreview, :item
+      assert @hreview.has_property?(:item)
+    end
+
     test 'The reviewer is a singular value' do
       assert_respond_to @hreview, :reviewer
       assert @hreview.has_property?(:reviewer)
-      assert_equal 'Tantek', @hreview.reviewer[:fn]
+    end
+
+    test 'The dtreviewed is a singular value' do
+      assert_respond_to @hreview, :dtreviewed
+      assert @hreview.has_property?(:dtreviewed)
+      assert_equal 18, @hreview.dtreviewed.day
+      assert_equal 04, @hreview.dtreviewed.mon
+      assert_equal 2005, @hreview.dtreviewed.year
     end
 
     test 'The description is a singular value' do
       assert_respond_to @hreview, :description
       assert @hreview.has_property?(:description)
-      assert_equal "Crepes on Cole is one of the best little \n"+
-        "  creperies in San Francisco.\n"+
-        "  Excellent food and service. Plenty of tables in a variety of sizes \n"+
-        "  for parties large and small.", @hreview.description
+      assert_equal "Crepes on Cole is one of the best little creperies in "+
+                   "San Francisco. Excellent food and service. Plenty of "+
+                   "tables in a variety of sizes for parties large and small.",
+                   @hreview.description.gsub(/\n|\r/, "").squeeze(' ')
     end
 
     describe 'Check item nested in description' do

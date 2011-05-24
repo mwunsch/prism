@@ -1,14 +1,109 @@
-<div class="hreview">
- <span><span class="rating">5</span> out of 5 stars</span>
- <h4 class="summary">Crepes on Cole is awesome</h4>
- <span class="reviewer vcard">Reviewer: <span class="fn">Tantek</span> - 
- <abbr class="dtreviewed" title="20050418T2300-0700">April 18, 2005</abbr></span>
- <div class="description item vcard"><p>
-  <span class="fn org">Crepes on Cole</span> is one of the best little 
-  creperies in <span class="adr"><span class="locality">San Francisco</span></span>.
-  Excellent food and service. Plenty of tables in a variety of sizes 
-  for parties large and small.</span>
- </p></div>
- <p>Visit date: <span>April 2005</span></p>
- <p>Food eaten: <span>Florentine crepe</span></p>
-</div>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hReview 1 - Single occurence test</title>
+</head>
+<body>
+
+  <div class="test-fixture">
+
+    <h1 class="summary">hReview 1 - Single occurrence test</h1>
+    <p class="description">This page was designed to test that values of a hreview which are meant to have only a single occurrence are parsed correctly.</p>
+    <p>Inspired by: <a href="http://ufxtract.com/testsuite/">Glenn Jones' Microformat Test Suite</a></p>
+
+    <p class="author vcard">
+      Author: <a class="url fn" href="http://techtinkering.com">Lawrence Woodman</a>
+      (<a class="org url" href="http://vlifesystems.com/">vLife Systems</a>)
+    </p>
+
+    <h2>Tests</h2>
+    <table id="assetTable">
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Result</th>
+        <th>Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="assert">
+        <td class="test">hreview[0].version</td>
+        <td class="result">IsEqualTo("0.3")</td>
+        <td class="comment">The version is a singular value</td>
+      </tr>
+      <tr class="assert">
+        <td class="test">hreview[0].summary</td>
+        <td class="result">IsEqualTo("Crepes on Cole is awesome")</td>
+        <td class="comment">The summary is a singular value</td>
+      </tr>
+      <tr class="assert">
+        <td class="test">hreview[0].rating</td>
+        <td class="result">IsEqualTo("5")</td>
+        <td class="comment">The rating is a singular value</td>
+      </tr>
+      <tr class="assert">
+        <td class="test">hreview[0].type</td>
+        <td class="result">IsEqualTo("business")</td>
+        <td class="comment">The type (item type) is a singular value</td>
+      </tr>
+      <tr class="assert">
+        <td class="test">hreview[0].item</td>
+        <td class="result">HasProperty(true)</td>
+        <td class="comment">The item is a singular value</td>
+      </tr>
+      <tr class="assert">
+        <td class="test">hreview[0].review</td>
+        <td class="result">HasProperty(true)</td>
+        <td class="comment">The reviewer is a singular value</td>
+      </tr>
+      <tr class="assert">
+        <td class="test">hreview[0].dtreviewed</td>
+        <td class="result">IsEqualToISODate("20050418")</td>
+        <td class="comment">The dtreviewed (dated reviewed) is a singular value</td>
+      </tr>
+      <tr class="assert">
+        <td class="test">hreview[0].description</td>
+        <td class="result">IsEqualTo("Crepes on Cole is one of the best little creperies in San Francisco. Excellent food and service. Plenty of tables in a variety of sizes for parties large and small.")</td>
+        <td class="comment">The description is a singular value</td>
+      </tr>
+    </tbody>
+    </table>
+
+
+    <h2>History</h2>
+    <ul>
+      <li class="history vevent">
+        <span class="summary">Created</span>: <abbr class="dtstart" title="2011-05-24">24 May 2011</abbr>
+        <span class="description">by Lawrence Woodman</span>
+      </li>
+    </ul>
+
+  </div>
+
+  <div>
+    <h2>hReview</h2>
+    This review was adapted from: <a href="http://microformats.org/wiki/hreview#Restaurant_reviews">http://microformats.org/wiki/hreview#Restaurant_reviews</a>
+
+    <div class="hreview">
+      <span class="version" style="display:none">0.3</span>
+      <h4 class="summary">Crepes on Cole is awesome</h4>
+      Rated <span><span class="rating">5</span> out of 5</span> by
+      <span class="reviewer vcard"><span class="fn">Tantek</span> -
+      <abbr class="dtreviewed" title="20050418">April 18, 2005</abbr></span>
+      <div class="description item vcard">
+        <p>
+          <span class="fn org">Crepes on Cole</span> is one of the best
+          <abbr class="type" title="business">little creperies</abbr> in
+          <span class="adr"><span class="locality">San Francisco</span></span>.
+          Excellent food and service. Plenty of tables in a variety of sizes
+          for parties large and small.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
