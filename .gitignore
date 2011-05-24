@@ -1,3 +1,6 @@
 pkg/
 doc/
 .bundle/
+
+# Vi swap files
+*.swp
