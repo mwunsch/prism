@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{prism}
-  s.version = "0.1.0.pre"
+  s.version = "0.1.0"
 
-  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Wunsch"]
-  s.date = %q{2011-05-23}
+  s.date = %q{2011-05-24}
   s.description = %q{A Ruby microformat parser and HTML toolkit powered by Nokogiri}
   s.email = ["mark@markwunsch.com"]
   s.executables = ["prism"]
