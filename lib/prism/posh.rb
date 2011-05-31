@@ -51,7 +51,7 @@ module Prism
         name = Prism.normalize(pattern_class.name).to_s
         if node['class'].split.include?(name) ||
            [:valueclass, :url, :typevalue].include?(pattern)
-          if (value = Prism.map(pattern).extract_from(node))
+          if (value = pattern_class.extract_from(node))
             break
           end
         end

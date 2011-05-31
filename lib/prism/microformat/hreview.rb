@@ -4,8 +4,15 @@ module Prism
       FRIENDLY_NAME = "hReview"
       WIKI_URL = "http://microformats.org/wiki/hreview"
       XMDP = 'http://microformats.org/profile/hreview'
-      
+
       name :hreview
+
+      # Extracts a property from a node using a given pattern
+      def self.extract_property(node, property, microformat=:valueclass)
+        return nil unless (prop_node = node.css(".#{property.to_s}"))
+        parser = Prism.map(microformat)
+        parser.extract_from(prop_node.first)
+      end
 
       has_one :version, :summary, :dtreviewed, :rating, :description
 
@@ -14,8 +21,20 @@ module Prism
       has_one :type
 
       has_one :item do
-        # FIX: Also needs to recognize: fn (url || photo)
-        extract :hcard, :hcalendar
+        extract do |node|
+          value = find_one_of(node, :hcard, :hcalendar)
+
+          unless value
+            fn = HReview.extract_property(node, :fn)
+            url = HReview.extract_property(node, :url, :url)
+            photo = HReview.extract_property(node, :photo, :url)
+            # FIX: Using a Struct breaks away from using Prism::POSH::Base
+            # but I was struggling to get it to work otherwise
+            item = Struct.new(:fn, :url, :photo)
+            value = item.new(fn, url, photo)
+          end
+          value
+        end
       end
 
       has_one :reviewer do
@@ -25,6 +44,7 @@ module Prism
       end
 
     end
+
     register(:hreview, HReview)
   end
 end

@@ -89,6 +89,30 @@ class HReviewTest < Test::Unit::TestCase
     test 'item.adr[0].locality is a singular value' do
       assert_equal ['San Francisco'], @item.adr[0].locality
     end
+  end
 
+  # hreview3.html
+  describe 'extracting item fn (url|photo) test' do
+    def self.before_all
+      @doc ||= Nokogiri.parse(get_fixture('hreview/hreview3.html'))
+      @hreview ||= @@klass.parse_first(@doc)
+    end
+
+    setup do
+      @hreview ||= self.class.before_all
+      @item = @hreview.item
+    end
+
+    test 'item.fn is a singular value' do
+      assert_equal 'Crepes on Cole', @item.fn
+    end
+
+    test 'item.url is a singular value' do
+      assert_equal 'http://example.com/', @item.url
+    end
+
+    test 'item.photo is a singular value' do
+      assert_equal 'http://example.com/photos/crepes.png', @item.photo
+    end
   end
 end
