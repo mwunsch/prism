@@ -1,3 +1,5 @@
+require 'yaml'
+
 module Prism
   class POSH
     extend Prism
