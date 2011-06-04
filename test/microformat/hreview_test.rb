@@ -115,4 +115,36 @@ class HReviewTest < Test::Unit::TestCase
       assert_equal 'http://example.com/photos/crepes.png', @item.photo
     end
   end
+
+  # hreview4.html
+  describe 'extracting reviewer hCard test' do
+    def self.before_all
+      @doc ||= Nokogiri.parse(get_fixture('hreview/hreview4.html'))
+      @hreview ||= @@klass.parse_first(@doc)
+    end
+
+    setup do
+      @hreview ||= self.class.before_all
+    end
+
+    test 'reviewer.fn is a singular value' do
+      assert_equal 'Tantek', @hreview.reviewer.fn
+    end
+  end
+
+  # hreview5.html
+  describe "extracting reviewer that isn't properly wrapped in an hCard test" do
+    def self.before_all
+      @doc ||= Nokogiri.parse(get_fixture('hreview/hreview5.html'))
+      @hreview ||= @@klass.parse_first(@doc)
+    end
+
+    setup do
+      @hreview ||= self.class.before_all
+    end
+
+    test 'reviewer.fn is a singular value' do
+      assert_equal 'Tantek', @hreview.reviewer.fn
+    end
+  end
 end

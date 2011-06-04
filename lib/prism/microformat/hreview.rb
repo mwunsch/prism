@@ -40,7 +40,20 @@ module Prism
       has_one :reviewer do
         # FIX: If there is no reviewer, then the parser should look outside
         # of the hReview
-        extract :hcard
+        # NOTE: By creating an hCard from a plain text reviewer this diverges
+        # from the hReview 0.3 standard, but is needed because it is so common
+        # where people were using hReview 0.2
+        extract do |node|
+          value = find_one_of(node, :hcard)
+
+          unless value
+            # FIX: Using a Struct breaks away from using Prism::POSH::Base
+            # but I was struggling to get it to work otherwise
+            reviewer = Struct.new(:fn)
+            value = reviewer.new(node.content.strip)
+          end
+          value
+        end
       end
 
     end

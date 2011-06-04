@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>hReview 4 - Extracting reviewer hCard test</title>
+</head>
+<body>
+
+  <div class="test-fixture">
+
+    <h1 class="summary">hReview 4 - Extracting reviewer hCard test</h1>
+    <p class="description">This page was designed to test the extraction of an hCard from the reviewer property of hreview.</p>
+    <p>Inspired by: <a href="http://ufxtract.com/testsuite/">Glenn Jones' Microformat Test Suite</a></p>
+
+    <p class="author vcard">
+      Author: <a class="url fn" href="http://techtinkering.com">Lawrence Woodman</a>
+      (<a class="org url" href="http://vlifesystems.com/">vLife Systems</a>)
+    </p>
+
+    <h2>Tests</h2>
+    <table id="assetTable">
+    <thead>
+      <tr>
+        <th>Test</th>
+        <th>Result</th>
+        <th>Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="assert">
+        <td class="test">hreview[0].reviewer.fn</td>
+        <td class="result">IsEqualTo("Tantek")</td>
+        <td class="comment">fn is a singular value</td>
+      </tr>
+    </tbody>
+    </table>
+
+
+    <h2>History</h2>
+    <ul>
+      <li class="history vevent">
+        <span class="summary">Created</span>: <abbr class="dtstart" title="2011-06-04">4 June 2011</abbr>
+        <span class="description">by Lawrence Woodman</span>
+      </li>
+    </ul>
+
+  </div>
+
+  <div>
+    <h2>hReview</h2>
+    This review was adapted from: <a href="http://microformats.org/wiki/hreview#Restaurant_reviews">http://microformats.org/wiki/hreview#Restaurant_reviews</a>
+
+    <div class="hreview">
+      <span class="version" style="display:none">0.3</span>
+      <h4 class="summary">Crepes on Cole is awesome</h4>
+      Rated <span><span class="rating">5</span> out of 5</span> by
+      <span class="reviewer vcard"><span class="fn">Tantek</span> -
+      <abbr class="dtreviewed" title="20050418">April 18, 2005</abbr></span>
+      <div class="description item vcard">
+        <p>
+          <span class="fn org">Crepes on Cole</span> is one of the best
+          <abbr class="type" title="business">little creperies</abbr> in
+          <span class="adr"><span class="locality">San Francisco</span></span>.
+          Excellent food and service. Plenty of tables in a variety of sizes
+          for parties large and small.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
