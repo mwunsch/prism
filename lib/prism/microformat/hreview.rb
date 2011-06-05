@@ -30,7 +30,11 @@ module Prism
             photo = HReview.extract_property(node, :photo, :url)
             # FIX: Using a Struct breaks away from using Prism::POSH::Base
             # but I was struggling to get it to work otherwise
-            item = Struct.new(:fn, :url, :photo)
+            item = Struct.new(:fn, :url, :photo) do
+              def to_h
+                {fn: fn, url: url, photo: photo}
+              end
+            end
             value = item.new(fn, url, photo)
           end
           value
@@ -49,7 +53,11 @@ module Prism
           unless value
             # FIX: Using a Struct breaks away from using Prism::POSH::Base
             # but I was struggling to get it to work otherwise
-            reviewer = Struct.new(:fn)
+            reviewer = Struct.new(:fn) do
+              def to_h
+                {fn: fn}
+              end
+            end
             value = reviewer.new(node.content.strip)
           end
           value
