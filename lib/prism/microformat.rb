@@ -37,15 +37,3 @@ module Prism
     
   end
 end
-
-require 'prism/microformat/reltag'
-require 'prism/microformat/rellicense'
-require 'prism/microformat/votelinks'
-require 'prism/microformat/xoxo'
-require 'prism/microformat/xmdp'
-require 'prism/microformat/xfn'
-require 'prism/microformat/geo'
-require 'prism/microformat/adr'
-require 'prism/microformat/hcard'
-require 'prism/microformat/hcalendar'
-require 'prism/microformat/hreview'

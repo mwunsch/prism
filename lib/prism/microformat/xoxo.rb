@@ -65,6 +65,5 @@ module Prism
       end      
       
     end
-    register(:xoxo, XOXO)
   end
 end

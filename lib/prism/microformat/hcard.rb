@@ -179,6 +179,5 @@ module Prism
         end
             
     end
-    register(:hcard, HCard)
   end
 end

@@ -34,6 +34,5 @@ module Prism
       end
       
     end
-    register(:geo, Geo)
   end
 end

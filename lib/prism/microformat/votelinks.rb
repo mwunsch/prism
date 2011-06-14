@@ -38,6 +38,5 @@ module Prism
       end
       
     end
-    register(:votelinks, VoteLinks)
   end
 end

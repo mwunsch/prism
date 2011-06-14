@@ -16,6 +16,5 @@ module Prism
       end
       
     end
-    register(:rellicense, RelLicense)
   end
 end

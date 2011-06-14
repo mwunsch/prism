@@ -1,4 +1,5 @@
 require 'yaml'
+require 'prism/microformat'
 
 module Prism
   class POSH
@@ -24,6 +25,13 @@ module Prism
                       :@extract, :@validate, :@requirements ]
       inheritable.each do |var|
         subclass.instance_variable_set(var, instance_variable_get(var).dup) if instance_variable_get(var)
+      end
+
+      # Register any inherited microformats
+      # FIX: The following isn't exactly bulletproof
+      if subclass.to_s =~ /.*::Microformat::.*/
+        subclass_symbol = subclass.to_s.sub(/.*::/, '').downcase.to_sym
+        Microformat.register(subclass_symbol, subclass)
       end
     end
 

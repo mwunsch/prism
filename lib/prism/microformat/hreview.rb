@@ -66,6 +66,5 @@ module Prism
 
     end
 
-    register(:hreview, HReview)
   end
 end

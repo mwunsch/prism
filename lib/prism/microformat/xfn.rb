@@ -50,6 +50,5 @@ module Prism
       end
       
     end
-    register(:xfn, XFN)
   end
 end
