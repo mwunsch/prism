@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Wunsch"]
-  s.date = %q{2011-06-14}
+  s.date = %q{2011-06-15}
   s.description = %q{A Ruby microformat parser and HTML toolkit powered by Nokogiri}
   s.email = ["mark@markwunsch.com"]
   s.executables = ["prism"]
@@ -53,6 +53,8 @@ Gem::Specification.new do |s|
     "test/fixtures/hreview/hreview1.html",
     "test/fixtures/hreview/hreview2.html",
     "test/fixtures/hreview/hreview3.html",
+    "test/fixtures/hreview/hreview3a.html",
+    "test/fixtures/hreview/hreview3b.html",
     "test/fixtures/hreview/hreview4.html",
     "test/fixtures/hreview/hreview5.html",
     "test/fixtures/huffduffer.html",

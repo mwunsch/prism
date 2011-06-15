@@ -116,6 +116,40 @@ class HReviewTest < Test::Unit::TestCase
     end
   end
 
+  # hreview3a.html
+  describe 'extracting item url without photo test' do
+    def self.before_all
+      @doc ||= Nokogiri.parse(get_fixture('hreview/hreview3a.html'))
+      @hreview ||= @@klass.parse_first(@doc)
+    end
+
+    setup do
+      @hreview ||= self.class.before_all
+      @item = @hreview.item
+    end
+
+    test 'item.url is a singular value' do
+      assert_equal 'http://example.com/', @item.url
+    end
+  end
+
+  # hreview3b.html
+  describe 'extracting item photo without url test' do
+    def self.before_all
+      @doc ||= Nokogiri.parse(get_fixture('hreview/hreview3b.html'))
+      @hreview ||= @@klass.parse_first(@doc)
+    end
+
+    setup do
+      @hreview ||= self.class.before_all
+      @item = @hreview.item
+    end
+
+    test 'item.photo is a singular value' do
+      assert_equal 'http://example.com/photos/crepes.png', @item.photo
+    end
+  end
+
   # hreview4.html
   describe 'extracting reviewer hCard test' do
     def self.before_all

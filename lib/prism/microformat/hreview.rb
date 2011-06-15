@@ -9,7 +9,8 @@ module Prism
 
       # Extracts a property from a node using a given pattern
       def self.extract_property(node, property, microformat=:valueclass)
-        return nil unless (prop_node = node.css(".#{property.to_s}"))
+        prop_node = node.css(".#{property.to_s}")
+        return nil unless prop_node.length >= 1
         parser = Prism.map(microformat)
         parser.extract_from(prop_node.first)
       end
