@@ -1,3 +1,4 @@
+# encoding: utf-8
 require File.join(File.dirname(File.absolute_path(__FILE__)), 'test_helper')
 
 class PatternTest < Test::Unit::TestCase
@@ -15,6 +16,13 @@ class PatternTest < Test::Unit::TestCase
     should 'normalize URLs' do
       assert_respond_to Prism::Pattern::URL, :normalize
       assert_equal 'http://foobar.com/', Prism::Pattern::URL.normalize('http://foobar.com')
+    end
+
+    should 'normalize and encode URLs that have non-ascii characters in them' do
+      assert_respond_to Prism::Pattern::URL, :normalize
+      in_url = "http://example.com/logo_ƒ_mini.jpg"
+      encoded_url = "http://example.com/logo_%C6%92_mini.jpg"
+      assert_equal encoded_url, Prism::Pattern::URL.normalize(in_url)
     end
     
     should 'extract the href out of an a element' do

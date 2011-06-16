@@ -20,7 +20,7 @@ module Prism
       end
       
       def self.normalize(url)
-        uri = URI.parse(url).normalize
+        uri = URI.parse(URI.encode(url)).normalize
         return uri.to if uri.is_a?(URI::MailTo)
         uri.to_s
       end
