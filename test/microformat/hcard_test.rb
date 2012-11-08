@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '..', 'test_helper')
+require File.join(File.dirname(File.absolute_path(__FILE__)),'..','test_helper')
 
 class HCardTest < Test::Unit::TestCase
   @@klass = Prism::Microformat::HCard

@@ -1,9 +1,9 @@
-require File.join(File.dirname(__FILE__), 'test_helper')
+require File.join(File.dirname(File.absolute_path(__FILE__)), 'test_helper')
 
 class MicroformatTest < Test::Unit::TestCase  
   should 'map a symbol to a design pattern' do
-    assert Prism::Microformat::HCard, Prism::Microformat.map(:hcard)
-    assert Prism::Microformat::RelTag, Prism.map(:reltag)
+    assert_equal Prism::Microformat::HCard, Prism::Microformat.map(:hcard)
+    assert_equal Prism::Microformat::RelTag, Prism.map(:reltag)
   end
   
   should 'find all microformats in a document' do

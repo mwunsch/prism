@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__),'..','test_helper')
+require File.join(File.dirname(File.absolute_path(__FILE__)),'..','test_helper')
 
 class DateTimePatternTest < Test::Unit::TestCase
   setup do
@@ -25,7 +25,7 @@ class DateTimePatternTest < Test::Unit::TestCase
   end
   
   should 'build an iso8601 time' do
-    assert_equal "T12:0:0#{Time.now.utc_offset}", @pattern.time('12:00')
+    assert_equal "T12:0:0#{Time.now.zone}", @pattern.time('12:00')
     assert_equal 'T13:0:0-18000', @pattern.time('1:00pm-18000')
     assert_equal 'T4:45:30Z', @pattern.time('4:45:30Z')
     assert !@pattern.time('12')
@@ -41,7 +41,7 @@ class DateTimePatternTest < Test::Unit::TestCase
   should 'validate a DateTime string' do
     assert @pattern.valid?('2010-02-14')
     assert !@pattern.valid?('Hello World!')
-    assert !@pattern.valid?('+441223 123 123')
+    assert !@pattern.valid?('+441223 123 123') # Impossible to tell telephone numbers from dates. It's too long to be a valid date though.
   end
   
   should 'convert a datetime string to a Time object' do
