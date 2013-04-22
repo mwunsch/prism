@@ -39,7 +39,7 @@ rescue LoadError
   puts "Jeweler not available. Install it with: gem install jeweler"
 end
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'doc'
   rdoc.title    = 'Prism'
