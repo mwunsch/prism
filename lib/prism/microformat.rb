@@ -3,21 +3,27 @@ module Prism
 
     def self.map(name)
       map = microformats[Prism.normalize(name)]
+      map = format_to_class(map) if map
       raise "#{name} is not a recognized microformat." unless map
       map
     end
 
     def self.microformats
-      { :hcard      => Prism::Microformat::HCard,
-        :hcalendar  => Prism::Microformat::HCalendar,
-        :geo        => Prism::Microformat::Geo,
-        :adr        => Prism::Microformat::Adr,
-        :rellicense => Prism::Microformat::RelLicense,
-        :reltag     => Prism::Microformat::RelTag,
-        :votelinks  => Prism::Microformat::VoteLinks,
-        :xfn        => Prism::Microformat::XFN,
-        :xmdp       => Prism::Microformat::XMDP,
-        :xoxo       => Prism::Microformat::XOXO }
+      { :hatom      => "HAtom",
+        :hcard      => "HCard",
+        :hcalendar  => "HCalendar",
+        :geo        => "Geo",
+        :adr        => "Adr",
+        :rellicense => "RelLicense",
+        :reltag     => "RelTag",
+        :votelinks  => "VoteLinks",
+        :xfn        => "XFN",
+        :xmdp       => "XMDP",
+        :xoxo       => "XOXO" }
+    end
+
+    def self.format_to_class(format)
+      Prism::Microformat.const_get(format)
     end
 
     def self.find(html, uformat = nil)
@@ -31,7 +37,8 @@ module Prism
     def self.find_all(html)
       doc = Prism.get(html)
       uformats = microformats.values.collect do |uf|
-        uf.parse(doc)
+        klass = format_to_class(uf)
+        klass.parse(doc)
       end
       uformats.compact.flatten
     end
@@ -49,3 +56,4 @@ require 'prism/microformat/geo'
 require 'prism/microformat/adr'
 require 'prism/microformat/hcalendar'
 require 'prism/microformat/hcard'
+require 'prism/microformat/hatom'

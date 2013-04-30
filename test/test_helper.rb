@@ -8,6 +8,7 @@ rescue LoadError
   Bundler.setup
 end
 
+require 'yaml'
 require 'test/unit'
 require 'contest'
 require 'fakeweb'
