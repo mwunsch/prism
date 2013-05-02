@@ -13,6 +13,7 @@
 ## If no SOURCE is given, prism will read from the Standard Input.
 ##
 ## Microformats:
+##    --atom,  --atom           hAtom => atom feed
 ##    --vcard, --hcard          hCard => vCard converter
 ##    --xfn                     Get XFN URLs
 ##
@@ -59,6 +60,7 @@ end
 options = {}
 ARGV.options do |option|
   option.banner = "Hi."
+  option.on('--atom','--atom') { options[:atom] = true }
   option.on('--hcard','--vcard') { options[:vcard] = true }
   option.on('--xfn') { options[:xfn] = true }
   option.on_tail('-h','--help') { puts usage ; exit }
@@ -73,11 +75,12 @@ end
 
 def uformat_counts(group)
   uf_count = Prism::Microformat.microformats.values.collect do |uformat|
-    name = "#{uformat::FRIENDLY_NAME}"
-    found = group.select {|format| format.is_a?(uformat) }.count
+    klass = Prism::Microformat.format_to_class(uformat)
+    name = "#{klass::FRIENDLY_NAME}"
+    found = group.select {|format| format.is_a?(klass) }.count
     if found > 0
       name += "s" if found > 1
-      "Found #{found} #{name} in the document. Read more at: #{uformat::WIKI_URL}"
+      "Found #{found} #{name} in the document. Read more at: #{klass::WIKI_URL}"
     end
   end.compact
   if !uf_count.empty?
@@ -107,7 +110,9 @@ end
 if options.empty?
   uformat_counts(Prism.find(input)).each {|count| puts count }
 else
-  if options[:vcard]
+  if options[:atom]
+    parse_microformats(input, :hatom) {|hatom| puts hatom.to_atom }
+  elsif options[:vcard]
     parse_microformats(input, :hcard) {|hcard| puts hcard.to_vcard }
   elsif options[:xfn]
     parse_microformats(input, :xfn) {|xfn| puts xfn.url }
