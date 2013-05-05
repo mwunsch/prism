@@ -75,9 +75,7 @@ module Prism
       end
 
       def to_atom
-        builder = Prism::Builder::AtomBuilder.new(self)
-        builder.build
-        builder.to_s
+        Prism::Builder::AtomBuilder.new(self).build.to_s
       end
 
     end

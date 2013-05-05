@@ -17,6 +17,7 @@ module Prism
             end
           end
         end
+        self
       end
 
      def to_s
