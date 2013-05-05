@@ -23,7 +23,7 @@ class AtomBuilderTest < Test::Unit::TestCase
     @atom.add_hatom(@hatom)
     parse_atom
     assert_equal "Wiki Attack", @xml_doc.xpath('/xmlns:feed/xmlns:entry[1]/xmlns:title').text
-    assert_equal "2005-10-10T14:07:00-07:00", @xml_doc.xpath('/xmlns:feed/xmlns:entry[1]/xmlns:published').text
+    assert_equal "2005-10-10T21:07:00+00:00", @xml_doc.xpath('/xmlns:feed/xmlns:entry[1]/xmlns:published').text
     assert_equal "We had a bit of trouble with ...", @xml_doc.xpath('/xmlns:feed/xmlns:entry[1]/xmlns:summary').text
     assert_equal "Ryan King", @xml_doc.xpath('/xmlns:feed/xmlns:entry[1]/xmlns:author/xmlns:name').text
     assert_equal "http://theryanking.com/", @xml_doc.xpath('/xmlns:feed/xmlns:entry[1]/xmlns:author/xmlns:uri').text
