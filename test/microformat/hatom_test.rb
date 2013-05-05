@@ -18,14 +18,24 @@ class HAtomTest < Test::Unit::TestCase
       assert_equal "Wiki Attack", hentry[0].entry_title
     end
 
+    test 'The title will fall back to h# tag' do
+      hentry = @hatom.hentry
+      assert_equal "Another title", hentry[1].entry_title
+    end
+
     test 'The content contains html' do
       hentry = @hatom.hentry
       content = <<-EOS
-     <p>We had a bit of trouble with ...</p>
+     <p class="entry-summary">We had a bit of trouble with ...</p>
      <p>We've restored the wiki and ...</p>
      <p>If anyone is working to combat said spammers ...</p>
       EOS
       assert_equal content.strip, hentry[0].entry_content
+    end
+
+    test 'The summary is a singular value' do
+      hentry = @hatom.hentry
+      assert_equal 'We had a bit of trouble with ...', hentry[0].entry_summary
     end
 
     test 'The published is a time' do

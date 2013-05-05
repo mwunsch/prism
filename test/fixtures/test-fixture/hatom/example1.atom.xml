@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <entry>
+    <title>Wiki Attack</title>
+    <published>2005-10-10T14:07:00-07:00</published>
+    <summary>We had a bit of trouble with ...</summary>
+    <content type="html">&lt;p class="entry-summary"&gt;We had a bit of trouble with ...&lt;/p&gt;
+     &lt;p&gt;We've restored the wiki and ...&lt;/p&gt;
+     &lt;p&gt;If anyone is working to combat said spammers ...&lt;/p&gt;</content>
+    <author>
+      <name>Ryan King</name>
+      <uri>http://theryanking.com/</uri>
+    </author>
+  </entry>
+  <entry/>
+</feed>

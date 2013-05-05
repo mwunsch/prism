@@ -137,3 +137,4 @@ end
 require 'prism/pattern'
 require 'prism/posh'
 require 'prism/microformat'
+require 'prism/builder'

@@ -36,3 +36,5 @@ def test_fixture(filename)
   html = get_fixture('test-fixture/' + filename)
   doc = Nokogiri::HTML.parse(html).css('#uf').first
 end
+
+ENV['TZ'] = 'UTC' # set UTC as timezone for tests

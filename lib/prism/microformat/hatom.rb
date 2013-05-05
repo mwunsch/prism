@@ -27,7 +27,16 @@ module Prism
       end
 
       has_many :hentry do
-        has_one :entry_title, :entry_summary
+        has_one :entry_title do
+          search do |node|
+            entry_title = node.css(".entry-title")
+            if entry_title.empty?
+              entry_title = node.css("h1,h2,h3,h4,h5,h6")
+            end
+            entry_title
+          end
+        end
+        has_one :entry_summary
 
         has_one :updated, :published do
           extract :typevalue
@@ -63,6 +72,10 @@ module Prism
         end
 
         required!
+      end
+
+      def to_atom
+        Prism::Builder::AtomBuilder.new(self).build.to_s
       end
 
     end
